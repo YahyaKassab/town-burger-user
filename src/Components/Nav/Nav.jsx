@@ -7,7 +7,7 @@ const Nav = () => {
     <>
       <Container
         maxWidth="xl"
-        className="relative justify-between align-baseline"
+        className="relative flex justify-between align-baseline"
       >
         <div className="flex">
           <Link to={"/"}>
@@ -23,6 +23,53 @@ const Nav = () => {
             </Typography>
           </Link>
         </div>
+        <div className="hidden flex-col md:flex md:flex-row no-underline space-x-3">
+          <Link to={"/"} className="no-underline">
+            <div className=" py-4 px-5">
+              <Typography
+                variant="h5"
+                gutterBottom
+                className=" font-thin text-black hover:text-gray-500"
+              >
+                nigga
+              </Typography>
+            </div>
+          </Link>
+          <Link to={"/"} className="no-underline">
+            <div className=" py-4 px-5">
+              <Typography
+                variant="h5"
+                gutterBottom
+                className=" font-thin text-black hover:text-gray-500"
+              >
+                nigga
+              </Typography>
+            </div>
+          </Link>
+          <Link to={"/"} className="no-underline">
+            <div className=" py-4 px-5">
+              <Typography
+                variant="h5"
+                gutterBottom
+                className=" font-thin text-black hover:text-gray-500"
+              >
+                nigga
+              </Typography>
+            </div>
+          </Link>
+          <Link to={"/"} className="no-underline">
+            <div className=" py-4 px-5">
+              <Typography
+                variant="h5"
+                gutterBottom
+                className=" font-thin text-black hover:text-gray-500"
+              >
+                nigga
+              </Typography>
+            </div>
+          </Link>
+        </div>
+        <div className="hidden md:flex"></div>
       </Container>
     </>
   )
