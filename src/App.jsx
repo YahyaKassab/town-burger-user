@@ -1,15 +1,14 @@
 import { useState } from "react"
-import { Button } from "@mui/material"
+import Nav from "./Components/Nav/Nav"
+import Page from "./Components/Page"
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className="App">
-      <Button variant="contained" color="primary">
-        nigga
-      </Button>
-    </div>
+    <Page title="Best Burger Restaurant in Ismailia">
+      <Nav />
+    </Page>
   )
 }
 
