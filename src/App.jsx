@@ -8,6 +8,7 @@ import { useImmerReducer } from "use-immer"
 import StateContext from "./StateContext"
 import DispatchContext from "./DispatchContext"
 import { toast, ToastContainer } from "react-toastify"
+import CssBaseline from "@mui/material/CssBaseline"
 import "react-toastify/dist/ReactToastify.css"
 import MessageContext from "./MessageContext"
 
@@ -77,6 +78,7 @@ function App() {
       <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
           <MessageContext.Provider value={message}>
+            <CssBaseline />
             <Page
               container={false}
               nav={false}

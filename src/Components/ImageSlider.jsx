@@ -1,5 +1,6 @@
 import { useState } from "react"
 import "./home.css"
+import { Typography } from "@mui/material"
 import ImageSlide from "./ImageSlide"
 
 const ImageSlider = (props) => {
@@ -8,11 +9,21 @@ const ImageSlider = (props) => {
   console.log(props.slides[currentIndex].url)
   return (
     <div>
-      <ImageSlide
-        slides={props.slides}
-        index={currentIndex}
-        setIndex={setCurrentIndex}
-      />
+      <div className="slider-image relative">
+        <Typography
+          variant="overline"
+          color={""}
+          gutterBottom
+          className="text-start text-lg m-5 font-bold my-9"
+        >
+          Our Most Popular Beef burger dishes
+        </Typography>
+        <ImageSlide
+          slides={props.slides}
+          index={currentIndex}
+          setIndex={setCurrentIndex}
+        />
+      </div>
     </div>
   )
 }
