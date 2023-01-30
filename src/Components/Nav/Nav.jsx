@@ -1,4 +1,4 @@
-import { Container, IconButton, Typography } from "@mui/material"
+import { Button, Container, IconButton, Typography } from "@mui/material"
 import { useState } from "react"
 import "./Nav.css"
 import { Link } from "react-router-dom"
@@ -12,7 +12,7 @@ const Nav = () => {
   }
   return (
     <>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" className="mb-3">
         <div className="flex justify-between align-baseline">
           <div className="flex">
             <Link to={"/"}>
@@ -40,7 +40,7 @@ const Nav = () => {
                   gutterBottom
                   className=" font-thin text-black hover:text-gray-500"
                 >
-                  nigga
+                  Menu
                 </Typography>
               </div>
             </Link>
@@ -51,32 +51,20 @@ const Nav = () => {
                   gutterBottom
                   className=" font-thin text-black hover:text-gray-500"
                 >
-                  nigga
+                  Contact Us
                 </Typography>
               </div>
             </Link>
-            <Link to={"/"} className="no-underline">
-              <div className=" py-4 px-5">
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  className=" font-thin text-black hover:text-gray-500"
-                >
-                  nigga
-                </Typography>
-              </div>
-            </Link>
-            <Link to={"/"} className="no-underline">
-              <div className=" py-4 px-5">
-                <Typography
-                  variant="h5"
-                  gutterBottom
-                  className=" font-thin text-black hover:text-gray-500"
-                >
-                  nigga
-                </Typography>
-              </div>
-            </Link>
+            <div className=" py-4 mx-2">
+              <Button variant="contained" className="text-bold bg-red-800">
+                Order now
+              </Button>
+            </div>
+            <div className=" py-4 mx-2">
+              <Button variant="contained" className="text-bold bg-neutral-800">
+                Register
+              </Button>
+            </div>
           </div>
           <a
             href="#"
@@ -89,9 +77,9 @@ const Nav = () => {
               <span className={`upper ${open ? "open" : ""}`}></span>
             </div>
           </a>
-          <div className={`hidden m-3 md:block`}>
-            {/* <LoggedOut /> */}
-            <LoggedIn />
+          <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
+            <LoggedOut />
+            {/* <LoggedIn /> */}
           </div>
         </div>
       </Container>

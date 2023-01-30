@@ -1,0 +1,31 @@
+.img1,
+.img2,
+.img3 {
+  position: absolute;
+}
+/* .img2 {
+  transform: translateX(-100vw);
+}
+.img3 {
+  transform: translateX(-200vw);
+} */
+.right {
+  transition: all 3s;
+  transform: translateX(100vw);
+}
+.left {
+  transition: all 3s;
+  transform: translateX(-100vw);
+}
+/* .img1 {
+  transition: all 3s;
+  transform: translateX(-100vw);
+}
+.img2.click {
+  transition: all 3s;
+  transform: translateX(-100vw);
+}
+.img3.click {
+  transition: all 3s;
+  transform: translateX(-100vw);
+} */

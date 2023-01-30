@@ -20,7 +20,11 @@ export default function LoggedIn() {
         <span className="rounded-full bg-red-600 absolute notify text-white">
           1
         </span>
-        <Button variant="contained" color="secondary">
+        <Button
+          variant="outlined"
+          className="font-bold text-gray-700"
+          style={{ borderWidth: 2, borderColor: "black" }}
+        >
           Logout
         </Button>
       </div>
