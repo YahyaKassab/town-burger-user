@@ -4,6 +4,7 @@
 } */
 .image {
   width: 100%;
+  transition: all 0.25s;
 }
 .top-left {
   position: absolute;

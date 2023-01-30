@@ -4,28 +4,36 @@ import "./home.css"
 import { Grid } from "@mui/material"
 import ImageSlider from "./ImageSlider"
 import OtherBurgers from "./OtherBurgers"
+import MostFamous from "./MostFamous"
 export default function Home() {
   const [slides, setSlides] = useState([
     {
       url: "SliderImages\\burger1.jpg",
-      title: "title",
-      body: "body",
+      title: "title1",
+      body: "body1",
       action: "/login",
       position: "top-right",
     },
     {
       url: "SliderImages\\burger2.jpg",
-      title: "title",
-      body: "body",
+      title: "title2",
+      body: "body2",
       action: "/login",
       position: "top-left",
     },
     {
       url: "SliderImages\\burger3.jpg",
-      title: "title",
-      body: "body",
+      title: "title3",
+      body: "body3",
       action: "/login",
-      position: "top-left",
+      position: "bottom-left",
+    },
+    {
+      url: "SliderImages\\burger3.jpg",
+      title: "title4",
+      body: "body4",
+      action: "/login",
+      position: "bottom-right",
     },
   ])
   return (
@@ -40,6 +48,9 @@ export default function Home() {
           </Grid>
           <Grid item lg={4} xs={12}>
             <OtherBurgers />
+          </Grid>
+          <Grid item xs={12}>
+            <MostFamous />
           </Grid>
         </Grid>
       </Page>

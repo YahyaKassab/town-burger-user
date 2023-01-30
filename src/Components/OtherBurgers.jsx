@@ -1,47 +1,48 @@
 import React, { useState } from "react"
 import { Grid, Typography } from "@mui/material"
+import { Link } from "react-router-dom"
 
 const OtherBurgers = () => {
   return (
     <>
-      <Grid
-        container
-        spacing={3}
-        // direction={"column"}
-        flexWrap
-        className="mt-1"
-      >
+      <Grid container spacing={2} flexWrap className="mt-2">
         <Grid item lg={12} md={6} xs={12}>
-          <div className="relative">
-            <Typography
-              variant="overline"
-              className=" absolute font-bold text-white top-3 left-3"
-            >
-              Classic Chicken Burger
-            </Typography>
-            <img
-              src="SliderImages\burger2.jpg"
-              className=""
-              width={"100%"}
-              alt=""
-            />
-          </div>
+          <Link to={"/login"}>
+            <div className="relative">
+              <Typography
+                variant="overline"
+                className=" absolute font-bold text-white top-3 left-3"
+              >
+                Classic Chicken Burger
+              </Typography>
+              <img
+                src="SliderImages\burger2.jpg"
+                className=""
+                style={{ borderRadius: 10 }}
+                width={"100%"}
+                alt=""
+              />
+            </div>
+          </Link>
         </Grid>
         <Grid item lg={12} md={6} xs={12}>
-          <div className="relative">
-            <Typography
-              variant="overline"
-              className="hidden sm:block absolute font-bold text-white top-3 left-3"
-            >
-              Delicious Black Burger
-            </Typography>
-            <img
-              src="SliderImages\burger3.jpg"
-              className="hidden sm:block"
-              width={"100%"}
-              alt=""
-            />
-          </div>
+          <Link to={"/login"}>
+            <div className="relative">
+              <Typography
+                variant="overline"
+                className="hidden sm:block absolute font-bold text-white top-3 left-3"
+              >
+                Delicious Black Burger
+              </Typography>
+              <img
+                src="SliderImages\burger3.jpg"
+                className="hidden sm:block"
+                width={"100%"}
+                style={{ borderRadius: 10 }}
+                alt=""
+              />
+            </div>
+          </Link>
         </Grid>
       </Grid>
       {/* <div className="flex flex-col justify-center space-y-3">
