@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Page from "./Page"
 import { useNavigate } from "react-router"
+import MessageContext from "../MessageContext"
 
 function Copyright(props) {
   return (
@@ -36,6 +37,7 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function Login() {
+  const message = React.useContext(MessageContext)
   const navigate = useNavigate()
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -141,6 +143,7 @@ export default function Login() {
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   className="bg-black"
+                  onClick={() => message.success("successful")}
                 >
                   Sign In
                 </Button>
