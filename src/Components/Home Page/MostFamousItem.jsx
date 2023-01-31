@@ -16,7 +16,7 @@ export default function MostFamousItem(props) {
   console.log(meal)
   return (
     <>
-      <Card sx={{ maxWidth: 400 }}>
+      <Card sx={{ maxWidth: 400, borderRadius: 12 }}>
         <CardMedia>
           <img src={meal.image} width={"100%"} alt="" />
         </CardMedia>

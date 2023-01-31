@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 const OtherBurgers = () => {
   return (
     <>
-      <Grid container spacing={2} flexWrap className="mt-2">
+      <Grid container spacing={2} flexWrap className="-mt-4">
         <Grid item lg={12} md={6} xs={12}>
           <Link to={"/login"}>
             <div className="relative">

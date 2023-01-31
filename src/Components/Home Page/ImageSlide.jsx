@@ -6,6 +6,8 @@ import {
   Button,
   Typography,
 } from "@mui/material"
+import FiberManualRecordOutlinedIcon from "@mui/icons-material/FiberManualRecordOutlined"
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
 import "./home.css"
 import { useNavigate } from "react-router"
 const rightArrowStyles = {
@@ -123,7 +125,11 @@ const ImageSlide = (props) => {
             onClick={() => props.setIndex(slideIndex)}
           >
             <div className="" key={slideIndex}>
-              {props.index == slideIndex ? "⦿" : "⦾"}
+              {props.index == slideIndex ? (
+                <FiberManualRecordIcon fontSize="large" />
+              ) : (
+                <FiberManualRecordOutlinedIcon fontSize="large" />
+              )}
             </div>
           </a>
         ))}

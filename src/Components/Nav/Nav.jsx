@@ -78,8 +78,8 @@ const Nav = () => {
             </div>
           </a>
           <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
-            <LoggedOut />
-            {/* <LoggedIn /> */}
+            {/* <LoggedOut /> */}
+            <LoggedIn />
           </div>
         </div>
       </Container>

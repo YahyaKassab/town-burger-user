@@ -10,14 +10,6 @@ const ImageSlider = (props) => {
   return (
     <div>
       <div className="slider-image relative">
-        <Typography
-          variant="overline"
-          color={""}
-          gutterBottom
-          className="text-start text-lg m-5 font-bold my-9"
-        >
-          Our Most Popular Beef burger dishes
-        </Typography>
         <ImageSlide
           slides={props.slides}
           index={currentIndex}

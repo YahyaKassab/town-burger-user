@@ -27,8 +27,8 @@
   transition: all 0.25s;
 }
 .notify {
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   padding-left: 9px;
   transform: translate(50px, 3px);
 }
