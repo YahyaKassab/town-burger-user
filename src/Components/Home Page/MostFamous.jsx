@@ -35,7 +35,11 @@ export default function MostFamous() {
         </Grid>
         <Grid item md={6} xs={12}>
           <div className="text-end mt-8">
-            <Button onClick={() => navigate("/")} variant="text" className="">
+            <Button
+              onClick={() => navigate("/menu")}
+              variant="text"
+              className=""
+            >
               <Typography variant="h6" className=" text-red-800">
                 See full menu
               </Typography>

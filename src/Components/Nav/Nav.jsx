@@ -33,7 +33,7 @@ const Nav = () => {
               open ? "flex mt-14" : "hidden mt-0"
             } md:flex md:flex-row no-underline justify-between`}
           >
-            <Link to={"/"} className="no-underline">
+            <Link to={"/menu"} className="no-underline">
               <div className=" py-4 px-5">
                 <Typography
                   variant="h5"

@@ -10,6 +10,7 @@ import { toast, ToastContainer } from "react-toastify"
 import CssBaseline from "@mui/material/CssBaseline"
 import "react-toastify/dist/ReactToastify.css"
 import MessageContext from "./MessageContext"
+import Menu from "./Components/Menu"
 
 function App() {
   const error = (msg) => {
@@ -98,7 +99,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/t" element={<>rarrar</>} />
+                <Route path="/menu" element={<Menu />} />
               </Routes>
             </Page>
           </MessageContext.Provider>
