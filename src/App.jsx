@@ -10,7 +10,7 @@ import { toast, ToastContainer } from "react-toastify"
 import CssBaseline from "@mui/material/CssBaseline"
 import "react-toastify/dist/ReactToastify.css"
 import MessageContext from "./MessageContext"
-import Menu from "./Components/Menu"
+import Menu from "./Components/Menu page/Menu"
 
 function App() {
   const error = (msg) => {

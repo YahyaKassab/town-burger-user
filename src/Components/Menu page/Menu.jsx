@@ -4,9 +4,10 @@ import Tabs from "@mui/material/Tabs"
 import Tab from "@mui/material/Tab"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
-import Page from "./Page"
+import Page from "../Page"
 import { Grid } from "@mui/material"
 import MealItem from "./MealItem"
+import Cart from "./Cart"
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -46,8 +47,7 @@ export default function Menu() {
     {
       image: "SliderImages\\burger1.jpg",
       title: "title",
-      description:
-        "descritiondescritiondescritiondescritiondescritiondescritiondescritiondescritiondescritiondescritiondescrition",
+      description: "Description",
       action: "/login",
     },
     {
@@ -234,8 +234,11 @@ export default function Menu() {
   return (
     <>
       <Page container={true} nav={true} title={"Our Delicious menu"}>
-        <Grid container spacing={3} className="mt-16">
-          <Grid item xs={12} sm={8}>
+        <Grid container direction={"row-reverse"} spacing={3} className="mt-16">
+          <Grid item xs={12} sm={6} lg={4}>
+            <Cart />
+          </Grid>
+          <Grid item xs={12} sm={6} lg={8}>
             <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs
@@ -309,22 +312,8 @@ export default function Menu() {
               </TabPanel>
             </Box>
           </Grid>
-          <Grid item xs={12} sm={4}>
-            Cart
-          </Grid>
         </Grid>
       </Page>
     </>
   )
-}
-{
-  /* <Page container={true} nav={true} title={"Our Delicious menu"}>
-        <Grid container spacing={4} className="my-20 justify-center">
-          {menu.map((item, index) => (
-            <Grid item key={index} lg={3} md={4} sm={6} xs={12}>
-              <MostFamousItem meal={item} />
-            </Grid>
-          ))}
-        </Grid>
-      </Page> */
 }
