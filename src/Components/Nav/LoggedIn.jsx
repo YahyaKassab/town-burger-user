@@ -14,7 +14,7 @@ export default function LoggedIn() {
             <PersonSharpIcon className="mt-2" fontSize="large" />
           </Tooltip>
         </Link>
-        <Link to={"/"} onClick={() => setNotifications([])}>
+        <Link to={"/menu"} onClick={() => setNotifications([])}>
           <Tooltip title="Cart">
             <ShoppingCartOutlinedIcon
               className="mt-2 pl-0 ml-0"
