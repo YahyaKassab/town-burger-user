@@ -7,22 +7,25 @@ import {
   Typography,
   CardHeader,
 } from "@mui/material"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router"
 import IconButton from "@mui/material/IconButton"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
+import DispatchContext from "../../DispatchContext"
 export default function MostFamousItem(props) {
-  const [count, setCount] = useState(0)
+  const appDispatch = useContext(DispatchContext)
+  const [qty, setQty] = useState(0)
   const navigate = useNavigate()
   const meal = props.meal
-  console.log("meal:")
-  console.log(meal)
 
   //handle - button
   //description doesnt show
   const handleRemove = () => {
-    if (count > 0) setCount(count - 1)
+    if (qty > 0) setQty(qty - 1)
+  }
+  const addToCart = () => {
+    appDispatch({ type: "addToCart", value: { meal, qty } })
   }
 
   return (
@@ -46,10 +49,10 @@ export default function MostFamousItem(props) {
         <CardActions className="justify-center">
           <div className="flex justify-around space-x-10 md:space-x-5">
             <Typography variant="h5" className="my-auto text-gray-800">
-              {count}
+              {qty}
             </Typography>
             <div className="flex flex-col justify-center space-y-2">
-              <IconButton onClick={() => setCount(count + 1)}>
+              <IconButton onClick={() => setQty(qty + 1)}>
                 <AddIcon fontSize="large" />
               </IconButton>
               <IconButton onClick={handleRemove}>
@@ -57,9 +60,12 @@ export default function MostFamousItem(props) {
               </IconButton>
             </div>
             <Button
-              onClick={() => navigate(meal.action)}
-              variant="contained"
-              className="bg-red-800 m-3"
+              onClick={addToCart}
+              variant={qty == 0 ? "outlined" : "contained"}
+              disabled={qty == 0}
+              className={`m-3 border-black ${
+                qty == 0 ? "text-black" : "contained bg-red-800"
+              }`}
               style={{ borderRadius: 20 }}
             >
               Add to cart
