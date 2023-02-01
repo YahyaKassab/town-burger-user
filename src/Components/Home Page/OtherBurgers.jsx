@@ -1,0 +1,57 @@
+import React, { useState } from "react"
+import { Grid, Typography } from "@mui/material"
+import { Link } from "react-router-dom"
+
+const OtherBurgers = () => {
+  return (
+    <>
+      <Grid container spacing={2} flexWrap className="-mt-4">
+        <Grid item lg={12} md={6} xs={12}>
+          <Link to={"/login"}>
+            <div className="relative">
+              <Typography
+                variant="overline"
+                className=" absolute font-bold text-white top-3 left-3"
+              >
+                Classic Chicken Burger
+              </Typography>
+              <img
+                src="SliderImages\burger2.jpg"
+                className=""
+                style={{ borderRadius: 10 }}
+                width={"100%"}
+                alt=""
+              />
+            </div>
+          </Link>
+        </Grid>
+        <Grid item lg={12} md={6} xs={12}>
+          <Link to={"/login"}>
+            <div className="relative">
+              <Typography
+                variant="overline"
+                className="hidden sm:block absolute font-bold text-white top-3 left-3"
+              >
+                Delicious Black Burger
+              </Typography>
+              <img
+                src="SliderImages\burger3.jpg"
+                className="hidden sm:block"
+                width={"100%"}
+                style={{ borderRadius: 10 }}
+                alt=""
+              />
+            </div>
+          </Link>
+        </Grid>
+      </Grid>
+      {/* <div className="flex flex-col justify-center space-y-3">
+        <div className="bg-red-900 w-10 h-12"></div>
+        <div
+          className="bg-black"
+        ></div>
+      </div> */}
+    </>
+  )
+}
+export default OtherBurgers

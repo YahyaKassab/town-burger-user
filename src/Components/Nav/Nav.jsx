@@ -1,22 +1,35 @@
 import { Button, Container, IconButton, Typography } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import "./Nav.css"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import LoggedOut from "./LoggedOut"
 import LoggedIn from "./LoggedIn"
+import StateContext from "../../StateContext"
 
 const Nav = () => {
+  const appState = useContext(StateContext)
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const toggleOpen = () => {
     setOpen(!open)
   }
+  const handleScroll = async () => {
+    await navigate("/")
+    const element = document.getElementById("footer")
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
+  //icon makes error
   return (
     <>
       <Container maxWidth="xl" className="mb-3">
         <div className="flex justify-between align-baseline">
           <div className="flex">
             <Link to={"/"}>
-              <img src={"town-burger-logo.png"} alt="logo" className="w-16" />
+              {/* <img src={"town-burger-logo.png"} alt="logo" className="w-16" /> */}
+              <div className="w-16 logo"></div>
             </Link>
             <Link to={"/"} className="no-underline">
               <Typography
@@ -33,7 +46,7 @@ const Nav = () => {
               open ? "flex mt-14" : "hidden mt-0"
             } md:flex md:flex-row no-underline justify-between`}
           >
-            <Link to={"/"} className="no-underline">
+            <Link to={"/menu"} className="no-underline">
               <div className=" py-4 px-5">
                 <Typography
                   variant="h5"
@@ -44,7 +57,7 @@ const Nav = () => {
                 </Typography>
               </div>
             </Link>
-            <Link to={"/"} className="no-underline">
+            <a onClick={handleScroll} className="no-underline">
               <div className=" py-4 px-5">
                 <Typography
                   variant="h5"
@@ -54,14 +67,22 @@ const Nav = () => {
                   Contact Us
                 </Typography>
               </div>
-            </Link>
+            </a>
             <div className=" py-4 mx-2">
-              <Button variant="contained" className="text-bold bg-red-800">
+              <Button
+                onClick={() => navigate("/menu")}
+                variant="contained"
+                className="text-bold bg-red-800"
+              >
                 Order now
               </Button>
             </div>
             <div className=" py-4 mx-2">
-              <Button variant="contained" className="text-bold bg-neutral-800">
+              <Button
+                onClick={() => navigate("/register")}
+                variant="contained"
+                className="text-bold bg-neutral-800"
+              >
                 Register
               </Button>
             </div>
@@ -78,8 +99,8 @@ const Nav = () => {
             </div>
           </a>
           <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
-            <LoggedOut />
-            {/* <LoggedIn /> */}
+            {/* <LoggedOut /> */}
+            <LoggedIn />
           </div>
         </div>
       </Container>
