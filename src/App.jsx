@@ -13,6 +13,8 @@ import MessageContext from "./MessageContext"
 import Menu from "./Components/Menu page/Menu"
 import Register from "./Components/Register Page/Register"
 import Profile from "./Components/Profile Page/Profile"
+import Orders from "./Components/Orders/Orders"
+import PlaceOrder from "./Components/Orders/PlaceOrder"
 
 function App() {
   // const footerRef = createRef()
@@ -66,13 +68,14 @@ function App() {
   }
   const message = { error, warning, success, info }
 
-  useEffect(() => {}, [])
+  // useEffect(() => {
+  //   console.log(state.orders)
+  // }, [state.orders])
   const n = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   const edit = (array, index, value) => {
     const st = array.slice(0, index)
     const nd = array.slice(index + 1)
-    console.log("nd:" + nd)
     st.push(value)
     const last = st.concat(nd)
     return last
@@ -80,7 +83,7 @@ function App() {
 
   const initial = {
     cart: [],
-    // footerRef,
+    orders: [],
   }
   const appReducer = (draft, action) => {
     switch (action.type) {
@@ -112,6 +115,13 @@ function App() {
         return
       case "decreaseQty":
         if (draft.cart[action.value].qty > 0) draft.cart[action.value].qty--
+        return
+      case "addOrder":
+        draft.orders.push(action.value)
+        draft.cart = []
+        return
+      case "descriptionChange":
+        draft.cart[action.value.index].description = action.value.description
         return
     }
   }
@@ -146,6 +156,8 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile/:number" element={<Profile />} />
+                <Route path="/:number/orders" element={<Orders />} />
+                <Route path="/:number/place-order" element={<PlaceOrder />} />
               </Routes>
             </Page>
           </MessageContext.Provider>

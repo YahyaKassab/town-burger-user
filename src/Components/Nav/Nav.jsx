@@ -28,7 +28,8 @@ const Nav = () => {
         <div className="flex justify-between align-baseline">
           <div className="flex">
             <Link to={"/"}>
-              <img src={"town-burger-logo.png"} alt="logo" className="w-16" />
+              {/* <img src={"town-burger-logo.png"} alt="logo" className="w-16" /> */}
+              <div className="w-16 logo"></div>
             </Link>
             <Link to={"/"} className="no-underline">
               <Typography

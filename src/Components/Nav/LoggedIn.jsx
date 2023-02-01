@@ -2,10 +2,11 @@ import { Button, Tooltip } from "@mui/material"
 import React, { useContext, useState } from "react"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import PersonSharpIcon from "@mui/icons-material/PersonSharp"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import "./Nav.css"
 import StateContext from "../../StateContext"
 export default function LoggedIn() {
+  const navigate = useNavigate()
   const appState = useContext(StateContext)
   return (
     <>
@@ -43,6 +44,7 @@ export default function LoggedIn() {
           variant="outlined"
           className="font-bold text-gray-700"
           style={{ borderWidth: 2, borderColor: "black" }}
+          onClick={() => navigate("/menu")}
         >
           Logout
         </Button>

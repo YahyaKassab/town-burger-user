@@ -25,7 +25,7 @@ export default function MostFamousItem(props) {
     if (qty > 0) setQty(qty - 1)
   }
   const addToCart = () => {
-    appDispatch({ type: "addToCart", value: { meal, qty } })
+    appDispatch({ type: "addToCart", value: { meal, qty, description: "" } })
   }
 
   return (

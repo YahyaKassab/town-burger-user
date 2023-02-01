@@ -14,10 +14,12 @@ import DispatchContext from "../../DispatchContext"
 import StateContext from "../../StateContext"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
 import DeleteIcon from "@mui/icons-material/Delete"
+import { useNavigate } from "react-router"
 
 export default function Cart() {
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
+  const navigate = useNavigate()
   const deleteFromCart = (index) => {
     appDispatch({ type: "removeFromCart", value: index })
   }
@@ -150,7 +152,11 @@ export default function Cart() {
                 appState.cart.length == 0 ? "hidden" : "block"
               }`}
             >
-              <Button variant="text" className="text-red-800 px-10 py-5 my-20">
+              <Button
+                onClick={() => navigate(`/${"01123334417"}/place-order`)}
+                variant="text"
+                className="text-red-800 px-10 py-5 my-20"
+              >
                 <Typography variant="h4" className="">
                   Continue
                 </Typography>

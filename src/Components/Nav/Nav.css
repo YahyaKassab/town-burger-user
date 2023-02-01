@@ -1,3 +1,10 @@
+.logo {
+  background-image: url("../../../town-burger-logo.png");
+  margin: 10px;
+  background-size: cover;
+  height: 50px;
+}
+
 .upper,
 .middle,
 .bottom {
