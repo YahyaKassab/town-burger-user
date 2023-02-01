@@ -7,6 +7,7 @@ import OtherBurgers from "./OtherBurgers"
 import Divider from "@mui/material/Divider"
 import MostFamous from "./MostFamous"
 import Footer from "./Footer"
+import SpecialOffers from "./SpecialOffers"
 export default function Home() {
   const [slides, setSlides] = useState([
     {
@@ -44,10 +45,15 @@ export default function Home() {
         {/* <div className="flex flex-col lg:flex-row justify-between">
           
         </div> */}
-        <Typography variant="h4" className="my-12">
-          Our Most Popular Beef burger dishes
-        </Typography>
         <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <SpecialOffers />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="h4" className="my-5 ml-10">
+              Our Most Popular Beef burger dishes
+            </Typography>
+          </Grid>
           <Grid item lg={8} xs={12}>
             <ImageSlider slides={slides} />
           </Grid>

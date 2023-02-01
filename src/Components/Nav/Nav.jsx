@@ -1,11 +1,14 @@
 import { Button, Container, IconButton, Typography } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import "./Nav.css"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import LoggedOut from "./LoggedOut"
 import LoggedIn from "./LoggedIn"
+import StateContext from "../../StateContext"
 
 const Nav = () => {
+  const appState = useContext(StateContext)
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const toggleOpen = () => {
     setOpen(!open)
@@ -44,7 +47,15 @@ const Nav = () => {
                 </Typography>
               </div>
             </Link>
-            <Link to={"/"} className="no-underline">
+            <Link
+              to={"#"}
+              onClick={() =>
+                appState.footerRef.current?.scrollIntoView({
+                  behavior: "smooth",
+                })
+              }
+              className="no-underline"
+            >
               <div className=" py-4 px-5">
                 <Typography
                   variant="h5"
@@ -56,12 +67,20 @@ const Nav = () => {
               </div>
             </Link>
             <div className=" py-4 mx-2">
-              <Button variant="contained" className="text-bold bg-red-800">
+              <Button
+                onClick={() => navigate("/menu")}
+                variant="contained"
+                className="text-bold bg-red-800"
+              >
                 Order now
               </Button>
             </div>
             <div className=" py-4 mx-2">
-              <Button variant="contained" className="text-bold bg-neutral-800">
+              <Button
+                onClick={() => navigate("/register")}
+                variant="contained"
+                className="text-bold bg-neutral-800"
+              >
                 Register
               </Button>
             </div>

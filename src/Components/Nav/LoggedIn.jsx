@@ -1,11 +1,12 @@
 import { Button, Tooltip } from "@mui/material"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined"
 import PersonSharpIcon from "@mui/icons-material/PersonSharp"
 import { Link } from "react-router-dom"
 import "./Nav.css"
+import StateContext from "../../StateContext"
 export default function LoggedIn() {
-  const [notifications, setNotifications] = useState([1])
+  const appState = useContext(StateContext)
   return (
     <>
       <div className="flex justify-between relative space-x-4">
@@ -14,7 +15,7 @@ export default function LoggedIn() {
             <PersonSharpIcon className="mt-2" fontSize="large" />
           </Tooltip>
         </Link>
-        <Link to={"/menu"} onClick={() => setNotifications([])}>
+        <Link to={"/menu"}>
           <Tooltip title="Cart">
             <ShoppingCartOutlinedIcon
               className="mt-2 pl-0 ml-0"
@@ -22,19 +23,20 @@ export default function LoggedIn() {
             />
           </Tooltip>
         </Link>
+
         <span
           className={`${
-            notifications.length == 0 ? "hidden" : "block"
+            appState.cart.length == 0 ? "hidden" : "block"
           } rounded-full bg-red-600 absolute notify text-white`}
         >
           <span
             className="absolute text-sm font-bold"
             style={{
-              right: `${notifications.length < 10 ? 5 : 1}px`,
+              right: `${appState.cart.length < 10 ? 5 : 1}px`,
               bottom: 0,
             }}
           >
-            {notifications.length < 10 ? notifications.length : "9+"}
+            {appState.cart.length < 10 ? appState.cart.length : "9+"}
           </span>
         </span>
         <Button

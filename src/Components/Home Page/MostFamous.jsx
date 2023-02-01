@@ -25,6 +25,10 @@ export default function MostFamous() {
       action: "/login",
     },
   ])
+  const seeFullMenu = () => {
+    navigate("/menu")
+    window.scrollTo(0, 0)
+  }
   return (
     <>
       <Grid container spacing={9} className="mb-5">
@@ -35,11 +39,7 @@ export default function MostFamous() {
         </Grid>
         <Grid item md={6} xs={12}>
           <div className="text-end mt-8">
-            <Button
-              onClick={() => navigate("/menu")}
-              variant="text"
-              className=""
-            >
+            <Button onClick={seeFullMenu} variant="text" className="">
               <Typography variant="h6" className=" text-red-800">
                 See full menu
               </Typography>

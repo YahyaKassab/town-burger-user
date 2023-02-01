@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Route, Routes } from "react-router"
 import Home from "./Components/Home Page/Home"
 import Page from "./Components/Page"
@@ -11,8 +11,10 @@ import CssBaseline from "@mui/material/CssBaseline"
 import "react-toastify/dist/ReactToastify.css"
 import MessageContext from "./MessageContext"
 import Menu from "./Components/Menu page/Menu"
+import Register from "./Components/Register Page/Register"
 
 function App() {
+  const footerRef = useRef()
   const error = (msg) => {
     toast.error(msg, {
       position: "top-left",
@@ -75,11 +77,25 @@ function App() {
     return last
   }
 
-  const initial = { cart: [] }
+  const initial = { cart: [], footerRef }
   const appReducer = (draft, action) => {
     switch (action.type) {
       case "addToCart":
-        draft.cart.push(action.value)
+        if (
+          draft.cart.findIndex(
+            (meal) =>
+              meal.meal.title.toLowerCase() ==
+              action.value.meal.title.toLowerCase()
+          ) != -1
+        )
+          draft.cart[
+            draft.cart.findIndex(
+              (meal) =>
+                meal.meal.title.toLowerCase() ==
+                action.value.meal.title.toLowerCase()
+            )
+          ].qty += action.value.qty
+        else draft.cart.push(action.value)
         return
       case "removeFromCart":
         draft.cart.splice(action.value, 1)
@@ -123,6 +139,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route path="/menu" element={<Menu />} />
               </Routes>
             </Page>

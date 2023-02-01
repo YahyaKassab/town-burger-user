@@ -1,12 +1,14 @@
 import { Button, Divider, Grid, Typography } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Link } from "react-router-dom"
+import StateContext from "../../StateContext"
 
 const Footer = () => {
+  const appState = useContext(StateContext)
   return (
     <>
       <hr />
-      <div className="flex justify-between my-20">
+      <div className="flex justify-between my-20" ref={appState.footerRef}>
         <Grid container spacing={4}>
           {/* Contact us */}
           <Grid item md={4} xs={12}>
@@ -36,6 +38,18 @@ const Footer = () => {
                   style={{ width: 100, height: 100 }}
                   alt=""
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography variant="h4">
+                  {" "}
+                  Call us:
+                  <a
+                    href="tel:PHONE_NUM"
+                    className="no-underline font-bold ml-2"
+                  >
+                    +201014150373
+                  </a>
+                </Typography>
               </Grid>
             </Grid>
           </Grid>
