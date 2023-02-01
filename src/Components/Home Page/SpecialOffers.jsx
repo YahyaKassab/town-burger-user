@@ -18,7 +18,12 @@ const SpecialOffers = () => {
           >
             Special offer
           </Typography>
-          <img src="SliderImages\burger1.jpg" width={"100%"} alt="" />
+          <img
+            src="SliderImages\burger1.jpg"
+            width={"100%"}
+            style={{ borderRadius: 10 }}
+            alt=""
+          />
         </div>
       </Link>
     </>
