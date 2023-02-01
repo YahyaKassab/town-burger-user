@@ -51,7 +51,11 @@ const PlaceOrder = () => {
           },
           time: {
             hour:
-              today.getHours() < 13 ? today.getHours() : today.getHours() - 12,
+              today.getHours() < 13
+                ? today.getHours() == 0
+                  ? 12
+                  : today.getHours()
+                : today.getHours() - 12,
             minute:
               today.getMinutes().toString().length == 1
                 ? "0" + today.getMinutes()
