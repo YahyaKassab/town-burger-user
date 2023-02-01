@@ -8,7 +8,12 @@ const Footer = () => {
   return (
     <>
       <hr />
-      <div className="flex justify-between my-20" ref={appState.footerRef}>
+      <div
+        className="flex justify-between my-20"
+        style={{ float: "left", clear: "both" }}
+        // ref={appState.footerRef}
+        id="footer"
+      >
         <Grid container spacing={4}>
           {/* Contact us */}
           <Grid item md={4} xs={12}>

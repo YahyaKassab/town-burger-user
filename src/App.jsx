@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { createRef, useEffect, useRef, useState } from "react"
 import { Route, Routes } from "react-router"
 import Home from "./Components/Home Page/Home"
 import Page from "./Components/Page"
@@ -12,9 +12,10 @@ import "react-toastify/dist/ReactToastify.css"
 import MessageContext from "./MessageContext"
 import Menu from "./Components/Menu page/Menu"
 import Register from "./Components/Register Page/Register"
+import Profile from "./Components/Profile Page/Profile"
 
 function App() {
-  const footerRef = useRef()
+  // const footerRef = createRef()
   const error = (msg) => {
     toast.error(msg, {
       position: "top-left",
@@ -77,7 +78,10 @@ function App() {
     return last
   }
 
-  const initial = { cart: [], footerRef }
+  const initial = {
+    cart: [],
+    // footerRef,
+  }
   const appReducer = (draft, action) => {
     switch (action.type) {
       case "addToCart":
@@ -141,6 +145,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/menu" element={<Menu />} />
+                <Route path="/profile/:number" element={<Profile />} />
               </Routes>
             </Page>
           </MessageContext.Provider>

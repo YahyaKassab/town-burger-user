@@ -13,6 +13,15 @@ const Nav = () => {
   const toggleOpen = () => {
     setOpen(!open)
   }
+  const handleScroll = async () => {
+    await navigate("/")
+    const element = document.getElementById("footer")
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
+  //icon makes error
   return (
     <>
       <Container maxWidth="xl" className="mb-3">
@@ -47,15 +56,7 @@ const Nav = () => {
                 </Typography>
               </div>
             </Link>
-            <Link
-              to={"#"}
-              onClick={() =>
-                appState.footerRef.current?.scrollIntoView({
-                  behavior: "smooth",
-                })
-              }
-              className="no-underline"
-            >
+            <a onClick={handleScroll} className="no-underline">
               <div className=" py-4 px-5">
                 <Typography
                   variant="h5"
@@ -65,7 +66,7 @@ const Nav = () => {
                   Contact Us
                 </Typography>
               </div>
-            </Link>
+            </a>
             <div className=" py-4 mx-2">
               <Button
                 onClick={() => navigate("/menu")}

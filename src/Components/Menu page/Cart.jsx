@@ -8,10 +8,12 @@ import Avatar from "@mui/material/Avatar"
 import Typography from "@mui/material/Typography"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
+import EditIcon from "@mui/icons-material/Edit"
 import { Button, Grid, IconButton } from "@mui/material"
 import DispatchContext from "../../DispatchContext"
 import StateContext from "../../StateContext"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import DeleteIcon from "@mui/icons-material/Delete"
 
 export default function Cart() {
   const appDispatch = useContext(DispatchContext)
@@ -30,7 +32,7 @@ export default function Cart() {
         <Grid container direction={"column"}>
           {appState.cart.map((item, index) => {
             return (
-              <>
+              <div key={index}>
                 <ListItem alignItems="flex-start">
                   <Grid container spacing={1}>
                     <Grid item>
@@ -64,9 +66,13 @@ export default function Cart() {
                               <Button
                                 variant="contained"
                                 onClick={() => deleteFromCart(index)}
-                                className="bg-red-900  h-12 self-center"
+                                className={`bg-red-900  h-12 self-center`}
                                 style={{ borderRadius: 10 }}
                               >
+                                <DeleteIcon
+                                  fontSize="medium"
+                                  className="text-white mr-2"
+                                />{" "}
                                 Delete
                               </Button>
 
@@ -77,6 +83,10 @@ export default function Cart() {
                                   onClick={() => setEdit(false)}
                                   style={{ borderRadius: 10 }}
                                 >
+                                  <EditIcon
+                                    fontSize="medium"
+                                    className="text-white mr-2"
+                                  />{" "}
                                   Edit
                                 </Button>
                               ) : (
@@ -104,10 +114,19 @@ export default function Cart() {
                                     </IconButton>
                                   </div>
                                   <Button
-                                    variant="contained"
-                                    className=" bg-blue-800 h-12 self-center"
+                                    variant={
+                                      appState.cart[index].qty == 0
+                                        ? "outlined"
+                                        : "contained"
+                                    }
+                                    className={` bg-blue-800 h-12 self-center ${
+                                      appState.cart[index].qty == 0
+                                        ? "bg-white text-black border-black"
+                                        : ""
+                                    }`}
                                     onClick={() => setEdit(true)}
                                     style={{ borderRadius: 10 }}
+                                    disabled={appState.cart[index].qty == 0}
                                   >
                                     Confirm
                                   </Button>
@@ -122,7 +141,7 @@ export default function Cart() {
                 </ListItem>
 
                 <Divider variant="inset" component="li" />
-              </>
+              </div>
             )
           })}
           <Grid xs={12} item>

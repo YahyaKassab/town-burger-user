@@ -12,8 +12,6 @@ import { useNavigate } from "react-router"
 export default function MostFamousItem(props) {
   const navigate = useNavigate()
   const meal = props.meal
-  console.log("meal:")
-  console.log(meal)
   return (
     <>
       <Card sx={{ maxWidth: 400, borderRadius: 12 }}>

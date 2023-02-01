@@ -10,7 +10,7 @@ export default function LoggedIn() {
   return (
     <>
       <div className="flex justify-between relative space-x-4">
-        <Link to={"/"}>
+        <Link to={"/profile/nigga"}>
           <Tooltip title="Profile">
             <PersonSharpIcon className="mt-2" fontSize="large" />
           </Tooltip>
