@@ -51,9 +51,13 @@ const ImageSlide = (props) => {
     const newIndex = isLastSlide ? 0 : props.index + 1
     props.setIndex(newIndex)
   }
+  const handleClick = (slideIndex, e) => {
+    e.preventDefault()
+    props.setIndex(slideIndex)
+  }
   return (
     <>
-      <div className={`${props.slides[props.index].position}`}>
+      <div className={`${props.slides[props.index].position}`} id="slider">
         {showCard ? (
           <Card className={`text-white w-60  xl:w-80`}>
             <CardContent>
@@ -122,7 +126,7 @@ const ImageSlide = (props) => {
             key={slideIndex}
             href="#"
             className="text-black no-underline"
-            onClick={() => props.setIndex(slideIndex)}
+            onClick={(e) => handleClick(slideIndex, e)}
           >
             <div className="" key={slideIndex}>
               {props.index == slideIndex ? (
