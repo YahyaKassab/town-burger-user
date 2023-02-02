@@ -50,7 +50,8 @@ const Orders = () => {
                                 ? " AM"
                                 : " PM"}{" "}
                               <br />
-                              to Yahya kassab <br /> at address ismailia <br />
+                              to Yahya kassab <br /> at address ismailia <br />{" "}
+                              {/* index {appState.orders.length}, {order.index} */}
                             </span>
                           </Typography>
                         </Grid>
@@ -58,7 +59,7 @@ const Orders = () => {
                           item
                           xs={12}
                           md={6}
-                          lg={4}
+                          lg={6}
                           className="text-center"
                         >
                           <Grid container>
@@ -114,7 +115,7 @@ const Orders = () => {
                             </Grid>
                           </Grid>
                         </Grid>
-                        <Grid item lg={4} xs={8}>
+                        <Grid item lg={2} xs={8}>
                           <Typography variant="h3" className="text-center">
                             {order.dateDelivered ? (
                               "Delivered"
@@ -122,6 +123,9 @@ const Orders = () => {
                               <Button
                                 variant="contained"
                                 className="bg-red-800 py-6 px-14 font-bold"
+                                onClick={() =>
+                                  navigate(`/${order.index}/track`)
+                                }
                               >
                                 Track Order
                               </Button>

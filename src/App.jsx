@@ -20,6 +20,7 @@ import Reset from "./Components/Login Page/Reset"
 import AboutUs from "./Components/AboutUs"
 import OrderingPolicies from "./Components/OrderingPolicies"
 import AddComplaint from "./Components/Complaint/AddComplaint"
+import TrackOrder from "./Components/Orders/TrackOrder"
 
 function App() {
   // const footerRef = createRef()
@@ -71,11 +72,9 @@ function App() {
       theme: "dark",
     })
   }
+  var today = new Date()
   const message = { error, warning, success, info }
 
-  // useEffect(() => {
-  //   console.log(state.orders)
-  // }, [state.orders])
   const n = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
   const edit = (array, index, value) => {
@@ -144,6 +143,25 @@ function App() {
       case "descriptionChange":
         draft.cart[action.value.index].description = action.value.description
         return
+      case "orderOut":
+        draft.orders[action.value].state = "out"
+        return
+      case "orderDelivered":
+        draft.orders[action.value].state = "delivered"
+        draft.orders[action.value].dateDelivered = {
+          hour:
+            today.getHours() < 13
+              ? today.getHours() == 0
+                ? 12
+                : today.getHours()
+              : today.getHours() - 12,
+          minute:
+            today.getMinutes().toString().length == 1
+              ? "0" + today.getMinutes()
+              : today.getMinutes(),
+          day: today.getHours() < 13,
+        }
+        return
     }
   }
   const [state, dispatch] = useImmerReducer(appReducer, initial)
@@ -200,6 +218,7 @@ function App() {
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile/:number" element={<Profile />} />
                 <Route path="/:number/orders" element={<Orders />} />
+                <Route path="/:index/track" element={<TrackOrder />} />
                 <Route path="/:number/place-order" element={<PlaceOrder />} />
               </Routes>
             </Page>

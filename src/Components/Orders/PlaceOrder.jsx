@@ -64,6 +64,8 @@ const PlaceOrder = () => {
           },
         },
         dateDelivered: null,
+        state: "placed",
+        index: appState.orders.length,
       },
     })
     navigate("/01123334417/orders")
