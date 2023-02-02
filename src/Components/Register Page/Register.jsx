@@ -114,6 +114,15 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
+                  id="phone-number"
+                  label="Phone Number"
+                  name="Phone Number"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
                   name="password"
                   label="Password"
                   type="password"

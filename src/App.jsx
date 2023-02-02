@@ -15,6 +15,8 @@ import Register from "./Components/Register Page/Register"
 import Profile from "./Components/Profile Page/Profile"
 import Orders from "./Components/Orders/Orders"
 import PlaceOrder from "./Components/Orders/PlaceOrder"
+import ForgotPassword from "./Components/Login Page/ForgotPassword"
+import Reset from "./Components/Login Page/Reset"
 
 function App() {
   // const footerRef = createRef()
@@ -82,11 +84,27 @@ function App() {
   }
 
   const initial = {
+    loggedIn: localStorage.getItem("userToken"),
+    user: {
+      token: localStorage.getItem("userToken"),
+      firstName: localStorage.getItem("userFirstName"),
+      lastName: localStorage.getItem("userLastName"),
+      phoneNumber: localStorage.getItem("userNumber"),
+      email: localStorage.getItem("userEmail"),
+      password: localStorage.getItem("userPassword"),
+    },
     cart: [],
     orders: [],
   }
   const appReducer = (draft, action) => {
     switch (action.type) {
+      case "login":
+        draft.user = action.value
+        draft.loggedIn = true
+        return
+      case "logout":
+        draft.loggedIn = false
+        return
       case "addToCart":
         if (
           draft.cart.findIndex(
@@ -126,6 +144,23 @@ function App() {
     }
   }
   const [state, dispatch] = useImmerReducer(appReducer, initial)
+  useEffect(() => {
+    if (state.loggedIn) {
+      localStorage.setItem("userToken", state.user.token)
+      localStorage.setItem("userFirstName", state.user.firstName)
+      localStorage.setItem("userLastName", state.user.lastName)
+      localStorage.setItem("userNumber", state.user.phoneNumber)
+      localStorage.setItem("userEmail", state.user.email)
+      localStorage.setItem("userPassword", state.user.password)
+    } else {
+      localStorage.removeItem("userToken")
+      localStorage.removeItem("userFirstName")
+      localStorage.removeItem("userLastName")
+      localStorage.removeItem("userNumber")
+      localStorage.removeItem("userEmail")
+      localStorage.removeItem("userPassword")
+    }
+  }, [state.user])
 
   return (
     <>
@@ -153,6 +188,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/forgot" element={<ForgotPassword />} />
+                <Route path="/reset" element={<Reset />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile/:number" element={<Profile />} />

@@ -47,7 +47,7 @@ const PlaceOrder = () => {
           date: {
             day: today.getDate(),
             month: today.getMonth() + 1,
-            year: today.getDate(),
+            year: today.getFullYear(),
           },
           time: {
             hour:

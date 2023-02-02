@@ -71,6 +71,15 @@ const Profile = () => {
                 defaultValue="01123334417"
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                disabled={!edit}
+                type={edit ? "text" : "password"}
+                label="Password"
+                fullWidth
+                defaultValue="Nakmys12"
+              />
+            </Grid>
             <Grid item xs={6} className="text-center">
               {edit ? (
                 <Button

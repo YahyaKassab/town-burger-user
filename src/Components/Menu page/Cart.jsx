@@ -32,120 +32,124 @@ export default function Cart() {
       </Typography>
       <List sx={{ width: "100%" }}>
         <Grid container direction={"column"}>
-          {appState.cart.map((item, index) => {
-            return (
-              <div key={index}>
-                <ListItem alignItems="flex-start">
-                  <Grid container spacing={1}>
-                    <Grid item>
-                      <ListItemAvatar>
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={appState.cart[index].meal.image}
-                          sx={{ width: 120, height: 120 }}
-                        />
-                      </ListItemAvatar>
-                    </Grid>
-                    <Grid item>
-                      <ListItemText
-                        primary={
-                          <Typography variant="h4" className="ml-3">
-                            {appState.cart[index].meal.title}
-                          </Typography>
-                        }
-                        secondary={
-                          <div className="flex flex-col">
-                            <Typography
-                              sx={{ display: "inline" }}
-                              className="ml-9"
-                              component="span"
-                              variant="h3"
-                              color="text.primary"
-                            >
-                              {appState.cart[index].qty}
+          {appState.cart.length > 0 ? (
+            appState.cart.map((item, index) => {
+              return (
+                <div key={index}>
+                  <ListItem alignItems="flex-start">
+                    <Grid container spacing={1}>
+                      <Grid item>
+                        <ListItemAvatar>
+                          <Avatar
+                            alt="Remy Sharp"
+                            src={appState.cart[index].meal.image}
+                            sx={{ width: 120, height: 120 }}
+                          />
+                        </ListItemAvatar>
+                      </Grid>
+                      <Grid item>
+                        <ListItemText
+                          primary={
+                            <Typography variant="h4" className="ml-3">
+                              {appState.cart[index].meal.title}
                             </Typography>
-                            <div className="flex flex-row justify-center space-x-5 mt-2">
-                              <Button
-                                variant="contained"
-                                onClick={() => deleteFromCart(index)}
-                                className={`bg-red-900  h-12 self-center`}
-                                style={{ borderRadius: 10 }}
+                          }
+                          secondary={
+                            <div className="flex flex-col">
+                              <Typography
+                                sx={{ display: "inline" }}
+                                className="ml-9"
+                                component="span"
+                                variant="h3"
+                                color="text.primary"
                               >
-                                <DeleteIcon
-                                  fontSize="medium"
-                                  className="text-white mr-2"
-                                />{" "}
-                                Delete
-                              </Button>
-
-                              {edit ? (
+                                {appState.cart[index].qty}
+                              </Typography>
+                              <div className="flex flex-row justify-center space-x-5 mt-2">
                                 <Button
                                   variant="contained"
-                                  className=" bg-blue-800"
-                                  onClick={() => setEdit(false)}
+                                  onClick={() => deleteFromCart(index)}
+                                  className={`bg-red-900  h-12 self-center`}
                                   style={{ borderRadius: 10 }}
                                 >
-                                  <EditIcon
+                                  <DeleteIcon
                                     fontSize="medium"
                                     className="text-white mr-2"
                                   />{" "}
-                                  Edit
+                                  Delete
                                 </Button>
-                              ) : (
-                                <div className="flex">
-                                  <div className="flex flex-col justify-center space-y-1 mx-5">
-                                    <IconButton
-                                      onClick={() =>
-                                        appDispatch({
-                                          type: "increaseQty",
-                                          value: index,
-                                        })
-                                      }
-                                    >
-                                      <AddIcon fontSize="large" />
-                                    </IconButton>
-                                    <IconButton
-                                      onClick={() =>
-                                        appDispatch({
-                                          type: "decreaseQty",
-                                          value: index,
-                                        })
-                                      }
-                                    >
-                                      <RemoveIcon fontSize="large" />
-                                    </IconButton>
-                                  </div>
-                                  <Button
-                                    variant={
-                                      appState.cart[index].qty == 0
-                                        ? "outlined"
-                                        : "contained"
-                                    }
-                                    className={` bg-blue-800 h-12 self-center ${
-                                      appState.cart[index].qty == 0
-                                        ? "bg-white text-black border-black"
-                                        : ""
-                                    }`}
-                                    onClick={() => setEdit(true)}
-                                    style={{ borderRadius: 10 }}
-                                    disabled={appState.cart[index].qty == 0}
-                                  >
-                                    Confirm
-                                  </Button>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        }
-                      />
-                    </Grid>
-                  </Grid>
-                </ListItem>
 
-                <Divider variant="inset" component="li" />
-              </div>
-            )
-          })}
+                                {edit ? (
+                                  <Button
+                                    variant="contained"
+                                    className=" bg-blue-800"
+                                    onClick={() => setEdit(false)}
+                                    style={{ borderRadius: 10 }}
+                                  >
+                                    <EditIcon
+                                      fontSize="medium"
+                                      className="text-white mr-2"
+                                    />{" "}
+                                    Edit
+                                  </Button>
+                                ) : (
+                                  <div className="flex">
+                                    <div className="flex flex-col justify-center space-y-1 mx-5">
+                                      <IconButton
+                                        onClick={() =>
+                                          appDispatch({
+                                            type: "increaseQty",
+                                            value: index,
+                                          })
+                                        }
+                                      >
+                                        <AddIcon fontSize="large" />
+                                      </IconButton>
+                                      <IconButton
+                                        onClick={() =>
+                                          appDispatch({
+                                            type: "decreaseQty",
+                                            value: index,
+                                          })
+                                        }
+                                      >
+                                        <RemoveIcon fontSize="large" />
+                                      </IconButton>
+                                    </div>
+                                    <Button
+                                      variant={
+                                        appState.cart[index].qty == 0
+                                          ? "outlined"
+                                          : "contained"
+                                      }
+                                      className={` bg-blue-800 h-12 self-center ${
+                                        appState.cart[index].qty == 0
+                                          ? "bg-white text-black border-black"
+                                          : ""
+                                      }`}
+                                      onClick={() => setEdit(true)}
+                                      style={{ borderRadius: 10 }}
+                                      disabled={appState.cart[index].qty == 0}
+                                    >
+                                      Confirm
+                                    </Button>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          }
+                        />
+                      </Grid>
+                    </Grid>
+                  </ListItem>
+
+                  <Divider variant="inset" component="li" />
+                </div>
+              )
+            })
+          ) : (
+            <></>
+          )}
           <Grid xs={12} item>
             <div
               className={`text-end ${

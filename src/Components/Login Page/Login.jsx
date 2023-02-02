@@ -5,7 +5,6 @@ import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
-import Link from "@mui/material/Link"
 import Paper from "@mui/material/Paper"
 import Box from "@mui/material/Box"
 import Grid from "@mui/material/Grid"
@@ -15,6 +14,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles"
 import Page from "../Page"
 import { useNavigate } from "react-router"
 import MessageContext from "../../MessageContext"
+import { Link } from "react-router-dom"
+import "./Login.css"
 
 function Copyright(props) {
   return (
@@ -25,8 +26,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link to="/" className="text-black no-underline">
+        Town Burger
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -149,12 +150,12 @@ export default function Login() {
                 </Button>
                 <Grid container>
                   <Grid item xs>
-                    <Link href="#" variant="body2">
+                    <Link to="/forgot" className="text-black no-underline">
                       Forgot password?
                     </Link>
                   </Grid>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link to="/register" className="text-black no-underline">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>
