@@ -50,7 +50,7 @@ const TrackOrder = () => {
   return (
     <Page title="Track Order" container={true} nav={true}>
       <div className="justify-center">
-        <Box sx={{ maxWidth: 400, justifyContent: "center" }}>
+        <Box sx={{ maxWidth: 400 }} className="mt-10 mx-auto">
           <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => (
               <Step key={step.label}>
