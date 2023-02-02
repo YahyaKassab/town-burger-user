@@ -42,6 +42,9 @@ export default function Register() {
     console.log({
       email: data.get("email"),
       password: data.get("password"),
+      firstName: data.get("firstName"),
+      lastName: data.get("lastName"),
+      number: data.get("Phone Number"),
     })
   }
 

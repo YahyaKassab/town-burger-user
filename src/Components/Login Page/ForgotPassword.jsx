@@ -9,9 +9,13 @@ import MenuItem from "@mui/material/MenuItem"
 import FormControl from "@mui/material/FormControl"
 import Select from "@mui/material/Select"
 import MessageContext from "../../MessageContext"
+import { useNavigate } from "react-router"
+import CircularProgress from "@mui/material/CircularProgress"
 
 const ForgotPassword = () => {
+  const navigate = useNavigate()
   const form = useRef()
+  const [sending, setSending] = useState(false)
   const message = useContext(MessageContext)
   const [resetWay, setResetWay] = useState("email")
   const [email, setEmail] = useState()
@@ -22,8 +26,8 @@ const ForgotPassword = () => {
 
   const resetEmail = async (e) => {
     e.preventDefault()
-
-    emailjs
+    setSending(true)
+    await emailjs
       .sendForm(
         "ya7yakassab",
         "Town-burger-reset",
@@ -32,7 +36,6 @@ const ForgotPassword = () => {
       )
       .then(
         (result) => {
-          //   console.log(result.text)
           message.success("Reset Email sent to " + form.current.email.value)
           console.log(form.current)
         },
@@ -41,9 +44,14 @@ const ForgotPassword = () => {
           message.error("Error sending reset email")
         }
       )
+    navigate("/login")
+    setSending(false)
   }
 
-  const resetNumber = async () => {}
+  const resetNumber = async (e) => {
+    e.preventDefault()
+    message.warning("Phone reset coming soon")
+  }
 
   const handleSubmit = async (e) => {
     if (resetWay == "email") resetEmail(e)
@@ -60,6 +68,7 @@ const ForgotPassword = () => {
                   variant="h5"
                   className="my-6 text-black justify-center text-center"
                 >
+                  {" "}
                   Choose Your Reset Way
                 </Typography>
                 <div className=" w-80 mx-auto">
@@ -79,14 +88,12 @@ const ForgotPassword = () => {
                 </div>
               </Box>
             </Grid>
-            <form ref={form} onSubmit={handleSubmit}>
+            <form ref={form} onSubmit={handleSubmit} className="ml-8">
               <Grid item xs={12} className="mt-8 justify-center text-center">
                 {resetWay == "email" ? (
                   <TextField
-                    // ref={emailRef}
                     required
                     fullWidth
-                    //   onChange={(e) => setEmail(e.target.value)}
                     className="w-80 mx-auto"
                     id="email"
                     label="Email Address"
@@ -97,22 +104,29 @@ const ForgotPassword = () => {
                   <TextField
                     required
                     fullWidth
-                    //   onChange={(e) => setNumber(e.target.value)}
                     className="w-80 mx-auto"
                     id="phone-number"
                     label="Phone Number"
-                    name="Phone Number"
+                    name="phone-number"
                   />
                 )}
               </Grid>
               <Grid item xs={12} className="mt-8 justify-center text-center">
+                <Button type="submit" variant="contained" className="bg-black">
+                  {sending ? (
+                    <CircularProgress size={25} className="text-white" />
+                  ) : (
+                    "Submit"
+                  )}
+                </Button>
+              </Grid>
+              <Grid item xs={12} className="mt-12 justify-center text-center">
                 <Button
-                  // onClick={handleSubmit}
-                  type="submit"
+                  onClick={() => navigate("/login")}
                   variant="contained"
                   className="bg-black"
                 >
-                  Submit
+                  Go Back
                 </Button>
               </Grid>
             </form>

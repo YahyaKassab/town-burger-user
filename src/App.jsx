@@ -17,6 +17,9 @@ import Orders from "./Components/Orders/Orders"
 import PlaceOrder from "./Components/Orders/PlaceOrder"
 import ForgotPassword from "./Components/Login Page/ForgotPassword"
 import Reset from "./Components/Login Page/Reset"
+import AboutUs from "./Components/AboutUs"
+import OrderingPolicies from "./Components/OrderingPolicies"
+import AddComplaint from "./Components/Complaint/AddComplaint"
 
 function App() {
   // const footerRef = createRef()
@@ -187,6 +190,9 @@ function App() {
               />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/add-complaint" element={<AddComplaint />} />
+                <Route path="/policies" element={<OrderingPolicies />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot" element={<ForgotPassword />} />
                 <Route path="/reset" element={<Reset />} />

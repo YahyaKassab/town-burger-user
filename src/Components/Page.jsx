@@ -8,7 +8,7 @@ const Page = (props) => {
     <>
       {props.nav ? <Nav /> : ""}
       {props.container ? (
-        <Container maxWidth="xl" className="relative justify-between">
+        <Container maxWidth="lg" className="relative justify-between">
           {props.children}
         </Container>
       ) : (

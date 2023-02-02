@@ -1,9 +1,10 @@
 import { Button, Divider, Grid, Typography } from "@mui/material"
 import { useContext, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import StateContext from "../../StateContext"
 
 const Footer = () => {
+  const navigate = useNavigate()
   const appState = useContext(StateContext)
   return (
     <>
@@ -62,12 +63,18 @@ const Footer = () => {
           <Grid item md={4} xs={12} className="mt-8">
             <Grid container spacing={4}>
               <Grid item xs={12}>
-                <Link to={"/"} className="text-black no-underline text-center">
+                <Link
+                  to={"/policies"}
+                  className="text-black no-underline text-center"
+                >
                   <Typography variant="h6">Ordering Policies</Typography>
                 </Link>
               </Grid>
               <Grid item xs={12}>
-                <Link to={"/"} className="text-black no-underline  text-center">
+                <Link
+                  to={"/about-us"}
+                  className="text-black no-underline  text-center"
+                >
                   <Typography variant="h6">About Us</Typography>
                 </Link>
               </Grid>
@@ -76,6 +83,7 @@ const Footer = () => {
           <Grid item md={4} xs={12}>
             <Button
               variant="contained"
+              onClick={() => navigate("/add-complaint")}
               className="bg-red-800 px-10 py-5 font-bold mt-24 ml-28"
             >
               Add Complaint

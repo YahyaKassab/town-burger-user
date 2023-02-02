@@ -205,10 +205,10 @@ export default function Menu() {
     <>
       <Page container={true} nav={true} title={"Our Delicious menu"}>
         <Grid container direction={"row-reverse"} spacing={3} className="mt-16">
-          <Grid item xs={12} sm={6} lg={4}>
+          <Grid item sm={12} md={6} lg={4}>
             <Cart />
           </Grid>
-          <Grid item xs={12} sm={6} lg={8}>
+          <Grid item sm={12} md={6} lg={8}>
             <Box sx={{ width: "100%" }}>
               <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                 <Tabs

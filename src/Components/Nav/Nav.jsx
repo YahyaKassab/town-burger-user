@@ -43,7 +43,7 @@ const Nav = () => {
           </div>
           <div
             className={`flex-col md:space-y-0 ${
-              open ? "flex mt-14" : "hidden mt-0"
+              open ? "flex my-3" : "hidden mt-0"
             } md:flex md:flex-row no-underline justify-between`}
           >
             <Link to={"/menu"} className="no-underline">
@@ -99,7 +99,7 @@ const Nav = () => {
             </div>
           </a>
           <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
-            {/* <LoggedOut /> */}
+            <LoggedOut />
             <LoggedIn />
           </div>
         </div>
