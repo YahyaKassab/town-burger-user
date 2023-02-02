@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material"
-import React, { useState } from "react"
-import { useParams } from "react-router"
+import React, { useContext, useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router"
 import Page from "../Page"
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye"
 import Box from "@mui/material/Box"
@@ -10,32 +10,56 @@ import StepLabel from "@mui/material/StepLabel"
 import StepContent from "@mui/material/StepContent"
 import Button from "@mui/material/Button"
 import Paper from "@mui/material/Paper"
+import DispatchContext from "../../DispatchContext"
+import StateContext from "../../StateContext"
+import MessageContext from "../../MessageContext"
 
 const steps = [
   {
-    label: "Select campaign settings",
-    description: `For each ad campaign that you create, you can control how much
-                      you're willing to spend on clicks and conversions, which networks
-                      and geographical locations you want your ads to show on, and more.`,
+    label: "Prepairing",
+    description: `The order is placed and is being prepared right now.
+    It will be out for delivery soon`,
   },
   {
-    label: "Create an ad group",
+    label: "Out",
     description:
-      "An ad group contains one or more ads which target a shared set of keywords.",
+      "The order is ready and is out for delivery.You will be expecting a phone call soon",
   },
   {
-    label: "Create an ad",
-    description: `Try out different ad text to see what brings in the most customers,
-                      and learn how to enhance your ads using features like ad extensions.
-                      If you run into any problems with your ads, find out how to tell if
-                      they're running and how to resolve approval issues.`,
+    label: "Delivered",
+    description: `The Order Was Successfully delivered to the given address`,
   },
 ]
 const TrackOrder = () => {
-  const [activeStep, setActiveStep] = React.useState(0)
+  const { index } = useParams()
+  const navigate = useNavigate()
+  const appDispatch = useContext(DispatchContext)
+  const appState = useContext(StateContext)
+  const message = useContext(MessageContext)
+  const [activeStep, setActiveStep] = React.useState(
+    appState.orders[index] ? appState.orders[index].state : -1
+  )
+  useEffect(() => {
+    if (activeStep == -1) {
+      navigate("/")
+      console.log("error")
+      message.warning("This order doesnt exist")
+    } else {
+      console.log("active step")
+      console.log(activeStep)
+      console.log("state:")
+      console.log(appState.orders[index].state)
+    }
+  }, [activeStep])
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1)
+    appDispatch({
+      type: "orderStep",
+      value: { index, step: activeStep == 1 ? activeStep + 2 : activeStep + 1 },
+    })
+    setActiveStep((prevActiveStep) =>
+      prevActiveStep == 1 ? prevActiveStep + 2 : prevActiveStep + 1
+    )
   }
 
   const handleBack = () => {
@@ -46,14 +70,13 @@ const TrackOrder = () => {
     setActiveStep(0)
   }
 
-  const { index } = useParams()
   return (
     <Page title="Track Order" container={true} nav={true}>
       <div className="justify-center">
         <Box sx={{ maxWidth: 400 }} className="mt-10 mx-auto">
           <Stepper activeStep={activeStep} orientation="vertical">
             {steps.map((step, index) => (
-              <Step key={step.label}>
+              <Step key={index}>
                 <StepLabel
                   optional={
                     index === 2 ? (
@@ -61,25 +84,28 @@ const TrackOrder = () => {
                     ) : null
                   }
                 >
-                  {step.label}
+                  <Typography variant="h3">{step.label}</Typography>
                 </StepLabel>
                 <StepContent>
-                  <Typography>{step.description}</Typography>
+                  <Typography variant="h5">{step.description}</Typography>
                   <Box sx={{ mb: 2 }}>
                     <div>
                       <Button
                         variant="contained"
                         onClick={handleNext}
-                        sx={{ mt: 1, mr: 1 }}
+                        sx={{ mt: 1, mr: 1, py: 3, px: 4 }}
                       >
-                        {index === steps.length - 1 ? "Finish" : "Continue"}
+                        <Typography variant="h4">
+                          {" "}
+                          {index === steps.length - 1 ? "Finish" : "Continue"}
+                        </Typography>
                       </Button>
                       <Button
                         disabled={index === 0}
                         onClick={handleBack}
-                        sx={{ mt: 1, mr: 1 }}
+                        sx={{ mt: 1, mr: 1, py: 3, px: 4 }}
                       >
-                        Back
+                        <Typography variant="h4">Back</Typography>
                       </Button>
                     </div>
                   </Box>
@@ -87,7 +113,7 @@ const TrackOrder = () => {
               </Step>
             ))}
           </Stepper>
-          {activeStep === steps.length && (
+          {/* {activeStep === steps.length && (
             <Paper square elevation={0} sx={{ p: 3 }}>
               <Typography>
                 All steps completed - you&apos;re finished
@@ -96,7 +122,7 @@ const TrackOrder = () => {
                 Reset
               </Button>
             </Paper>
-          )}
+          )} */}
         </Box>
       </div>
     </Page>

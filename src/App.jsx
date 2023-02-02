@@ -143,23 +143,22 @@ function App() {
       case "descriptionChange":
         draft.cart[action.value.index].description = action.value.description
         return
-      case "orderOut":
-        draft.orders[action.value].state = "out"
-        return
-      case "orderDelivered":
-        draft.orders[action.value].state = "delivered"
-        draft.orders[action.value].dateDelivered = {
-          hour:
-            today.getHours() < 13
-              ? today.getHours() == 0
-                ? 12
-                : today.getHours()
-              : today.getHours() - 12,
-          minute:
-            today.getMinutes().toString().length == 1
-              ? "0" + today.getMinutes()
-              : today.getMinutes(),
-          day: today.getHours() < 13,
+      case "orderStep":
+        draft.orders[action.value.index].state = action.value.step
+        if (draft.orders[action.value.index].state == 3) {
+          draft.orders[action.value.index].dateDelivered = {
+            hour:
+              today.getHours() < 13
+                ? today.getHours() == 0
+                  ? 12
+                  : today.getHours()
+                : today.getHours() - 12,
+            minute:
+              today.getMinutes().toString().length == 1
+                ? "0" + today.getMinutes()
+                : today.getMinutes(),
+            day: today.getHours() < 13,
+          }
         }
         return
     }
@@ -208,6 +207,7 @@ function App() {
               />
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="*" element={<>Not Found</>} />
                 <Route path="/about-us" element={<AboutUs />} />
                 <Route path="/add-complaint" element={<AddComplaint />} />
                 <Route path="/policies" element={<OrderingPolicies />} />

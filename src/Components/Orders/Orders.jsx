@@ -116,9 +116,14 @@ const Orders = () => {
                           </Grid>
                         </Grid>
                         <Grid item lg={2} xs={8}>
-                          <Typography variant="h3" className="text-center">
-                            {order.dateDelivered ? (
-                              "Delivered"
+                          <Typography variant="h5" className="text-center">
+                            {order.state == 3 ? (
+                              `Delivered on ${
+                                order.dateDelivered.hour +
+                                ":" +
+                                order.dateDelivered.minute +
+                                (order.dateDelivered.day ? " AM" : " PM")
+                              } `
                             ) : (
                               <Button
                                 variant="contained"

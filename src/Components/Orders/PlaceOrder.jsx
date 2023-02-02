@@ -64,7 +64,7 @@ const PlaceOrder = () => {
           },
         },
         dateDelivered: null,
-        state: "placed",
+        state: 0,
         index: appState.orders.length,
       },
     })
