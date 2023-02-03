@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { Fragment, useContext, useEffect, useState } from "react"
 import List from "@mui/material/List"
 import ListItem from "@mui/material/ListItem"
 import Divider from "@mui/material/Divider"
@@ -35,7 +35,7 @@ export default function Cart() {
           {appState.cart.length > 0 ? (
             appState.cart.map((item, index) => {
               return (
-                <div key={index}>
+                <Fragment key={index}>
                   <ListItem alignItems="flex-start">
                     <Grid container spacing={1}>
                       <Grid item>
@@ -144,7 +144,7 @@ export default function Cart() {
                   </ListItem>
 
                   <Divider variant="inset" component="li" />
-                </div>
+                </Fragment>
               )
             })
           ) : (

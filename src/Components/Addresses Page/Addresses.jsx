@@ -6,7 +6,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material"
-import { forwardRef, useContext, useState } from "react"
+import { forwardRef, Fragment, useContext, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import DispatchContext from "../../DispatchContext"
 import StateContext from "../../StateContext"
@@ -75,7 +75,7 @@ const Addresses = () => {
                 </Grid>
                 {appState.addresses.map((address, index) => {
                   return (
-                    <div key={index}>
+                    <Fragment key={index}>
                       <Divider variant="inset" component="li" />
                       <ListItem alignItems="flex-start" className="ml-12 my-10">
                         <Grid container spacing={4}>
@@ -157,7 +157,7 @@ const Addresses = () => {
                         </Grid>
                       </ListItem>
                       <Divider variant="inset" component="li" />
-                    </div>
+                    </Fragment>
                   )
                 })}
               </>

@@ -6,7 +6,7 @@ import {
   ListItem,
   Typography,
 } from "@mui/material"
-import { useContext, useState } from "react"
+import { Fragment, useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import StateContext from "../../StateContext"
 import Page from "../Page"
@@ -34,7 +34,7 @@ const Orders = () => {
               appState.orders.map((order, index) => {
                 console.log(order)
                 return (
-                  <div key={index}>
+                  <Fragment key={index}>
                     <Divider variant="inset" component="li" />
                     <ListItem alignItems="flex-start" className="ml-12 my-10">
                       <Grid container spacing={4}>
@@ -144,7 +144,7 @@ const Orders = () => {
                       </Grid>
                     </ListItem>
                     <Divider variant="inset" component="li" />
-                  </div>
+                  </Fragment>
                 )
               })
             )}
