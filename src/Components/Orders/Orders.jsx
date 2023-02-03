@@ -32,6 +32,7 @@ const Orders = () => {
               </h1>
             ) : (
               appState.orders.map((order, index) => {
+                console.log(order)
                 return (
                   <div key={index}>
                     <Divider variant="inset" component="li" />
@@ -50,7 +51,10 @@ const Orders = () => {
                                 ? " AM"
                                 : " PM"}{" "}
                               <br />
-                              to Yahya kassab <br /> at address ismailia <br />{" "}
+                              to Yahya kassab <br /> in {
+                                order.address.street
+                              }{" "}
+                              street exactly {order.address.details} <br />{" "}
                               {/* index {appState.orders.length}, {order.index} */}
                             </span>
                           </Typography>

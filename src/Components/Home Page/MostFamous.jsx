@@ -10,19 +10,16 @@ export default function MostFamous() {
       image: "SliderImages\\burger2.jpg",
       title: "title",
       description: "descrition",
-      action: "/login",
     },
     {
       image: "SliderImages\\burger2.jpg",
       title: "title",
       description: "descrition",
-      action: "/login",
     },
     {
       image: "SliderImages\\burger2.jpg",
       title: "title",
       description: "descrition",
-      action: "/login",
     },
   ])
   const seeFullMenu = () => {

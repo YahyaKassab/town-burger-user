@@ -1,5 +1,6 @@
 import { Grid, Typography } from "@mui/material"
 import { useState } from "react"
+import Page from "./Page"
 
 const OrderingPolicies = () => {
   return (

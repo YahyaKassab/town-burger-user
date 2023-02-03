@@ -21,6 +21,9 @@ import AboutUs from "./Components/AboutUs"
 import OrderingPolicies from "./Components/OrderingPolicies"
 import AddComplaint from "./Components/Complaint/AddComplaint"
 import TrackOrder from "./Components/Orders/TrackOrder"
+import AddAddress from "./Components/Addresses Page/AddAddress"
+import Addresses from "./Components/Addresses Page/Addresses"
+import EditAddress from "./Components/Addresses Page/EditAddress"
 
 function App() {
   // const footerRef = createRef()
@@ -97,6 +100,7 @@ function App() {
     },
     cart: [],
     orders: [],
+    addresses: [],
   }
   const appReducer = (draft, action) => {
     switch (action.type) {
@@ -161,6 +165,15 @@ function App() {
           }
         }
         return
+      case "addAddress":
+        draft.addresses.push(action.value)
+        return
+      case "editAddress":
+        draft.addresses[action.value.index] = action.value.data
+        return
+      case "deleteAddress":
+        draft.addresses.splice(action.value, 1)
+        return
     }
   }
   const [state, dispatch] = useImmerReducer(appReducer, initial)
@@ -218,6 +231,9 @@ function App() {
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile/:number" element={<Profile />} />
                 <Route path="/:number/orders" element={<Orders />} />
+                <Route path="/:number/addresses" element={<Addresses />} />
+                <Route path="/:number/add-address" element={<AddAddress />} />
+                <Route path="/:number/:index/edit" element={<EditAddress />} />
                 <Route path="/:index/track" element={<TrackOrder />} />
                 <Route path="/:number/place-order" element={<PlaceOrder />} />
               </Routes>

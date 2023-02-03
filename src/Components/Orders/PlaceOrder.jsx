@@ -15,7 +15,9 @@ import {
   Grid,
   IconButton,
   InputLabel,
+  MenuItem,
   OutlinedInput,
+  Select,
   TextField,
 } from "@mui/material"
 import DispatchContext from "../../DispatchContext"
@@ -32,17 +34,24 @@ const PlaceOrder = () => {
   const message = useContext(MessageContext)
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
+  const [address, setAddress] = useState("")
   const navigate = useNavigate()
+  const handleChange = (event) => {
+    setAddress(event.target.value)
+  }
   const deleteFromCart = (index) => {
     appDispatch({ type: "removeFromCart", value: index })
   }
   const [edit, setEdit] = useState(true)
+  console.log("address:")
+  console.log(address)
   var today = new Date()
   const handlePlaceOrder = () => {
     appDispatch({
       type: "addOrder",
       value: {
         cart: appState.cart,
+
         datePlaced: {
           date: {
             day: today.getDate(),
@@ -66,9 +75,11 @@ const PlaceOrder = () => {
         dateDelivered: null,
         state: 0,
         index: appState.orders.length,
+        address,
       },
     })
     navigate("/01123334417/orders")
+    console.log(address)
     message.success("Order Placed Successfully")
   }
   return (
@@ -84,7 +95,7 @@ const PlaceOrder = () => {
                 <div key={index}>
                   <ListItem alignItems="flex-start">
                     <Grid container spacing={10}>
-                      <Grid item xs={6} lg={4}>
+                      <Grid item xs={12} md={6} lg={4}>
                         <ListItemText
                           primary={
                             <Typography variant="h4" className="ml-3">
@@ -177,7 +188,7 @@ const PlaceOrder = () => {
                           }
                         />
                       </Grid>
-                      <Grid item xs={5}>
+                      <Grid item xs={12} md={6} lg={4}>
                         <Typography variant="h4">Description</Typography>
                         <TextField
                           onChange={(e) =>
@@ -201,6 +212,44 @@ const PlaceOrder = () => {
                 </div>
               )
             })}
+            <Grid item xs={12} lg={12} className={`mx-auto my-12`}>
+              {" "}
+              <Typography
+                variant="h5"
+                className="my-6 text-black justify-center text-center"
+              >
+                {" "}
+                Choose Your Address
+              </Typography>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Address</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={address}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  {appState.addresses.length == 0 ? (
+                    <MenuItem>
+                      <Button
+                        variant="contained"
+                        className="bg-red-800"
+                        onClick={() => navigate("/01123334417/add-address")}
+                      >
+                        Add Address
+                      </Button>
+                    </MenuItem>
+                  ) : (
+                    appState.addresses.map((address, index) => (
+                      <MenuItem key={index} value={address}>
+                        {address.street}
+                      </MenuItem>
+                    ))
+                  )}
+                </Select>
+              </FormControl>
+            </Grid>
             <Grid item>
               <Grid container>
                 <Grid item xs={6}>
@@ -225,15 +274,15 @@ const PlaceOrder = () => {
                     <Button
                       onClick={handlePlaceOrder}
                       variant="text"
-                      className="text-red-800 px-10 py-5 my-20"
+                      disabled={address == ""}
+                      className={`${
+                        address == "" ? "text-gray-600" : "text-red-800"
+                      } px-10 py-5 my-20`}
                     >
                       <Typography variant="h4" className="">
                         Place Order
                       </Typography>
-                      <ArrowForwardIcon
-                        fontSize="large"
-                        className="text-red-800 mx-5"
-                      />
+                      <ArrowForwardIcon fontSize="large" className="mx-5" />
                     </Button>
                   </div>
                 </Grid>

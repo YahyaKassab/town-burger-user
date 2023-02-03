@@ -126,7 +126,10 @@ const Profile = () => {
               </ListItem>
             </Link>
             <Divider variant="inset" component="li" />
-            <Link to="#" className="text-black no-underline">
+            <Link
+              to="/01123334417/addresses"
+              className="text-black no-underline"
+            >
               <ListItem alignItems="flex-start" className="ml-12 my-10">
                 <Grid container spacing={4}>
                   <Grid item xs={12}>

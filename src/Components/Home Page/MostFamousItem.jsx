@@ -28,7 +28,7 @@ export default function MostFamousItem(props) {
         </CardContent>
         <CardActions className=" justify-end">
           <Button
-            onClick={() => navigate(meal.action)}
+            onClick={() => navigate("/menu")}
             variant="contained"
             className=" bg-red-800 m-3"
           >

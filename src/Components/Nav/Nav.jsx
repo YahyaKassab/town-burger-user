@@ -100,6 +100,8 @@ const Nav = () => {
           </a>
           <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
             <LoggedOut />
+          </div>
+          <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
             <LoggedIn />
           </div>
         </div>
