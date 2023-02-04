@@ -118,7 +118,13 @@ const Orders = () => {
                               </Grid>
                             </Grid>
                           </Grid>
+                          <Grid item xs={12}>
+                            <Typography variant="h5" className="mt-3">
+                              Total Price: {order.totalPrice} $
+                            </Typography>
+                          </Grid>
                         </Grid>
+
                         <Grid item lg={2} xs={8}>
                           <Typography variant="h5" className="text-center">
                             {order.state == 3 ? (

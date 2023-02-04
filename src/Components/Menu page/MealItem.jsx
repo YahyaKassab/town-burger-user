@@ -18,14 +18,20 @@ export default function MostFamousItem(props) {
   const [qty, setQty] = useState(0)
   const navigate = useNavigate()
   const meal = props.meal
+  // const index = props.index
 
-  //handle - button
-  //description doesnt show
   const handleRemove = () => {
     if (qty > 0) setQty(qty - 1)
   }
   const addToCart = () => {
-    appDispatch({ type: "addToCart", value: { meal, qty, description: "" } })
+    appDispatch({
+      type: "addToCart",
+      value: { meal, qty, description: "", price: meal.price * qty },
+    })
+    // appDispatch({
+    //   type: "ensurePrice",
+    //   value: index,
+    // })
   }
 
   return (
@@ -42,8 +48,19 @@ export default function MostFamousItem(props) {
           >
             {meal.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            className="inline-block m-5"
+          >
             {meal.description}
+          </Typography>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            className="inline-block ml-12"
+          >
+            {meal.price} $
           </Typography>
         </CardContent>
         <CardActions className="justify-center">

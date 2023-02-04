@@ -118,7 +118,7 @@ function App() {
               meal.meal.title.toLowerCase() ==
               action.value.meal.title.toLowerCase()
           ) != -1
-        )
+        ) {
           draft.cart[
             draft.cart.findIndex(
               (meal) =>
@@ -126,7 +126,7 @@ function App() {
                 action.value.meal.title.toLowerCase()
             )
           ].qty += action.value.qty
-        else draft.cart.push(action.value)
+        } else draft.cart.push(action.value)
         return
       case "removeFromCart":
         draft.cart.splice(action.value, 1)
@@ -173,6 +173,10 @@ function App() {
         return
       case "deleteAddress":
         draft.addresses.splice(action.value, 1)
+        return
+      case "ensurePrice":
+        draft.cart[action.value].price =
+          draft.cart[action.value].qty * draft.cart[action.value].meal.price
         return
     }
   }

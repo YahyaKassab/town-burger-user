@@ -25,6 +25,9 @@ export default function MostFamousItem(props) {
           <Typography variant="body1" className="">
             {meal.description}
           </Typography>
+          <Typography variant="body1" className="">
+            {meal.price} $
+          </Typography>
         </CardContent>
         <CardActions className=" justify-end">
           <Button

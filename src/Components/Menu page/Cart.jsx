@@ -24,7 +24,13 @@ export default function Cart() {
     appDispatch({ type: "removeFromCart", value: index })
   }
   const [edit, setEdit] = useState(true)
-
+  const totalPrice = (cart) => {
+    let total = 0
+    cart.map((meal) => {
+      total += meal.price
+    })
+    return total
+  }
   return (
     <div className="justify-center ml-12">
       <Typography variant="h3" className="my-3 text-red-800 ">
@@ -127,7 +133,13 @@ export default function Cart() {
                                           ? "bg-white text-black border-black"
                                           : ""
                                       }`}
-                                      onClick={() => setEdit(true)}
+                                      onClick={() => {
+                                        appDispatch({
+                                          type: "ensurePrice",
+                                          value: index,
+                                        })
+                                        setEdit(true)
+                                      }}
                                       style={{ borderRadius: 10 }}
                                       disabled={appState.cart[index].qty == 0}
                                     >
@@ -150,6 +162,11 @@ export default function Cart() {
           ) : (
             <></>
           )}
+          <Grid xs={12} item>
+            <Typography variant="h5" className="my-5">
+              Total Price: {totalPrice(appState.cart)} $
+            </Typography>
+          </Grid>
           <Grid xs={12} item>
             <div
               className={`text-end ${

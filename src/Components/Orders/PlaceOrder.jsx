@@ -42,6 +42,13 @@ const PlaceOrder = () => {
   const deleteFromCart = (index) => {
     appDispatch({ type: "removeFromCart", value: index })
   }
+  const totalPrice = (cart) => {
+    let total = 0
+    cart.map((meal) => {
+      total += meal.price
+    })
+    return total
+  }
   const [edit, setEdit] = useState(true)
   console.log("address:")
   console.log(address)
@@ -76,6 +83,7 @@ const PlaceOrder = () => {
         state: 0,
         index: appState.orders.length,
         address,
+        totalPrice: totalPrice(appState.cart),
       },
     })
     navigate("/01123334417/orders")
@@ -175,7 +183,13 @@ const PlaceOrder = () => {
                                           ? "bg-white text-black border-black"
                                           : ""
                                       }`}
-                                      onClick={() => setEdit(true)}
+                                      onClick={() => {
+                                        appDispatch({
+                                          type: "ensurePrice",
+                                          value: index,
+                                        })
+                                        setEdit(true)
+                                      }}
                                       style={{ borderRadius: 10 }}
                                       disabled={appState.cart[index].qty == 0}
                                     >
@@ -212,7 +226,7 @@ const PlaceOrder = () => {
                 </div>
               )
             })}
-            <Grid item xs={12} lg={12} className={`mx-auto my-12`}>
+            <Grid item xs={12} lg={6} className={`mx-auto my-12`}>
               {" "}
               <Typography
                 variant="h5"
@@ -249,6 +263,11 @@ const PlaceOrder = () => {
                   )}
                 </Select>
               </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="h4">
+                Total Price:{totalPrice(appState.cart)} $
+              </Typography>
             </Grid>
             <Grid item>
               <Grid container>
