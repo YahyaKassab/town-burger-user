@@ -128,6 +128,28 @@ function App() {
                 action.value.meal.title.toLowerCase()
             )
           ].qty += action.value.qty
+
+          draft.cart[
+            draft.cart.findIndex(
+              (meal) =>
+                meal.meal.title.toLowerCase() ==
+                action.value.meal.title.toLowerCase()
+            )
+          ].price =
+            draft.cart[
+              draft.cart.findIndex(
+                (meal) =>
+                  meal.meal.title.toLowerCase() ==
+                  action.value.meal.title.toLowerCase()
+              )
+            ].qty *
+            draft.cart[
+              draft.cart.findIndex(
+                (meal) =>
+                  meal.meal.title.toLowerCase() ==
+                  action.value.meal.title.toLowerCase()
+              )
+            ].meal.price
         } else draft.cart.push(action.value)
         return
       case 'removeFromCart':
