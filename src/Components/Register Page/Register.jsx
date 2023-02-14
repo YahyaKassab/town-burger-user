@@ -63,6 +63,7 @@ export default function Register() {
         message.error(res.response.data.message)
       })
     if (response.data) {
+      console.log(response.data)
       message.success(response.data.message)
       navigate('/login')
     }

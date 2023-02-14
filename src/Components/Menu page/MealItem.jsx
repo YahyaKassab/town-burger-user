@@ -6,13 +6,13 @@ import {
   Button,
   Typography,
   CardHeader,
-} from "@mui/material"
-import React, { useContext, useState } from "react"
-import { useNavigate } from "react-router"
-import IconButton from "@mui/material/IconButton"
-import AddIcon from "@mui/icons-material/Add"
-import RemoveIcon from "@mui/icons-material/Remove"
-import DispatchContext from "../../DispatchContext"
+} from '@mui/material'
+import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router'
+import IconButton from '@mui/material/IconButton'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
+import DispatchContext from '../../DispatchContext'
 export default function MostFamousItem(props) {
   const appDispatch = useContext(DispatchContext)
   const [qty, setQty] = useState(0)
@@ -25,8 +25,8 @@ export default function MostFamousItem(props) {
   }
   const addToCart = () => {
     appDispatch({
-      type: "addToCart",
-      value: { meal, qty, description: "", price: meal.price * qty },
+      type: 'addToCart',
+      value: { meal, qty, description: '', price: meal.price * qty },
     })
     // appDispatch({
     //   type: "ensurePrice",
@@ -38,7 +38,7 @@ export default function MostFamousItem(props) {
     <>
       <Card sx={{ maxWidth: 345, borderRadius: 12 }}>
         <CardMedia>
-          <img src={meal.image} width={"100%"} alt="" />
+          <img src={meal.image} width={'100%'} alt="" />
         </CardMedia>
         <CardContent>
           <Typography
@@ -78,10 +78,10 @@ export default function MostFamousItem(props) {
             </div>
             <Button
               onClick={addToCart}
-              variant={qty == 0 ? "outlined" : "contained"}
+              variant={qty == 0 ? 'outlined' : 'contained'}
               disabled={qty == 0}
               className={`m-3 border-black ${
-                qty == 0 ? "text-black" : "contained bg-red-800"
+                qty == 0 ? 'text-black' : 'contained bg-red-800'
               }`}
               style={{ borderRadius: 20 }}
             >

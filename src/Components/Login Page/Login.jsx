@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -17,6 +17,7 @@ import MessageContext from '../../MessageContext'
 import { Link } from 'react-router-dom'
 import './Login.css'
 import axios from 'axios'
+import DispatchContext from '../../DispatchContext'
 
 function Copyright(props) {
   return (
@@ -39,7 +40,8 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function Login() {
-  const message = React.useContext(MessageContext)
+  const message = useContext(MessageContext)
+  const appDispatch = useContext(DispatchContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
@@ -50,6 +52,8 @@ export default function Login() {
       .then((res) => {
         console.log(res.data)
         message.success(res.data.message)
+        appDispatch({ type: 'login', value: res.data.result })
+        navigate('/')
       })
       .catch((res) => {
         message.error(res.response.data.message)

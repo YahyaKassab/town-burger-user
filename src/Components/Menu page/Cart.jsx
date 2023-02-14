@@ -1,33 +1,33 @@
-import React, { Fragment, useContext, useEffect, useState } from "react"
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import Divider from "@mui/material/Divider"
-import ListItemText from "@mui/material/ListItemText"
-import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Avatar from "@mui/material/Avatar"
-import Typography from "@mui/material/Typography"
-import AddIcon from "@mui/icons-material/Add"
-import RemoveIcon from "@mui/icons-material/Remove"
-import EditIcon from "@mui/icons-material/Edit"
-import { Button, Grid, IconButton } from "@mui/material"
-import DispatchContext from "../../DispatchContext"
-import StateContext from "../../StateContext"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import DeleteIcon from "@mui/icons-material/Delete"
-import { useNavigate } from "react-router"
+import React, { Fragment, useContext, useEffect, useState } from 'react'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Divider from '@mui/material/Divider'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
+import EditIcon from '@mui/icons-material/Edit'
+import { Button, Grid, IconButton } from '@mui/material'
+import DispatchContext from '../../DispatchContext'
+import StateContext from '../../StateContext'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { useNavigate } from 'react-router'
 
 export default function Cart() {
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
   const navigate = useNavigate()
   const deleteFromCart = (index) => {
-    appDispatch({ type: "removeFromCart", value: index })
+    appDispatch({ type: 'removeFromCart', value: index })
   }
   const [edit, setEdit] = useState(true)
   const totalPrice = (cart) => {
     let total = 0
-    cart.map((meal) => {
-      total += meal.price
+    cart.items.map((item) => {
+      total += item.price
     })
     return total
   }
@@ -36,10 +36,11 @@ export default function Cart() {
       <Typography variant="h3" className="my-3 text-red-800 ">
         Cart
       </Typography>
-      <List sx={{ width: "100%" }}>
-        <Grid container direction={"column"}>
-          {appState.cart.length > 0 ? (
-            appState.cart.map((item, index) => {
+      <List sx={{ width: '100%' }}>
+        <Grid container direction={'column'}>
+          {appState.cart.items.length > 0 ? (
+            appState.cart.items.map((item, index) => {
+              console.log(item)
               return (
                 <Fragment key={index}>
                   <ListItem alignItems="flex-start">
@@ -48,7 +49,7 @@ export default function Cart() {
                         <ListItemAvatar>
                           <Avatar
                             alt="Remy Sharp"
-                            src={appState.cart[index].meal.image}
+                            //src={item.item.imageSource}
                             sx={{ width: 120, height: 120 }}
                           />
                         </ListItemAvatar>
@@ -57,19 +58,19 @@ export default function Cart() {
                         <ListItemText
                           primary={
                             <Typography variant="h4" className="ml-3">
-                              {appState.cart[index].meal.title}
+                              {item.title}
                             </Typography>
                           }
                           secondary={
                             <div className="flex flex-col">
                               <Typography
-                                sx={{ display: "inline" }}
+                                sx={{ display: 'inline' }}
                                 className="ml-9"
                                 component="span"
                                 variant="h3"
                                 color="text.primary"
                               >
-                                {appState.cart[index].qty}
+                                {appState.cart.items[index].qty}
                               </Typography>
                               <div className="flex flex-row justify-center space-x-5 mt-2">
                                 <Button
@@ -81,7 +82,7 @@ export default function Cart() {
                                   <DeleteIcon
                                     fontSize="medium"
                                     className="text-white mr-2"
-                                  />{" "}
+                                  />{' '}
                                   Delete
                                 </Button>
 
@@ -95,7 +96,7 @@ export default function Cart() {
                                     <EditIcon
                                       fontSize="medium"
                                       className="text-white mr-2"
-                                    />{" "}
+                                    />{' '}
                                     Edit
                                   </Button>
                                 ) : (
@@ -104,7 +105,7 @@ export default function Cart() {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: "increaseQty",
+                                            type: 'increaseQty',
                                             value: index,
                                           })
                                         }
@@ -114,7 +115,7 @@ export default function Cart() {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: "decreaseQty",
+                                            type: 'decreaseQty',
                                             value: index,
                                           })
                                         }
@@ -124,24 +125,26 @@ export default function Cart() {
                                     </div>
                                     <Button
                                       variant={
-                                        appState.cart[index].qty == 0
-                                          ? "outlined"
-                                          : "contained"
+                                        appState.cart.items[index].qty == 0
+                                          ? 'outlined'
+                                          : 'contained'
                                       }
                                       className={` bg-blue-800 h-12 self-center ${
-                                        appState.cart[index].qty == 0
-                                          ? "bg-white text-black border-black"
-                                          : ""
+                                        appState.cart.items[index].qty == 0
+                                          ? 'bg-white text-black border-black'
+                                          : ''
                                       }`}
                                       onClick={() => {
                                         appDispatch({
-                                          type: "ensurePrice",
+                                          type: 'ensurePrice',
                                           value: index,
                                         })
                                         setEdit(true)
                                       }}
                                       style={{ borderRadius: 10 }}
-                                      disabled={appState.cart[index].qty == 0}
+                                      disabled={
+                                        appState.cart.items[index].qty == 0
+                                      }
                                     >
                                       Confirm
                                     </Button>
@@ -170,11 +173,11 @@ export default function Cart() {
           <Grid xs={12} item>
             <div
               className={`text-end ${
-                appState.cart.length == 0 ? "hidden" : "block"
+                appState.cart.length == 0 ? 'hidden' : 'block'
               }`}
             >
               <Button
-                onClick={() => navigate(`/${"01123334417"}/place-order`)}
+                onClick={() => navigate(`/${'01123334417'}/place-order`)}
                 variant="text"
                 className="text-red-800 px-10 py-5 my-20"
               >

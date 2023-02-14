@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
@@ -8,6 +8,11 @@ import Page from '../Page'
 import { Grid } from '@mui/material'
 import MealItem from './MealItem'
 import Cart from './Cart'
+import axios from 'axios'
+import MessageContext from '../../MessageContext'
+import LoadingIcon from '../LoadingIcon'
+import StateContext from '../../StateContext'
+import DispatchContext from '../../DispatchContext'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -43,184 +48,16 @@ function a11yProps(index) {
 }
 
 export default function Menu() {
+  const message = useContext(MessageContext)
+  const appState = useContext(StateContext)
+  const appDispatch = useContext(DispatchContext)
+  const [isFetching, setIsFetching] = useState(false)
   const [menu, setMenu] = useState([
     {
-      image: 'SliderImages\\burger1.jpg',
+      id: 1,
+      imageSource: 'SliderImages\\burger1.jpg',
+      type: 'beef burger',
       title: 'title1',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title2',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title3',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title4',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title5',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger1.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger2.jpg',
-      title: 'title',
-      description: 'descrition',
-      price: 30,
-    },
-    {
-      image: 'SliderImages\\burger3.jpg',
-      title: 'title',
       description: 'descrition',
       price: 30,
     },
@@ -230,9 +67,33 @@ export default function Menu() {
   const handleChange = (event, newValue) => {
     setValue(newValue)
   }
+
   useEffect(() => {
     window.scrollTo(0, 0)
+    const fetch = async () => {
+      setIsFetching(true)
+      const response = await axios
+        .get('/Menu/GetFullMenu')
+        .then((res) => {
+          setMenu(res.data.result)
+          console.log(res.data)
+        })
+        .catch((res) => {
+          message.error(res.response)
+        })
+      const cartResponse = await axios
+        .get(`/Orders/GetCartByCustomerId?Id=${appState.user.id}`)
+        .then((res) => {
+          appDispatch({ type: 'setCart', value: res.data.result })
+          console.log(res.data)
+        })
+
+      setIsFetching(false)
+    }
+    fetch()
   }, [])
+
+  if (isFetching) return <LoadingIcon />
 
   return (
     <>
