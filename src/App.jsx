@@ -92,14 +92,14 @@ function App() {
   const initial = {
     loggedIn: localStorage.getItem('userToken'),
     user: {
+      id: localStorage.getItem('userId'),
       token: localStorage.getItem('userToken'),
-      firstName: localStorage.getItem('userFirstName'),
-      lastName: localStorage.getItem('userLastName'),
+      firstName: localStorage.getItem('userFullName'),
+      expire: localStorage.getItem('userExpire'),
       phoneNumber: localStorage.getItem('userNumber'),
       email: localStorage.getItem('userEmail'),
-      password: localStorage.getItem('userPassword'),
     },
-    cart: [],
+    cart: { id: 0, items: [{}] },
     orders: [],
     addresses: [],
   }
@@ -114,61 +114,66 @@ function App() {
         return
       case 'addToCart':
         if (
-          draft.cart.findIndex(
+          draft.cart.items.findIndex(
             (meal) =>
               meal.meal.title.toLowerCase() ==
               action.value.meal.title.toLowerCase()
           ) != -1
         ) {
-          draft.cart[
-            draft.cart.findIndex(
+          draft.cart.items[
+            draft.cart.items.findIndex(
               (meal) =>
                 meal.meal.title.toLowerCase() ==
                 action.value.meal.title.toLowerCase()
             )
           ].qty += action.value.qty
 
-          draft.cart[
-            draft.cart.findIndex(
+          draft.cart.items[
+            draft.cart.items.findIndex(
               (meal) =>
                 meal.meal.title.toLowerCase() ==
                 action.value.meal.title.toLowerCase()
             )
           ].price =
-            draft.cart[
-              draft.cart.findIndex(
+            draft.cart.items[
+              draft.cart.items.findIndex(
                 (meal) =>
                   meal.meal.title.toLowerCase() ==
                   action.value.meal.title.toLowerCase()
               )
             ].qty *
-            draft.cart[
-              draft.cart.findIndex(
+            draft.cart.items[
+              draft.cart.items.findIndex(
                 (meal) =>
                   meal.meal.title.toLowerCase() ==
                   action.value.meal.title.toLowerCase()
               )
             ].meal.price
-        } else draft.cart.push(action.value)
+        } else draft.cart.items.push(action.value)
+        return
+      case 'setCart':
+        draft.cart = action.value
         return
       case 'removeFromCart':
-        draft.cart.splice(action.value, 1)
+        draft.cart.items.splice(action.value, 1)
         return
       case 'editFromCart':
-        edit(draft.cart, action.value.index, action.value.newValue)
+        edit(draft.cart.items, action.value.index, action.value.newValue)
         return
       case 'increaseQty':
-        draft.cart[action.value].qty++
+        draft.cart.items[action.value].qty++
         return
       case 'decreaseQty':
-        if (draft.cart[action.value].qty > 0) draft.cart[action.value].qty--
+        if (draft.cart.items[action.value].qty > 0)
+          draft.cart.items[action.value].qty--
         return
       case 'addOrder':
         draft.orders.push(action.value)
-        draft.cart = []
+        draft.cart.items = []
         return
       case 'descriptionChange':
-        draft.cart[action.value.index].description = action.value.description
+        draft.cart.items[action.value.index].description =
+          action.value.description
         return
       case 'orderStep':
         draft.orders[action.value.index].state = action.value.step
@@ -198,8 +203,9 @@ function App() {
         draft.addresses.splice(action.value, 1)
         return
       case 'ensurePrice':
-        draft.cart[action.value].price =
-          draft.cart[action.value].qty * draft.cart[action.value].meal.price
+        draft.cart.items[action.value].price =
+          draft.cart.items[action.value].qty *
+          draft.cart.items[action.value].meal.price
         return
     }
   }
@@ -207,20 +213,21 @@ function App() {
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem('userToken', state.user.token)
-      localStorage.setItem('userId', state.user.Id)
-      localStorage.setItem('userExpire', state.user.expire)
+      localStorage.setItem('userId', state.user.id)
+      localStorage.setItem('userExpire', state.user.expireDate)
       localStorage.setItem('userFullName', state.user.fullName)
       localStorage.setItem('userNumber', state.user.phoneNumber)
       localStorage.setItem('userEmail', state.user.email)
+      console.log(state.user)
     } else {
       localStorage.removeItem('userToken')
       localStorage.removeItem('userExpire')
       localStorage.removeItem('userId')
-      localStorage.removeItem('userFirstName')
+      localStorage.removeItem('userFullName')
       localStorage.removeItem('userNumber')
       localStorage.removeItem('userEmail')
     }
-  }, [state.user])
+  }, [state.loggedIn])
 
   return (
     <>
