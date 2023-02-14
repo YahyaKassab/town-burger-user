@@ -1,10 +1,10 @@
-import { Button, Container, IconButton, Typography } from "@mui/material"
-import { useContext, useState } from "react"
-import "./Nav.css"
-import { Link, useNavigate } from "react-router-dom"
-import LoggedOut from "./LoggedOut"
-import LoggedIn from "./LoggedIn"
-import StateContext from "../../StateContext"
+import { Button, Container, IconButton, Typography } from '@mui/material'
+import { useContext, useState } from 'react'
+import './Nav.css'
+import { Link, useNavigate } from 'react-router-dom'
+import LoggedOut from './LoggedOut'
+import LoggedIn from './LoggedIn'
+import StateContext from '../../StateContext'
 
 const Nav = () => {
   const appState = useContext(StateContext)
@@ -14,10 +14,10 @@ const Nav = () => {
     setOpen(!open)
   }
   const handleScroll = async () => {
-    await navigate("/")
-    const element = document.getElementById("footer")
+    await navigate('/')
+    const element = document.getElementById('footer')
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      element.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
@@ -27,11 +27,11 @@ const Nav = () => {
       <Container maxWidth="xl" className="mb-3">
         <div className="flex justify-between align-baseline">
           <div className="flex">
-            <Link to={"/"}>
+            <Link to={'/'}>
               {/* <img src={"town-burger-logo.png"} alt="logo" className="w-16" /> */}
               <div className="w-16 logo"></div>
             </Link>
-            <Link to={"/"} className="no-underline">
+            <Link to={'/'} className="no-underline">
               <Typography
                 variant="h5"
                 gutterBottom
@@ -43,10 +43,10 @@ const Nav = () => {
           </div>
           <div
             className={`flex-col md:space-y-0 ${
-              open ? "flex my-3" : "hidden mt-0"
+              open ? 'flex my-3' : 'hidden mt-0'
             } md:flex md:flex-row no-underline justify-between`}
           >
-            <Link to={"/menu"} className="no-underline">
+            <Link to={'/menu'} className="no-underline">
               <div className=" py-4 px-5">
                 <Typography
                   variant="h5"
@@ -70,7 +70,7 @@ const Nav = () => {
             </a>
             <div className=" py-4 mx-2">
               <Button
-                onClick={() => navigate("/menu")}
+                onClick={() => navigate('/menu')}
                 variant="contained"
                 className="text-bold bg-red-800"
               >
@@ -79,7 +79,7 @@ const Nav = () => {
             </div>
             <div className=" py-4 mx-2">
               <Button
-                onClick={() => navigate("/register")}
+                onClick={() => navigate('/register')}
                 variant="contained"
                 className="text-bold bg-neutral-800"
               >
@@ -93,17 +93,12 @@ const Nav = () => {
             className={`block  md:hidden`}
           >
             <div className="relative m-10">
-              <span className={`bottom ${open ? "open" : ""}`}></span>
-              <span className={`middle ${open ? "open" : ""}`}></span>
-              <span className={`upper ${open ? "open" : ""}`}></span>
+              <span className={`bottom ${open ? 'open' : ''}`}></span>
+              <span className={`middle ${open ? 'open' : ''}`}></span>
+              <span className={`upper ${open ? 'open' : ''}`}></span>
             </div>
           </a>
-          <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
-            <LoggedOut />
-          </div>
-          <div className={`${open ? "hidden" : "block"} m-3 md:block`}>
-            <LoggedIn />
-          </div>
+          {appState.loggedIn ? <LoggedIn /> : <LoggedOut />}
         </div>
       </Container>
     </>

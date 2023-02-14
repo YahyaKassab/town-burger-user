@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react"
-import PropTypes from "prop-types"
-import Tabs from "@mui/material/Tabs"
-import Tab from "@mui/material/Tab"
-import Typography from "@mui/material/Typography"
-import Box from "@mui/material/Box"
-import Page from "../Page"
-import { Grid } from "@mui/material"
-import MealItem from "./MealItem"
-import Cart from "./Cart"
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Page from '../Page'
+import { Grid } from '@mui/material'
+import MealItem from './MealItem'
+import Cart from './Cart'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props
@@ -38,190 +38,190 @@ TabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
   }
 }
 
 export default function Menu() {
   const [menu, setMenu] = useState([
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title1",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title1',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title2",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title2',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title3",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title3',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title4",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title4',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title5",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title5',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger1.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger1.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger3.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\burger3.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
   ])
@@ -236,20 +236,23 @@ export default function Menu() {
 
   return (
     <>
-      <Page container={true} nav={true} title={"Our Delicious menu"}>
-        <Grid container direction={"row-reverse"} spacing={3} className="mt-16">
-          <Grid item sm={12} md={6} lg={4}>
+      <Page container={true} nav={true} title={'Our Delicious menu'}>
+        <Grid container direction={'row-reverse'} spacing={3} className="mt-16">
+          <Grid item xs={12} md={6} lg={4}>
             <Cart />
           </Grid>
-          <Grid item sm={12} md={6} lg={8}>
-            <Box sx={{ width: "100%" }}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Grid item xs={12} md={6} lg={8}>
+            <Box sx={{ width: '100%' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs
                   value={value}
                   onChange={handleChange}
+                  variant="scrollable"
                   textColor="secondary"
                   indicatorColor="secondary"
                   aria-label="basic tabs example"
+                  scrollButtons
+                  allowScrollButtonsMobile
                 >
                   <Tab
                     label="Full Menu"

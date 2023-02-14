@@ -18,13 +18,19 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password == confirmPassword) {
-      const result = axios.post('/user/resetpassword', {
-        email,
-        password,
-        token,
-      })
-      if ((await result).status == 200) {
-        message.success('Password changed successfully')
+      const result = await axios
+        .post('/user/resetpassword', {
+          email,
+          password,
+          token,
+        })
+        .catch((res) => {
+          message.error(res.response.data.message)
+        })
+
+      if (result.data) {
+        console.log(result.data)
+        message.success(result.data.message)
         navigate('/')
       }
     } else {
@@ -32,7 +38,7 @@ const ResetPassword = () => {
     }
   }
   return (
-    <Page nav={false} container={true} title="Reset Password">
+    <Page nav={true} container={true} title="Reset Password">
       <Grid container spacing={4} className="text-center justify-center mt-16">
         <Grid item xs={12}>
           <TextField

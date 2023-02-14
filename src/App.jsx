@@ -16,7 +16,6 @@ import Profile from './Components/Profile Page/Profile'
 import Orders from './Components/Orders/Orders'
 import PlaceOrder from './Components/Orders/PlaceOrder'
 import ForgotPassword from './Components/Login Page/ForgotPassword'
-import Reset from './Components/Login Page/Reset'
 import AboutUs from './Components/AboutUs'
 import OrderingPolicies from './Components/OrderingPolicies'
 import AddComplaint from './Components/Complaint/AddComplaint'
@@ -208,18 +207,18 @@ function App() {
   useEffect(() => {
     if (state.loggedIn) {
       localStorage.setItem('userToken', state.user.token)
-      localStorage.setItem('userFirstName', state.user.firstName)
-      localStorage.setItem('userLastName', state.user.lastName)
+      localStorage.setItem('userId', state.user.Id)
+      localStorage.setItem('userExpire', state.user.expire)
+      localStorage.setItem('userFullName', state.user.fullName)
       localStorage.setItem('userNumber', state.user.phoneNumber)
       localStorage.setItem('userEmail', state.user.email)
-      localStorage.setItem('userPassword', state.user.password)
     } else {
       localStorage.removeItem('userToken')
+      localStorage.removeItem('userExpire')
+      localStorage.removeItem('userId')
       localStorage.removeItem('userFirstName')
-      localStorage.removeItem('userLastName')
       localStorage.removeItem('userNumber')
       localStorage.removeItem('userEmail')
-      localStorage.removeItem('userPassword')
     }
   }, [state.user])
 
@@ -259,7 +258,6 @@ function App() {
                 <Route path="/policies" element={<OrderingPolicies />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot" element={<ForgotPassword />} />
-                <Route path="/reset" element={<Reset />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/menu" element={<Menu />} />
                 <Route path="/profile/:number" element={<Profile />} />
