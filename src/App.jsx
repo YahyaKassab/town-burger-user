@@ -1,78 +1,80 @@
-import { createRef, useEffect, useRef, useState } from "react"
-import { Route, Routes } from "react-router"
-import Home from "./Components/Home Page/Home"
-import Page from "./Components/Page"
-import Login from "./Components/Login Page/Login"
-import { useImmerReducer } from "use-immer"
-import StateContext from "./StateContext"
-import DispatchContext from "./DispatchContext"
-import { toast, ToastContainer } from "react-toastify"
-import CssBaseline from "@mui/material/CssBaseline"
-import "react-toastify/dist/ReactToastify.css"
-import MessageContext from "./MessageContext"
-import Menu from "./Components/Menu page/Menu"
-import Register from "./Components/Register Page/Register"
-import Profile from "./Components/Profile Page/Profile"
-import Orders from "./Components/Orders/Orders"
-import PlaceOrder from "./Components/Orders/PlaceOrder"
-import ForgotPassword from "./Components/Login Page/ForgotPassword"
-import Reset from "./Components/Login Page/Reset"
-import AboutUs from "./Components/AboutUs"
-import OrderingPolicies from "./Components/OrderingPolicies"
-import AddComplaint from "./Components/Complaint/AddComplaint"
-import TrackOrder from "./Components/Orders/TrackOrder"
-import AddAddress from "./Components/Addresses Page/AddAddress"
-import Addresses from "./Components/Addresses Page/Addresses"
-import EditAddress from "./Components/Addresses Page/EditAddress"
+import { createRef, useEffect, useRef, useState } from 'react'
+import { Route, Routes } from 'react-router'
+import Home from './Components/Home Page/Home'
+import Page from './Components/Page'
+import Login from './Components/Login Page/Login'
+import { useImmerReducer } from 'use-immer'
+import StateContext from './StateContext'
+import DispatchContext from './DispatchContext'
+import { toast, ToastContainer } from 'react-toastify'
+import CssBaseline from '@mui/material/CssBaseline'
+import 'react-toastify/dist/ReactToastify.css'
+import MessageContext from './MessageContext'
+import Menu from './Components/Menu page/Menu'
+import Register from './Components/Register Page/Register'
+import Profile from './Components/Profile Page/Profile'
+import Orders from './Components/Orders/Orders'
+import PlaceOrder from './Components/Orders/PlaceOrder'
+import ForgotPassword from './Components/Login Page/ForgotPassword'
+import Reset from './Components/Login Page/Reset'
+import AboutUs from './Components/AboutUs'
+import OrderingPolicies from './Components/OrderingPolicies'
+import AddComplaint from './Components/Complaint/AddComplaint'
+import TrackOrder from './Components/Orders/TrackOrder'
+import AddAddress from './Components/Addresses Page/AddAddress'
+import Addresses from './Components/Addresses Page/Addresses'
+import EditAddress from './Components/Addresses Page/EditAddress'
+import EmailConfirmed from './Components/Register Page/EmailConfirmed'
+import ResetPassword from './Components/Register Page/ResetPassword'
 
 function App() {
   // const footerRef = createRef()
   const error = (msg) => {
     toast.error(msg, {
-      position: "top-left",
+      position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: 'dark',
     })
   }
   const warning = (msg) => {
     toast.warn(msg, {
-      position: "top-left",
+      position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: 'dark',
     })
   }
   const success = (msg) => {
     toast.success(msg, {
-      position: "top-left",
+      position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: 'dark',
     })
   }
   const info = (msg) => {
     toast.info(msg, {
-      position: "top-left",
+      position: 'top-left',
       autoClose: 2000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: 'dark',
     })
   }
   var today = new Date()
@@ -89,14 +91,14 @@ function App() {
   }
 
   const initial = {
-    loggedIn: localStorage.getItem("userToken"),
+    loggedIn: localStorage.getItem('userToken'),
     user: {
-      token: localStorage.getItem("userToken"),
-      firstName: localStorage.getItem("userFirstName"),
-      lastName: localStorage.getItem("userLastName"),
-      phoneNumber: localStorage.getItem("userNumber"),
-      email: localStorage.getItem("userEmail"),
-      password: localStorage.getItem("userPassword"),
+      token: localStorage.getItem('userToken'),
+      firstName: localStorage.getItem('userFirstName'),
+      lastName: localStorage.getItem('userLastName'),
+      phoneNumber: localStorage.getItem('userNumber'),
+      email: localStorage.getItem('userEmail'),
+      password: localStorage.getItem('userPassword'),
     },
     cart: [],
     orders: [],
@@ -104,14 +106,14 @@ function App() {
   }
   const appReducer = (draft, action) => {
     switch (action.type) {
-      case "login":
+      case 'login':
         draft.user = action.value
         draft.loggedIn = true
         return
-      case "logout":
+      case 'logout':
         draft.loggedIn = false
         return
-      case "addToCart":
+      case 'addToCart':
         if (
           draft.cart.findIndex(
             (meal) =>
@@ -128,26 +130,26 @@ function App() {
           ].qty += action.value.qty
         } else draft.cart.push(action.value)
         return
-      case "removeFromCart":
+      case 'removeFromCart':
         draft.cart.splice(action.value, 1)
         return
-      case "editFromCart":
+      case 'editFromCart':
         edit(draft.cart, action.value.index, action.value.newValue)
         return
-      case "increaseQty":
+      case 'increaseQty':
         draft.cart[action.value].qty++
         return
-      case "decreaseQty":
+      case 'decreaseQty':
         if (draft.cart[action.value].qty > 0) draft.cart[action.value].qty--
         return
-      case "addOrder":
+      case 'addOrder':
         draft.orders.push(action.value)
         draft.cart = []
         return
-      case "descriptionChange":
+      case 'descriptionChange':
         draft.cart[action.value.index].description = action.value.description
         return
-      case "orderStep":
+      case 'orderStep':
         draft.orders[action.value.index].state = action.value.step
         if (draft.orders[action.value.index].state == 3) {
           draft.orders[action.value.index].dateDelivered = {
@@ -159,22 +161,22 @@ function App() {
                 : today.getHours() - 12,
             minute:
               today.getMinutes().toString().length == 1
-                ? "0" + today.getMinutes()
+                ? '0' + today.getMinutes()
                 : today.getMinutes(),
             day: today.getHours() < 13,
           }
         }
         return
-      case "addAddress":
+      case 'addAddress':
         draft.addresses.push(action.value)
         return
-      case "editAddress":
+      case 'editAddress':
         draft.addresses[action.value.index] = action.value.data
         return
-      case "deleteAddress":
+      case 'deleteAddress':
         draft.addresses.splice(action.value, 1)
         return
-      case "ensurePrice":
+      case 'ensurePrice':
         draft.cart[action.value].price =
           draft.cart[action.value].qty * draft.cart[action.value].meal.price
         return
@@ -183,19 +185,19 @@ function App() {
   const [state, dispatch] = useImmerReducer(appReducer, initial)
   useEffect(() => {
     if (state.loggedIn) {
-      localStorage.setItem("userToken", state.user.token)
-      localStorage.setItem("userFirstName", state.user.firstName)
-      localStorage.setItem("userLastName", state.user.lastName)
-      localStorage.setItem("userNumber", state.user.phoneNumber)
-      localStorage.setItem("userEmail", state.user.email)
-      localStorage.setItem("userPassword", state.user.password)
+      localStorage.setItem('userToken', state.user.token)
+      localStorage.setItem('userFirstName', state.user.firstName)
+      localStorage.setItem('userLastName', state.user.lastName)
+      localStorage.setItem('userNumber', state.user.phoneNumber)
+      localStorage.setItem('userEmail', state.user.email)
+      localStorage.setItem('userPassword', state.user.password)
     } else {
-      localStorage.removeItem("userToken")
-      localStorage.removeItem("userFirstName")
-      localStorage.removeItem("userLastName")
-      localStorage.removeItem("userNumber")
-      localStorage.removeItem("userEmail")
-      localStorage.removeItem("userPassword")
+      localStorage.removeItem('userToken')
+      localStorage.removeItem('userFirstName')
+      localStorage.removeItem('userLastName')
+      localStorage.removeItem('userNumber')
+      localStorage.removeItem('userEmail')
+      localStorage.removeItem('userPassword')
     }
   }, [state.user])
 
@@ -226,6 +228,11 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<>Not Found</>} />
                 <Route path="/about-us" element={<AboutUs />} />
+                <Route path="/email-confirmed" element={<EmailConfirmed />} />
+                <Route
+                  path="/reset-password/:email/:token"
+                  element={<ResetPassword />}
+                />
                 <Route path="/add-complaint" element={<AddComplaint />} />
                 <Route path="/policies" element={<OrderingPolicies />} />
                 <Route path="/login" element={<Login />} />
