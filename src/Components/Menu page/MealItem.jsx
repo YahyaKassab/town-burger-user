@@ -15,6 +15,7 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import DispatchContext from '../../DispatchContext'
 import MessageContext from '../../MessageContext'
 import StateContext from '../../StateContext'
+import axios from 'axios'
 export default function MostFamousItem(props) {
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
@@ -27,14 +28,19 @@ export default function MostFamousItem(props) {
   const handleRemove = () => {
     if (quantity > 0) setQuantity(quantity - 1)
   }
-  const addToCart = () => {
+  const addToCart = async () => {
     if (appState.loggedIn) {
       console.log('added to cart')
-      appDispatch({
+      await appDispatch({
         type: 'addToCart',
-        value: { itemId: item.id, quantity, description: '' },
+        value: {
+          itemId: item.id,
+          item: appState.menu[appState.menu.findIndex((i) => i.id == item.id)],
+          quantity,
+          description: '',
+        },
       })
-      console.log(appState.cart)
+      appDispatch({ type: 'ensurePrice' })
     } else {
       navigate('/login')
       message.info('Login first')

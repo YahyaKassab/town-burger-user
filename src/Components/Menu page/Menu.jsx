@@ -51,16 +51,7 @@ export default function Menu() {
   const message = useContext(MessageContext)
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
-  const [isFetching, setIsFetching] = useState(false)
-  const [menu, setMenu] = useState([
-    {
-      id: 1,
-      type: 'beef burger',
-      title: 'title1',
-      description: 'descrition',
-      price: 30,
-    },
-  ])
+  const [isFetching, setIsFetching] = useState(true)
   const [value, setValue] = React.useState(0)
 
   const handleChange = (event, newValue) => {
@@ -70,13 +61,11 @@ export default function Menu() {
   useEffect(() => {
     window.scrollTo(0, 0)
     const fetch = async () => {
-      setIsFetching(true)
       const response = await axios
         .get('/Menu/GetFullMenu')
         .then((res) => {
           console.log('success fetching the menu')
-          setMenu(res.data.result)
-          console.log(res.data)
+          appDispatch({ type: 'setMenu', value: res.data.result })
         })
         .catch((res) => {
           console.log('failed fetching the menu')
@@ -144,7 +133,7 @@ export default function Menu() {
               </Box>
               <TabPanel value={value} index={0}>
                 <Grid container spacing={4} className="my-20 justify-center">
-                  {menu.map((item, index) => (
+                  {appState.menu.map((item, index) => (
                     <Grid item key={index} xl={4} lg={6} xs={12}>
                       <MealItem item={item} />
                     </Grid>
@@ -153,7 +142,7 @@ export default function Menu() {
               </TabPanel>
               <TabPanel value={value} index={1}>
                 <Grid container spacing={4} className="my-20 justify-center">
-                  {menu.map((item, index) => (
+                  {appState.menu.map((item, index) => (
                     <Grid item key={index} lg={4} md={6} xs={12}>
                       <MealItem item={item} />
                     </Grid>

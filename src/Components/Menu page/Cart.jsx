@@ -23,7 +23,7 @@ export default function Cart() {
   const appDispatch = useContext(DispatchContext)
   const message = useContext(MessageContext)
   const appState = useContext(StateContext)
-  const [isFetching, setIsFetching] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
   const navigate = useNavigate()
   const deleteFromCart = (index) => {
     appDispatch({ type: 'removeFromCart', value: index })
@@ -31,7 +31,7 @@ export default function Cart() {
   const [edit, setEdit] = useState(true)
   const totalPrice = (cart) => {
     let total = 0
-    cart.items.map((item) => {
+    cart.map((item) => {
       total += item.price
     })
     return total
@@ -40,22 +40,43 @@ export default function Cart() {
   useEffect(() => {
     if (!appState.loggedIn) return
     const fetch = async () => {
-      setIsFetching(true)
       const response = await axios
         .get(`/Orders/GetCartByCustomerId?Id=${appState.user.id}`)
         .then((res) => {
-          console.log('cart fetched success')
-          appDispatch({ type: 'setCart', value: res.data.result })
+          console.log(res.data.result)
+          appDispatch({
+            type: 'setCart',
+            value: res.data.result,
+          })
+          console.log('cart fetched successfully')
+          console.log(res.data)
         })
         .catch((res) => {
           console.log('fetch cart failed')
           console.log(res)
-          message.error(res.response)
+          console.log(res.response)
         })
       setIsFetching(false)
     }
     fetch()
   }, [])
+
+  const updateCart = async () => {
+    console.log('cart')
+    console.log(appState.cart)
+    const response = await axios
+      .put(`/Orders/UpdateCart`, appState.cart)
+      .then((res) => {
+        console.log(res.data)
+        navigate('/place-order')
+      })
+      .catch((res) => {
+        console.log(res)
+        console.log('failed')
+        updateCart()
+      })
+  }
+
   if (isFetching) return <LoadingIcon />
 
   return (
@@ -65,8 +86,9 @@ export default function Cart() {
       </Typography>
       <List sx={{ width: '100%' }}>
         <Grid container direction={'column'}>
-          {appState.cart.items.length > 1 ? (
+          {appState.cart.items.length > 0 ? (
             appState.cart.items.map((item, index) => {
+              console.log('item:')
               console.log(item)
               return (
                 <Fragment key={index}>
@@ -76,7 +98,7 @@ export default function Cart() {
                         <ListItemAvatar>
                           <Avatar
                             alt="Remy Sharp"
-                            //src={item.item.imageSource}
+                            src={`SliderImages\\${item.item.id}.jpg`}
                             sx={{ width: 120, height: 120 }}
                           />
                         </ListItemAvatar>
@@ -85,7 +107,7 @@ export default function Cart() {
                         <ListItemText
                           primary={
                             <Typography variant="h4" className="ml-3">
-                              {item.title}
+                              {item.item.title}
                             </Typography>
                           }
                           secondary={
@@ -102,7 +124,10 @@ export default function Cart() {
                               <div className="flex flex-row justify-center space-x-5 mt-2">
                                 <Button
                                   variant="contained"
-                                  onClick={() => deleteFromCart(index)}
+                                  onClick={() => {
+                                    deleteFromCart(index)
+                                    appDispatch({ type: 'ensurePrice' })
+                                  }}
                                   className={`bg-red-900  h-12 self-center`}
                                   style={{ borderRadius: 10 }}
                                 >
@@ -132,7 +157,7 @@ export default function Cart() {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: 'increasequantity',
+                                            type: 'increaseQuantity',
                                             value: index,
                                           })
                                         }
@@ -142,7 +167,7 @@ export default function Cart() {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: 'decreasequantity',
+                                            type: 'decreaseQuantity',
                                             value: index,
                                           })
                                         }
@@ -195,18 +220,17 @@ export default function Cart() {
           <Grid xs={12} item>
             <Typography variant="h5" className="my-5">
               Total Price:{' '}
-              {appState.cart.items.length > 1 ? totalPrice(appState.cart) : ''}{' '}
-              $
+              {appState.cart.items.length > 0 ? appState.totalCartPrice : 0} $
             </Typography>
           </Grid>
           <Grid xs={12} item>
             <div
               className={`text-end ${
-                appState.cart.length == 0 ? 'hidden' : 'block'
+                appState.cart.items.length == 0 ? 'hidden' : 'block'
               }`}
             >
               <Button
-                onClick={() => navigate(`/${'01123334417'}/place-order`)}
+                onClick={updateCart}
                 variant="text"
                 className="text-red-800 px-10 py-5 my-20"
               >

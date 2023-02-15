@@ -1,11 +1,12 @@
-import { Button, CssBaseline, Grid, TextField } from "@mui/material"
-import { useContext, useEffect, useState } from "react"
-import { useNavigate } from "react-router"
-import { useImmer } from "use-immer"
-import DispatchContext from "../../DispatchContext"
-import MessageContext from "../../MessageContext"
-import StateContext from "../../StateContext"
-import Page from "../Page"
+import { Button, CssBaseline, Grid, TextField } from '@mui/material'
+import axios from 'axios'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { useImmer } from 'use-immer'
+import DispatchContext from '../../DispatchContext'
+import MessageContext from '../../MessageContext'
+import StateContext from '../../StateContext'
+import Page from '../Page'
 
 const AddAddress = () => {
   const navigate = useNavigate()
@@ -13,17 +14,29 @@ const AddAddress = () => {
   const appState = useContext(StateContext)
   const message = useContext(MessageContext)
   const [address, setAddress] = useImmer({
-    street: "",
-    details: "",
+    street: '',
+    details: '',
   })
-  const handleSubmit = () => {
-    if (address.details != "" && address.street != "") {
-      appDispatch({ type: "addAddress", value: address })
-      message.success("Address Added Successfully")
-      navigate("/01123334417/addresses")
-      console.log(appState.addresses)
+  const handleSubmit = async () => {
+    if (address.details != '' && address.street != '') {
+      const response = await axios
+        .post('/Customer/AddAddress', {
+          customerId: appState.user.id,
+          details: address.details,
+          street: address.street,
+        })
+        .then((res) => {
+          message.success('Address Added Successfully')
+          console.log(res.data)
+          navigate('/addresses')
+        })
+        .catch((res) => {
+          console.log('error')
+          console.log(res)
+          handleSubmit()
+        })
     } else {
-      message.error("error adding the message")
+      message.error('Fields must not be blank')
       console.log(address)
     }
   }
@@ -78,17 +91,6 @@ const AddAddress = () => {
                 placeholder="Next to Al Hayah market"
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3434.048390332364!2d32.270486815468644!3d30.604398298856538!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14f8593adca965ed%3A0x907a5726147d0648!2sTown%20Burger%20-%20Ibrahim%20Salama%20Branch%202nd%20Branch!5e0!3m2!1sen!2seg!4v1675438899517!5m2!1sen!2seg"
-                width="600"
-                height="450"
-                style={{ border: 0 }}
-                allowfullscreen=""
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </Grid> */}
             <Grid item xs={12}>
               <Button
                 variant="contained"

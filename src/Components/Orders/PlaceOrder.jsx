@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react"
-import List from "@mui/material/List"
-import ListItem from "@mui/material/ListItem"
-import Divider from "@mui/material/Divider"
-import ListItemText from "@mui/material/ListItemText"
-import ListItemAvatar from "@mui/material/ListItemAvatar"
-import Avatar from "@mui/material/Avatar"
-import Typography from "@mui/material/Typography"
-import AddIcon from "@mui/icons-material/Add"
-import RemoveIcon from "@mui/icons-material/Remove"
-import EditIcon from "@mui/icons-material/Edit"
+import React, { useContext, useEffect, useState } from 'react'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import Divider from '@mui/material/Divider'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemAvatar from '@mui/material/ListItemAvatar'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
+import AddIcon from '@mui/icons-material/Add'
+import RemoveIcon from '@mui/icons-material/Remove'
+import EditIcon from '@mui/icons-material/Edit'
 import {
   Button,
   FormControl,
@@ -19,28 +19,29 @@ import {
   OutlinedInput,
   Select,
   TextField,
-} from "@mui/material"
-import DispatchContext from "../../DispatchContext"
-import StateContext from "../../StateContext"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
-import DeleteIcon from "@mui/icons-material/Delete"
-import { useNavigate } from "react-router"
-import Page from "../Page"
-import "./Orders.css"
-import MessageContext from "../../MessageContext"
+} from '@mui/material'
+import DispatchContext from '../../DispatchContext'
+import StateContext from '../../StateContext'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { useNavigate } from 'react-router'
+import Page from '../Page'
+import './Orders.css'
+import MessageContext from '../../MessageContext'
+import axios from 'axios'
 
 const PlaceOrder = () => {
   const message = useContext(MessageContext)
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState('')
   const navigate = useNavigate()
   const handleChange = (event) => {
     setAddress(event.target.value)
   }
   const deleteFromCart = (index) => {
-    appDispatch({ type: "removeFromCart", value: index })
+    appDispatch({ type: 'removeFromCart', value: index })
   }
   const totalPrice = (cart) => {
     let total = 0
@@ -50,45 +51,29 @@ const PlaceOrder = () => {
     return total
   }
   const [edit, setEdit] = useState(true)
-  console.log("address:")
-  console.log(address)
   var today = new Date()
-  const handlePlaceOrder = () => {
-    appDispatch({
-      type: "addOrder",
-      value: {
-        cart: appState.cart,
-
-        datePlaced: {
-          date: {
-            day: today.getDate(),
-            month: today.getMonth() + 1,
-            year: today.getFullYear(),
-          },
-          time: {
-            hour:
-              today.getHours() < 13
-                ? today.getHours() == 0
-                  ? 12
-                  : today.getHours()
-                : today.getHours() - 12,
-            minute:
-              today.getMinutes().toString().length == 1
-                ? "0" + today.getMinutes()
-                : today.getMinutes(),
-            day: today.getHours() < 13,
-          },
-        },
-        dateDelivered: null,
-        state: 0,
-        index: appState.orders.length,
-        address,
-        totalPrice: totalPrice(appState.cart),
-      },
-    })
-    navigate("/01123334417/orders")
+  const handlePlaceOrder = async () => {
+    await axios.post(
+      `/Orders/PlaceOrder?customerId=${appState.user.id}&addressId=${1}`
+    )
+    navigate('/orders')
     console.log(address)
-    message.success("Order Placed Successfully")
+    message.success('Order Placed Successfully')
+  }
+
+  const updateCart = async () => {
+    const response = await axios
+      .put(`/Orders/UpdateCart`, appState.cart)
+      .then((res) => {
+        console.log('updating from place order')
+        console.log(res.data)
+        navigate('/menu')
+      })
+      .catch((res) => {
+        console.log(res)
+        console.log('failed')
+        updateCart()
+      })
   }
   return (
     <Page container={true} nav={true} title="Place Your Order">
@@ -96,9 +81,9 @@ const PlaceOrder = () => {
         <Typography variant="h3" className="my-3 text-red-800 ">
           Cart
         </Typography>
-        <List sx={{ width: "100%" }}>
-          <Grid container direction={"column"}>
-            {appState.cart.map((item, index) => {
+        <List sx={{ width: '100%' }}>
+          <Grid container direction={'column'}>
+            {appState.cart.items.map((item, index) => {
               return (
                 <div key={index}>
                   <ListItem alignItems="flex-start">
@@ -107,19 +92,19 @@ const PlaceOrder = () => {
                         <ListItemText
                           primary={
                             <Typography variant="h4" className="ml-3">
-                              {appState.cart[index].meal.title}
+                              {appState.cart.items[index].item.title}
                             </Typography>
                           }
                           secondary={
                             <div className="flex flex-col">
                               <Typography
-                                sx={{ display: "inline" }}
+                                sx={{ display: 'inline' }}
                                 className="ml-9"
                                 component="span"
                                 variant="h3"
                                 color="text.primary"
                               >
-                                {appState.cart[index].qty}
+                                {appState.cart.items[index].quantity}
                               </Typography>
                               <div className="flex flex-row justify-center space-x-5 mt-2">
                                 <Button
@@ -131,7 +116,7 @@ const PlaceOrder = () => {
                                   <DeleteIcon
                                     fontSize="medium"
                                     className="text-white mr-2"
-                                  />{" "}
+                                  />{' '}
                                   Delete
                                 </Button>
 
@@ -145,7 +130,7 @@ const PlaceOrder = () => {
                                     <EditIcon
                                       fontSize="medium"
                                       className="text-white mr-2"
-                                    />{" "}
+                                    />{' '}
                                     Edit
                                   </Button>
                                 ) : (
@@ -154,7 +139,7 @@ const PlaceOrder = () => {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: "increaseQty",
+                                            type: 'increaseQuantity',
                                             value: index,
                                           })
                                         }
@@ -164,7 +149,7 @@ const PlaceOrder = () => {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: "decreaseQty",
+                                            type: 'decreaseQuantity',
                                             value: index,
                                           })
                                         }
@@ -174,24 +159,27 @@ const PlaceOrder = () => {
                                     </div>
                                     <Button
                                       variant={
-                                        appState.cart[index].qty == 0
-                                          ? "outlined"
-                                          : "contained"
+                                        appState.cart.items[index].quantity == 0
+                                          ? 'outlined'
+                                          : 'contained'
                                       }
                                       className={` bg-blue-800 h-12 self-center ${
-                                        appState.cart[index].qty == 0
-                                          ? "bg-white text-black border-black"
-                                          : ""
+                                        appState.cart.items[index].quantity == 0
+                                          ? 'bg-white text-black border-black'
+                                          : ''
                                       }`}
                                       onClick={() => {
                                         appDispatch({
-                                          type: "ensurePrice",
+                                          type: 'ensurePrice',
                                           value: index,
                                         })
                                         setEdit(true)
+                                        console.log(appState.cart)
                                       }}
                                       style={{ borderRadius: 10 }}
-                                      disabled={appState.cart[index].qty == 0}
+                                      disabled={
+                                        appState.cart.items[index].quantity == 0
+                                      }
                                     >
                                       Confirm
                                     </Button>
@@ -207,7 +195,7 @@ const PlaceOrder = () => {
                         <TextField
                           onChange={(e) =>
                             appDispatch({
-                              type: "descriptionChange",
+                              type: 'descriptionChange',
                               value: { index, description: e.target.value },
                             })
                           }
@@ -227,12 +215,12 @@ const PlaceOrder = () => {
               )
             })}
             <Grid item xs={12} lg={6} className={`mx-auto my-12`}>
-              {" "}
+              {' '}
               <Typography
                 variant="h5"
                 className="my-6 text-black justify-center text-center"
               >
-                {" "}
+                {' '}
                 Choose Your Address
               </Typography>
               <FormControl fullWidth>
@@ -249,7 +237,7 @@ const PlaceOrder = () => {
                       <Button
                         variant="contained"
                         className="bg-red-800"
-                        onClick={() => navigate("/01123334417/add-address")}
+                        onClick={() => navigate('/add-address')}
                       >
                         Add Address
                       </Button>
@@ -266,7 +254,7 @@ const PlaceOrder = () => {
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h4">
-                Total Price:{totalPrice(appState.cart)} $
+                Total Price:{appState.totalCartPrice} $
               </Typography>
             </Grid>
             <Grid item>
@@ -274,7 +262,9 @@ const PlaceOrder = () => {
                 <Grid item xs={6}>
                   <div className={`text-start`}>
                     <Button
-                      onClick={() => navigate(`/menu`)}
+                      onClick={() => {
+                        updateCart()
+                      }}
                       variant="text"
                       className="text-red-800 px-10 py-5 my-20"
                     >
@@ -293,9 +283,9 @@ const PlaceOrder = () => {
                     <Button
                       onClick={handlePlaceOrder}
                       variant="text"
-                      disabled={address == ""}
+                      disabled={address == ''}
                       className={`${
-                        address == "" ? "text-gray-600" : "text-red-800"
+                        address == '' ? 'text-gray-600' : 'text-red-800'
                       } px-10 py-5 my-20`}
                     >
                       <Typography variant="h4" className="">

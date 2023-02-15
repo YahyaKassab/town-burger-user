@@ -99,7 +99,9 @@ function App() {
       phoneNumber: localStorage.getItem('userNumber'),
       email: localStorage.getItem('userEmail'),
     },
-    cart: { id: 0, items: [{}] },
+    cartId: 0,
+    cart: { id: 0, items: [] },
+    menu: [],
     totalCartPrice: 0,
     orders: [],
     addresses: [],
@@ -114,55 +116,40 @@ function App() {
         draft.loggedIn = false
         return
       case 'addToCart':
-        //if is already in cart
-        if (
-          draft.cart.items.findIndex(
-            (cartItem) => cartItem.item.id == action.value.itemId
-          ) != -1
-        ) {
-          draft.cart.items[
-            draft.cart.items.findIndex(
-              (cartItem) => cartItem.item.id == action.value.itemId
-            )
-          ].quantity += action.value.quantity
-
-          draft.totalCartPrice +=
-            draft.cart.items[
-              draft.cart.items.findIndex(
-                (cartItem) => cartItem.item.id == action.value.itemId
-              )
-            ].quantity *
-            draft.cart.items[
-              draft.cart.items.findIndex(
-                (cartItem) => cartItem.item.id == action.value.itemId
-              )
-            ].item.price
-
-          // draft.cart.items[
-          //   draft.cart.items.findIndex(
-          //     (cartItem) => cartItem.item.id == action.value.itemId
-          //   )
-          // ].price =
-          //   draft.cart.items[
-          //     draft.cart.items.findIndex(
-          //       (cartItem) => cartItem.item.id == action.value.itemId
-          //     )
-          //   ].quantity *
-          //   draft.cart.items[
-          //     draft.cart.items.findIndex(
-          //       (cartItem) => cartItem.item.id == action.value.itemId
-          //     )
-          //   ].item.price
-        } else draft.cart.items.push(action.value)
+        if (draft.cart.items.length < 1) {
+          draft.cart.items.push(action.value)
+          console.log('length 0')
+          return
+        } else {
+          console.log('length >')
+          const cartItemIndex = draft.cart.items.findIndex(
+            (cartItem) => cartItem.item.id == action.value.item.id
+          )
+          if (cartItemIndex != -1) {
+            draft.cart.items[cartItemIndex].quantity += action.value.quantity
+          } else {
+            draft.cart.items.push(action.value)
+          }
+          return
+        }
+      case 'addAddress':
+        draft.addresses.push(action.value)
+        return
+      case 'setAddresses':
+        draft.addresses = action.value
         return
       case 'setCart':
         draft.cart = action.value
+        draft.cartId = action.value.id
+        return
+      case 'setMenu':
+        draft.menu = action.value
         return
       case 'removeFromCart':
         draft.cart.items.splice(action.value, 1)
         return
       case 'editFromCart':
-        edit(draft.cart.items, action.value.index, action.value.newValue)
+        edit(draft.cart, action.value.index, action.value.newValue)
         return
       case 'increaseQuantity':
         draft.cart.items[action.value].quantity++
@@ -171,45 +158,15 @@ function App() {
         if (draft.cart.items[action.value].quantity > 0)
           draft.cart.items[action.value].quantity--
         return
-      case 'addOrder':
-        draft.orders.push(action.value)
-        draft.cart.items = []
-        return
       case 'descriptionChange':
         draft.cart.items[action.value.index].description =
           action.value.description
         return
-      case 'orderStep':
-        draft.orders[action.value.index].state = action.value.step
-        if (draft.orders[action.value.index].state == 3) {
-          draft.orders[action.value.index].dateDelivered = {
-            hour:
-              today.getHours() < 13
-                ? today.getHours() == 0
-                  ? 12
-                  : today.getHours()
-                : today.getHours() - 12,
-            minute:
-              today.getMinutes().toString().length == 1
-                ? '0' + today.getMinutes()
-                : today.getMinutes(),
-            day: today.getHours() < 13,
-          }
-        }
-        return
-      case 'addAddress':
-        draft.addresses.push(action.value)
-        return
-      case 'editAddress':
-        draft.addresses[action.value.index] = action.value.data
-        return
-      case 'deleteAddress':
-        draft.addresses.splice(action.value, 1)
-        return
       case 'ensurePrice':
-        draft.cart.items[action.value].price =
-          draft.cart.items[action.value].quantity *
-          draft.cart.items[action.value].meal.price
+        draft.totalCartPrice = 0
+        draft.cart.items.map((cartItem) => {
+          draft.totalCartPrice += cartItem.quantity * cartItem.item.price
+        })
         return
     }
   }
@@ -294,13 +251,13 @@ function App() {
                 <Route path="/forgot" element={<ForgotPassword />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/menu" element={<Menu />} />
-                <Route path="/profile/:number" element={<Profile />} />
-                <Route path="/:number/orders" element={<Orders />} />
-                <Route path="/:number/addresses" element={<Addresses />} />
-                <Route path="/:number/add-address" element={<AddAddress />} />
-                <Route path="/:number/:index/edit" element={<EditAddress />} />
-                <Route path="/:index/track" element={<TrackOrder />} />
-                <Route path="/:number/place-order" element={<PlaceOrder />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/addresses" element={<Addresses />} />
+                <Route path="/add-address" element={<AddAddress />} />
+                <Route path="/:addressid/edit" element={<EditAddress />} />
+                <Route path="/:orderid/track" element={<TrackOrder />} />
+                <Route path="/place-order" element={<PlaceOrder />} />
               </Routes>
             </Page>
           </MessageContext.Provider>

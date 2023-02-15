@@ -5,59 +5,84 @@ import {
   List,
   ListItem,
   Typography,
-} from "@mui/material"
-import { forwardRef, Fragment, useContext, useState } from "react"
-import { useNavigate, useParams } from "react-router"
-import DispatchContext from "../../DispatchContext"
-import StateContext from "../../StateContext"
-import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
-import Page from "../Page"
-import Dialog from "@mui/material/Dialog"
-import DialogActions from "@mui/material/DialogActions"
-import DialogContent from "@mui/material/DialogContent"
-import DialogContentText from "@mui/material/DialogContentText"
-import DialogTitle from "@mui/material/DialogTitle"
-import Slide from "@mui/material/Slide"
-import MessageContext from "../../MessageContext"
+} from '@mui/material'
+import { forwardRef, Fragment, useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
+import DispatchContext from '../../DispatchContext'
+import StateContext from '../../StateContext'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import Page from '../Page'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import Slide from '@mui/material/Slide'
+import MessageContext from '../../MessageContext'
+import axios from 'axios'
+import LoadingIcon from '../LoadingIcon'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
 
 const Addresses = () => {
-  const [open, setOpen] = useState(false)
+  const [isFetching, setIsFetching] = useState(true)
 
-  const handleClickOpen = () => {
-    setOpen(true)
-  }
+  const [open, setOpen] = useState(0)
 
-  const handleClose = () => {
-    setOpen(false)
-  }
-  const { number } = useParams()
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await axios
+        .get(`/Customer/GetAddressesByCustomerId?id=${appState.user.id}`)
+        .then((res) => {
+          console.log('Addresses fetched successfully')
+          console.log(res.data)
+          appDispatch({ type: 'setAddresses', value: res.data.result })
+        })
+        .catch((res) => {
+          console.log('error')
+          console.log(res)
+          message.error(res.response.data.message)
+        })
+        .finally(() => setIsFetching(false))
+    }
+    fetch()
+  }, [])
+
   const [edit, setEdit] = useState(false)
   const navigate = useNavigate()
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   const message = useContext(MessageContext)
-  const handleDelete = (index) => {
-    appDispatch({ type: "deleteAddress", value: index })
-    handleClose()
-    message.success("Address Deleted Successfully")
+  const handleDelete = async (id) => {
+    const response = await axios
+      .delete(`/Customer/DeleteAddress?addressId=${id}`)
+      .then((res) => {
+        console.log('address Deleted successfully')
+        message.success('Address Deleted Successfully')
+        setOpen(0)
+        setRender(!render)
+      })
+      .catch((res) => {
+        console.log('Delete failed')
+        console.log(res)
+      })
   }
+  if (isFetching) return <LoadingIcon />
   return (
     <Page container={true} nav={true} title="Addresses">
-      <Grid container direction={"column-reverse"} spacing={4}>
+      <Grid container direction={'column-reverse'} spacing={4}>
         <Grid item xs={12}>
-          <List sx={{ width: "100%", marginTop: 10, marginLeft: 3 }}>
+          <List sx={{ width: '100%', marginTop: 10, marginLeft: 3 }}>
             {appState.addresses.length == 0 ? (
               <h1 className="text-center text-red-800">
                 No Addresses Yet
                 <Button
                   variant="contained"
                   className="bg-red-800 ml-5"
-                  onClick={() => navigate("/01123334417/add-address")}
+                  onClick={() => navigate('/add-address')}
                 >
                   Add Address
                 </Button>
@@ -68,12 +93,16 @@ const Addresses = () => {
                   <Button
                     variant="contained"
                     className="bg-red-800 ml-5"
-                    onClick={() => navigate("/01123334417/add-address")}
+                    onClick={() => navigate('/add-address')}
                   >
                     Add Address
                   </Button>
                 </Grid>
                 {appState.addresses.map((address, index) => {
+                  console.log('addresses')
+                  console.log(address.id)
+                  console.log(appState.addresses)
+
                   return (
                     <Fragment key={index}>
                       <Divider variant="inset" component="li" />
@@ -94,13 +123,13 @@ const Addresses = () => {
                                   variant="contained"
                                   className="py-3 px-7 bg-blue-800"
                                   onClick={() =>
-                                    navigate(`/${number}/${index}/edit`)
+                                    navigate(`/${address.id}/edit`)
                                   }
                                 >
                                   <EditIcon
                                     fontSize="large"
                                     className="text-white mr-2"
-                                  />{" "}
+                                  />{' '}
                                   Edit
                                 </Button>
                               </Grid>
@@ -108,7 +137,7 @@ const Addresses = () => {
                                 <div>
                                   <Button
                                     variant="contained"
-                                    onClick={handleClickOpen}
+                                    onClick={() => setOpen(address.id)}
                                     className="bg-red-800 text-white py-3 px-7"
                                   >
                                     <DeleteIcon
@@ -118,10 +147,10 @@ const Addresses = () => {
                                     Delete
                                   </Button>
                                   <Dialog
-                                    open={open}
+                                    open={open == address.id}
                                     TransitionComponent={Transition}
                                     keepMounted
-                                    onClose={handleClose}
+                                    onClose={() => setOpen(0)}
                                     aria-describedby="alert-dialog-slide-description"
                                   >
                                     <DialogTitle>
@@ -130,13 +159,19 @@ const Addresses = () => {
                                     </DialogTitle>
                                     <DialogContent></DialogContent>
                                     <DialogActions>
-                                      <Button onClick={handleClose}>No</Button>
+                                      <Button onClick={() => setOpen(0)}>
+                                        No
+                                      </Button>
                                       <Button
                                         variant="contained"
-                                        onClick={() => handleDelete(index)}
+                                        onClick={() => {
+                                          console.log('address delete')
+                                          console.log(address)
+                                          handleDelete(address.id)
+                                        }}
                                         className="bg-red-800 text-white py-3 px-7"
                                       >
-                                        {" "}
+                                        {' '}
                                         <DeleteIcon
                                           fontSize="medium"
                                           className="text-white mr-2"
@@ -146,11 +181,6 @@ const Addresses = () => {
                                     </DialogActions>
                                   </Dialog>
                                 </div>
-                                {/* <DeleteIcon
-                                fontSize="medium"
-                                className="text-white mr-2"
-                              />
-                              Delete */}
                               </Grid>
                             </Grid>
                           </Grid>
