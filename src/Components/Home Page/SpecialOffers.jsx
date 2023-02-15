@@ -1,15 +1,15 @@
-import { Typography } from "@mui/material"
-import React, { useState } from "react"
-import { Link } from "react-router-dom"
+import { Typography } from '@mui/material'
+import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const SpecialOffers = () => {
   return (
     <>
-      <Link to={"/menu"}>
+      <Link to={'/menu'}>
         <div
           style={{
-            width: "100%",
-            position: "relative",
+            width: '100%',
+            position: 'relative',
           }}
         >
           <Typography
@@ -19,8 +19,8 @@ const SpecialOffers = () => {
             Special offer
           </Typography>
           <img
-            src="SliderImages\burger1.jpg"
-            width={"100%"}
+            src="SliderImages\1.jpg"
+            width={'100%'}
             style={{ borderRadius: 10 }}
             alt=""
           />

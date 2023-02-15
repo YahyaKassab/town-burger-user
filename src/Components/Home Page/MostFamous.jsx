@@ -1,32 +1,32 @@
-import { Button, Grid, Typography } from "@mui/material"
-import React, { useState } from "react"
-import MostFamousItem from "./MostFamousItem"
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
-import { useNavigate } from "react-router"
+import { Button, Grid, Typography } from '@mui/material'
+import React, { useState } from 'react'
+import MostFamousItem from './MostFamousItem'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { useNavigate } from 'react-router'
 export default function MostFamous() {
   const navigate = useNavigate()
   const [mostFamous, setMostFamous] = useState([
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
     {
-      image: "SliderImages\\burger2.jpg",
-      title: "title",
-      description: "descrition",
+      image: 'SliderImages\\2.jpg',
+      title: 'title',
+      description: 'descrition',
       price: 30,
     },
   ])
   const seeFullMenu = () => {
-    navigate("/menu")
+    navigate('/menu')
     window.scrollTo(0, 0)
   }
   return (

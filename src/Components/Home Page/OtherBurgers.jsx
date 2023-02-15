@@ -1,13 +1,13 @@
-import React, { useState } from "react"
-import { Grid, Typography } from "@mui/material"
-import { Link } from "react-router-dom"
+import React, { useState } from 'react'
+import { Grid, Typography } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 const OtherBurgers = () => {
   return (
     <>
       <Grid container spacing={2} flexWrap className="-mt-4">
         <Grid item lg={12} md={6} xs={12}>
-          <Link to={"/login"}>
+          <Link to={'/login'}>
             <div className="relative">
               <Typography
                 variant="overline"
@@ -16,17 +16,17 @@ const OtherBurgers = () => {
                 Classic Chicken Burger
               </Typography>
               <img
-                src="SliderImages\burger2.jpg"
+                src="SliderImages\2.jpg"
                 className=""
                 style={{ borderRadius: 10 }}
-                width={"100%"}
+                width={'100%'}
                 alt=""
               />
             </div>
           </Link>
         </Grid>
         <Grid item lg={12} md={6} xs={12}>
-          <Link to={"/login"}>
+          <Link to={'/login'}>
             <div className="relative">
               <Typography
                 variant="overline"
@@ -35,9 +35,9 @@ const OtherBurgers = () => {
                 Delicious Black Burger
               </Typography>
               <img
-                src="SliderImages\burger3.jpg"
+                src="SliderImages\3.jpg"
                 className="hidden sm:block"
-                width={"100%"}
+                width={'100%'}
                 style={{ borderRadius: 10 }}
                 alt=""
               />

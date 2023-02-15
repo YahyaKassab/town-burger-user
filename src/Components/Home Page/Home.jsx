@@ -1,42 +1,42 @@
-import React, { useState } from "react"
-import Page from "../Page"
-import "./home.css"
-import { Grid, Typography } from "@mui/material"
-import ImageSlider from "./ImageSlider"
-import OtherBurgers from "./OtherBurgers"
-import Divider from "@mui/material/Divider"
-import MostFamous from "./MostFamous"
-import Footer from "./Footer"
-import SpecialOffers from "./SpecialOffers"
+import React, { useState } from 'react'
+import Page from '../Page'
+import './home.css'
+import { Grid, Typography } from '@mui/material'
+import ImageSlider from './ImageSlider'
+import OtherBurgers from './OtherBurgers'
+import Divider from '@mui/material/Divider'
+import MostFamous from './MostFamous'
+import Footer from './Footer'
+import SpecialOffers from './SpecialOffers'
 export default function Home() {
   const [slides, setSlides] = useState([
     {
-      url: "SliderImages\\burger1.jpg",
-      title: "title1",
-      body: "body1",
-      action: "/login",
-      position: "top-right",
+      url: 'SliderImages\\1.jpg',
+      title: 'title1',
+      body: 'body1',
+      action: '/login',
+      position: 'top-right',
     },
     {
-      url: "SliderImages\\burger2.jpg",
-      title: "title2",
-      body: "body2",
-      action: "/login",
-      position: "top-left",
+      url: 'SliderImages\\2.jpg',
+      title: 'title2',
+      body: 'body2',
+      action: '/login',
+      position: 'top-left',
     },
     {
-      url: "SliderImages\\burger3.jpg",
-      title: "title3",
-      body: "body3",
-      action: "/login",
-      position: "bottom-left",
+      url: 'SliderImages\\3.jpg',
+      title: 'title3',
+      body: 'body3',
+      action: '/login',
+      position: 'bottom-left',
     },
     {
-      url: "SliderImages\\burger3.jpg",
-      title: "title4",
-      body: "body4",
-      action: "/login",
-      position: "bottom-right",
+      url: 'SliderImages\\3.jpg',
+      title: 'title4',
+      body: 'body4',
+      action: '/login',
+      position: 'bottom-right',
     },
   ])
   return (

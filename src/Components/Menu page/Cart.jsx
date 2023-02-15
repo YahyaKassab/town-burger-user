@@ -15,10 +15,15 @@ import StateContext from '../../StateContext'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { useNavigate } from 'react-router'
+import LoadingIcon from '../LoadingIcon'
+import axios from 'axios'
+import MessageContext from '../../MessageContext'
 
 export default function Cart() {
   const appDispatch = useContext(DispatchContext)
+  const message = useContext(MessageContext)
   const appState = useContext(StateContext)
+  const [isFetching, setIsFetching] = useState(false)
   const navigate = useNavigate()
   const deleteFromCart = (index) => {
     appDispatch({ type: 'removeFromCart', value: index })
@@ -31,6 +36,28 @@ export default function Cart() {
     })
     return total
   }
+
+  useEffect(() => {
+    if (!appState.loggedIn) return
+    const fetch = async () => {
+      setIsFetching(true)
+      const response = await axios
+        .get(`/Orders/GetCartByCustomerId?Id=${appState.user.id}`)
+        .then((res) => {
+          console.log('cart fetched success')
+          appDispatch({ type: 'setCart', value: res.data.result })
+        })
+        .catch((res) => {
+          console.log('fetch cart failed')
+          console.log(res)
+          message.error(res.response)
+        })
+      setIsFetching(false)
+    }
+    fetch()
+  }, [])
+  if (isFetching) return <LoadingIcon />
+
   return (
     <div className="justify-center ml-12">
       <Typography variant="h3" className="my-3 text-red-800 ">
@@ -38,7 +65,7 @@ export default function Cart() {
       </Typography>
       <List sx={{ width: '100%' }}>
         <Grid container direction={'column'}>
-          {appState.cart.items.length > 0 ? (
+          {appState.cart.items.length > 1 ? (
             appState.cart.items.map((item, index) => {
               console.log(item)
               return (
@@ -70,7 +97,7 @@ export default function Cart() {
                                 variant="h3"
                                 color="text.primary"
                               >
-                                {appState.cart.items[index].qty}
+                                {appState.cart.items[index].quantity}
                               </Typography>
                               <div className="flex flex-row justify-center space-x-5 mt-2">
                                 <Button
@@ -105,7 +132,7 @@ export default function Cart() {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: 'increaseQty',
+                                            type: 'increasequantity',
                                             value: index,
                                           })
                                         }
@@ -115,7 +142,7 @@ export default function Cart() {
                                       <IconButton
                                         onClick={() =>
                                           appDispatch({
-                                            type: 'decreaseQty',
+                                            type: 'decreasequantity',
                                             value: index,
                                           })
                                         }
@@ -125,12 +152,12 @@ export default function Cart() {
                                     </div>
                                     <Button
                                       variant={
-                                        appState.cart.items[index].qty == 0
+                                        appState.cart.items[index].quantity == 0
                                           ? 'outlined'
                                           : 'contained'
                                       }
                                       className={` bg-blue-800 h-12 self-center ${
-                                        appState.cart.items[index].qty == 0
+                                        appState.cart.items[index].quantity == 0
                                           ? 'bg-white text-black border-black'
                                           : ''
                                       }`}
@@ -143,7 +170,7 @@ export default function Cart() {
                                       }}
                                       style={{ borderRadius: 10 }}
                                       disabled={
-                                        appState.cart.items[index].qty == 0
+                                        appState.cart.items[index].quantity == 0
                                       }
                                     >
                                       Confirm
@@ -167,7 +194,9 @@ export default function Cart() {
           )}
           <Grid xs={12} item>
             <Typography variant="h5" className="my-5">
-              Total Price: {totalPrice(appState.cart)} $
+              Total Price:{' '}
+              {appState.cart.items.length > 1 ? totalPrice(appState.cart) : ''}{' '}
+              $
             </Typography>
           </Grid>
           <Grid xs={12} item>

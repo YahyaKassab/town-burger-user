@@ -55,7 +55,6 @@ export default function Menu() {
   const [menu, setMenu] = useState([
     {
       id: 1,
-      imageSource: 'SliderImages\\burger1.jpg',
       type: 'beef burger',
       title: 'title1',
       description: 'descrition',
@@ -75,19 +74,15 @@ export default function Menu() {
       const response = await axios
         .get('/Menu/GetFullMenu')
         .then((res) => {
+          console.log('success fetching the menu')
           setMenu(res.data.result)
           console.log(res.data)
         })
         .catch((res) => {
+          console.log('failed fetching the menu')
+          console.log(res)
           message.error(res.response)
         })
-      const cartResponse = await axios
-        .get(`/Orders/GetCartByCustomerId?Id=${appState.user.id}`)
-        .then((res) => {
-          appDispatch({ type: 'setCart', value: res.data.result })
-          console.log(res.data)
-        })
-
       setIsFetching(false)
     }
     fetch()
@@ -100,7 +95,7 @@ export default function Menu() {
       <Page container={true} nav={true} title={'Our Delicious menu'}>
         <Grid container direction={'row-reverse'} spacing={3} className="mt-16">
           <Grid item xs={12} md={6} lg={4}>
-            <Cart />
+            {appState.loggedIn ? <Cart /> : ''}
           </Grid>
           <Grid item xs={12} md={6} lg={8}>
             <Box sx={{ width: '100%' }}>
@@ -151,7 +146,7 @@ export default function Menu() {
                 <Grid container spacing={4} className="my-20 justify-center">
                   {menu.map((item, index) => (
                     <Grid item key={index} xl={4} lg={6} xs={12}>
-                      <MealItem meal={item} />
+                      <MealItem item={item} />
                     </Grid>
                   ))}
                 </Grid>
@@ -160,7 +155,7 @@ export default function Menu() {
                 <Grid container spacing={4} className="my-20 justify-center">
                   {menu.map((item, index) => (
                     <Grid item key={index} lg={4} md={6} xs={12}>
-                      <MealItem meal={item} />
+                      <MealItem item={item} />
                     </Grid>
                   ))}
                 </Grid>

@@ -8,11 +8,11 @@ import './index.css'
 axios.defaults.baseURL = 'https://localhost:7021'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-  <BrowserRouter>
-    <StyledEngineProvider injectFirst>
-      <App />
-    </StyledEngineProvider>
-  </BrowserRouter>
-  // </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <StyledEngineProvider injectFirst>
+        <App />
+      </StyledEngineProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 )
