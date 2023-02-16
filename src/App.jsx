@@ -103,6 +103,8 @@ function App() {
     cart: { id: 0, items: [] },
     menu: [],
     totalCartPrice: 0,
+    fetchAddressCount: 0,
+    fetchCartCount: 0,
     orders: [],
     addresses: [],
   }
@@ -137,6 +139,12 @@ function App() {
         return
       case 'setAddresses':
         draft.addresses = action.value
+        return
+      case 'fetchAddresses':
+        draft.fetchAddressCount++
+        return
+      case 'fetchCart':
+        draft.fetchCartCount++
         return
       case 'setCart':
         draft.cart = action.value
@@ -189,11 +197,11 @@ function App() {
     }
   }, [state.loggedIn])
 
+  //Check the token
   useEffect(() => {
     if (!state.loggedIn) {
       return
     }
-    //Check the token
     const checkToken = async () => {
       const response = await axios
         .get(`/User/CheckToken?token=${state.user.token}`)
@@ -212,6 +220,53 @@ function App() {
     }
     checkToken()
   }, [])
+  //fetch address
+  useEffect(() => {
+    if (state.fetchAddressCount > 0) {
+      const fetch = async () => {
+        const response = await axios
+          .get(`/Customer/GetAddressesByCustomerId?id=${state.user.id}`)
+          .then((res) => {
+            console.log('Addresses fetched successfully')
+            console.log(res.data)
+            dispatch({ type: 'setAddresses', value: res.data.result })
+          })
+          .catch((res) => {
+            console.log('error')
+            console.log(res)
+            message.error(res.response.data.message)
+          })
+      }
+      fetch()
+    }
+  }, [state.fetchAddressCount])
+
+  //fetch cart
+  useEffect(() => {
+    if (state.fetchCartCount > 0) {
+      if (!state.loggedIn) return
+      const fetch = async () => {
+        const response = await axios
+          .get(`/Orders/GetCartByCustomerId?Id=${state.user.id}`)
+          .then((res) => {
+            console.log(res.data.result)
+            dispatch({
+              type: 'setCart',
+              value: res.data.result,
+            })
+            dispatch({ type: 'ensurePrice' })
+            console.log('cart fetched successfully')
+            console.log(res.data)
+          })
+          .catch((res) => {
+            console.log('fetch cart failed')
+            console.log(res)
+            console.log(res.response)
+          })
+      }
+      fetch()
+    }
+  }, [state.fetchCartCount])
 
   return (
     <>

@@ -13,7 +13,7 @@ export default function LoggedIn() {
   return (
     <>
       <div className="flex justify-between relative space-x-4">
-        <Link to={'/profile/nigga'}>
+        <Link to={'/profile'}>
           <Tooltip title="Profile">
             <PersonSharpIcon className="mt-2" fontSize="large" />
           </Tooltip>

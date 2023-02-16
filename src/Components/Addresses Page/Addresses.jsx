@@ -32,23 +32,28 @@ const Addresses = () => {
 
   const [open, setOpen] = useState(0)
 
+  // useEffect(() => {
+  //   const fetch = async () => {
+  //     const response = await axios
+  //       .get(`/Customer/GetAddressesByCustomerId?id=${appState.user.id}`)
+  //       .then((res) => {
+  //         console.log('Addresses fetched successfully')
+  //         console.log(res.data)
+  //         appDispatch({ type: 'setAddresses', value: res.data.result })
+  //       })
+  //       .catch((res) => {
+  //         console.log('error')
+  //         console.log(res)
+  //         message.error(res.response.data.message)
+  //       })
+  //       .finally(() => setIsFetching(false))
+  //   }
+  //   fetch()
+  // }, [])
+
   useEffect(() => {
-    const fetch = async () => {
-      const response = await axios
-        .get(`/Customer/GetAddressesByCustomerId?id=${appState.user.id}`)
-        .then((res) => {
-          console.log('Addresses fetched successfully')
-          console.log(res.data)
-          appDispatch({ type: 'setAddresses', value: res.data.result })
-        })
-        .catch((res) => {
-          console.log('error')
-          console.log(res)
-          message.error(res.response.data.message)
-        })
-        .finally(() => setIsFetching(false))
-    }
-    fetch()
+    appDispatch({ type: 'fetchAddresses' })
+    setIsFetching(false)
   }, [])
 
   const [edit, setEdit] = useState(false)

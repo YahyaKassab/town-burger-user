@@ -35,10 +35,10 @@ const PlaceOrder = () => {
   const message = useContext(MessageContext)
   const appDispatch = useContext(DispatchContext)
   const appState = useContext(StateContext)
-  const [address, setAddress] = useState('')
+  const [addressId, setAddressId] = useState(0)
   const navigate = useNavigate()
   const handleChange = (event) => {
-    setAddress(event.target.value)
+    setAddressId(event.target.value)
   }
   const deleteFromCart = (index) => {
     appDispatch({ type: 'removeFromCart', value: index })
@@ -53,12 +53,21 @@ const PlaceOrder = () => {
   const [edit, setEdit] = useState(true)
   var today = new Date()
   const handlePlaceOrder = async () => {
-    await axios.post(
-      `/Orders/PlaceOrder?customerId=${appState.user.id}&addressId=${1}`
-    )
-    navigate('/orders')
-    console.log(address)
-    message.success('Order Placed Successfully')
+    console.log('address id')
+    console.log(addressId)
+    await axios
+      .post(
+        `/Orders/PlaceOrder?customerId=${appState.user.id}&addressId=${addressId}`
+      )
+      .then((res) => {
+        navigate('/orders')
+        console.log(addressId)
+        message.success('Order Placed Successfully')
+      })
+      .catch((res) => {
+        console.log('error')
+        console.log(res)
+      })
   }
 
   const updateCart = async () => {
@@ -75,6 +84,13 @@ const PlaceOrder = () => {
         updateCart()
       })
   }
+
+  useEffect(() => {
+    //fetch addresses
+    appDispatch({ type: 'fetchAddresses' })
+    appDispatch({ type: 'fetchCart' })
+    console.log(appState.cart)
+  }, [])
   return (
     <Page container={true} nav={true} title="Place Your Order">
       <div className="justify-center ml-12">
@@ -109,7 +125,12 @@ const PlaceOrder = () => {
                               <div className="flex flex-row justify-center space-x-5 mt-2">
                                 <Button
                                   variant="contained"
-                                  onClick={() => deleteFromCart(index)}
+                                  onClick={() => {
+                                    appDispatch({
+                                      type: 'ensurePrice',
+                                    })
+                                    deleteFromCart(index)
+                                  }}
                                   className={`bg-red-900  h-12 self-center`}
                                   style={{ borderRadius: 10 }}
                                 >
@@ -137,22 +158,28 @@ const PlaceOrder = () => {
                                   <div className="flex">
                                     <div className="flex flex-col justify-center space-y-1 mx-5">
                                       <IconButton
-                                        onClick={() =>
+                                        onClick={() => {
                                           appDispatch({
                                             type: 'increaseQuantity',
                                             value: index,
                                           })
-                                        }
+                                          appDispatch({
+                                            type: 'ensurePrice',
+                                          })
+                                        }}
                                       >
                                         <AddIcon fontSize="large" />
                                       </IconButton>
                                       <IconButton
-                                        onClick={() =>
+                                        onClick={() => {
                                           appDispatch({
                                             type: 'decreaseQuantity',
                                             value: index,
                                           })
-                                        }
+                                          appDispatch({
+                                            type: 'ensurePrice',
+                                          })
+                                        }}
                                       >
                                         <RemoveIcon fontSize="large" />
                                       </IconButton>
@@ -171,7 +198,6 @@ const PlaceOrder = () => {
                                       onClick={() => {
                                         appDispatch({
                                           type: 'ensurePrice',
-                                          value: index,
                                         })
                                         setEdit(true)
                                         console.log(appState.cart)
@@ -228,7 +254,7 @@ const PlaceOrder = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={address}
+                  value={addressId}
                   label="Age"
                   onChange={handleChange}
                 >
@@ -244,7 +270,7 @@ const PlaceOrder = () => {
                     </MenuItem>
                   ) : (
                     appState.addresses.map((address, index) => (
-                      <MenuItem key={index} value={address}>
+                      <MenuItem key={index} value={address.id}>
                         {address.street}
                       </MenuItem>
                     ))
@@ -283,9 +309,9 @@ const PlaceOrder = () => {
                     <Button
                       onClick={handlePlaceOrder}
                       variant="text"
-                      disabled={address == ''}
+                      disabled={addressId == 0 || appState.cart.length < 1}
                       className={`${
-                        address == '' ? 'text-gray-600' : 'text-red-800'
+                        addressId == 0 ? 'text-gray-600' : 'text-red-800'
                       } px-10 py-5 my-20`}
                     >
                       <Typography variant="h4" className="">

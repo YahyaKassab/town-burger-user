@@ -5,17 +5,17 @@ import {
   List,
   ListItem,
   Typography,
-} from "@mui/material"
-import { useState } from "react"
-import { useParams } from "react-router"
-import Page from "../Page"
-import Box from "@mui/material/Box"
-import TextField from "@mui/material/TextField"
-import EditIcon from "@mui/icons-material/Edit"
-import DeleteIcon from "@mui/icons-material/Delete"
-import CheckIcon from "@mui/icons-material/Check"
-import AccountCircleIcon from "@mui/icons-material/AccountCircle"
-import { Link } from "react-router-dom"
+} from '@mui/material'
+import { useState } from 'react'
+import { useParams } from 'react-router'
+import Page from '../Page'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import CheckIcon from '@mui/icons-material/Check'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import { Link } from 'react-router-dom'
 const Profile = () => {
   const { number } = useParams()
   const [edit, setEdit] = useState(false)
@@ -74,7 +74,7 @@ const Profile = () => {
             <Grid item xs={12}>
               <TextField
                 disabled={!edit}
-                type={edit ? "text" : "password"}
+                type={edit ? 'text' : 'password'}
                 label="Password"
                 fullWidth
                 defaultValue="Nakmys12"
@@ -111,12 +111,9 @@ const Profile = () => {
         </Grid>
         {/* right side  */}
         <Grid item xs={12} xl={6}>
-          <List sx={{ width: "100%", marginTop: 10, marginLeft: 3 }}>
+          <List sx={{ width: '100%', marginTop: 10, marginLeft: 3 }}>
             <Divider variant="inset" component="li" />
-            <Link
-              to={`/${"01123334417"}/orders`}
-              className="text-black no-underline"
-            >
+            <Link to={`/orders`} className="text-black no-underline">
               <ListItem alignItems="flex-start" className="ml-12 my-10">
                 <Grid container spacing={4}>
                   <Grid item xs={12}>
@@ -126,10 +123,7 @@ const Profile = () => {
               </ListItem>
             </Link>
             <Divider variant="inset" component="li" />
-            <Link
-              to="/01123334417/addresses"
-              className="text-black no-underline"
-            >
+            <Link to="/addresses" className="text-black no-underline">
               <ListItem alignItems="flex-start" className="ml-12 my-10">
                 <Grid container spacing={4}>
                   <Grid item xs={12}>

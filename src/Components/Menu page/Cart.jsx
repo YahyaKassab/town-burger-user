@@ -38,27 +38,8 @@ export default function Cart() {
   }
 
   useEffect(() => {
-    if (!appState.loggedIn) return
-    const fetch = async () => {
-      const response = await axios
-        .get(`/Orders/GetCartByCustomerId?Id=${appState.user.id}`)
-        .then((res) => {
-          console.log(res.data.result)
-          appDispatch({
-            type: 'setCart',
-            value: res.data.result,
-          })
-          console.log('cart fetched successfully')
-          console.log(res.data)
-        })
-        .catch((res) => {
-          console.log('fetch cart failed')
-          console.log(res)
-          console.log(res.response)
-        })
-      setIsFetching(false)
-    }
-    fetch()
+    appDispatch({ type: 'fetchCart' })
+    setIsFetching(false)
   }, [])
 
   const updateCart = async () => {
@@ -155,22 +136,24 @@ export default function Cart() {
                                   <div className="flex">
                                     <div className="flex flex-col justify-center space-y-1 mx-5">
                                       <IconButton
-                                        onClick={() =>
+                                        onClick={() => {
                                           appDispatch({
                                             type: 'increaseQuantity',
                                             value: index,
                                           })
-                                        }
+                                          appDispatch({ type: 'ensurePrice' })
+                                        }}
                                       >
                                         <AddIcon fontSize="large" />
                                       </IconButton>
                                       <IconButton
-                                        onClick={() =>
+                                        onClick={() => {
                                           appDispatch({
                                             type: 'decreaseQuantity',
                                             value: index,
                                           })
-                                        }
+                                          appDispatch({ type: 'ensurePrice' })
+                                        }}
                                       >
                                         <RemoveIcon fontSize="large" />
                                       </IconButton>
