@@ -105,6 +105,7 @@ function App() {
     totalCartPrice: 0,
     fetchAddressCount: 0,
     fetchCartCount: 0,
+    fetchOrdersCount: 0,
     orders: [],
     addresses: [],
   }
@@ -134,6 +135,9 @@ function App() {
           }
           return
         }
+      case 'setOrders':
+        draft.orders = action.value
+        return
       case 'addAddress':
         draft.addresses.push(action.value)
         return
@@ -145,6 +149,9 @@ function App() {
         return
       case 'fetchCart':
         draft.fetchCartCount++
+        return
+      case 'fetchOrders':
+        draft.fetchOrdersCount++
         return
       case 'setCart':
         draft.cart = action.value
@@ -267,6 +274,26 @@ function App() {
       fetch()
     }
   }, [state.fetchCartCount])
+
+  //fetch orders
+  useEffect(() => {
+    if (state.fetchOrdersCount > 0) {
+      const fetch = async () => {
+        const response = await axios
+          .get(`/Customer/GetOrders?id=${state.user.id}`)
+          .then((res) => {
+            console.log('Orders fetched successfully')
+            console.log(res.data.result)
+            dispatch({ type: 'setOrders', value: res.data.result })
+          })
+          .catch((res) => {
+            console.log('fetch orders failed')
+            console.log(res)
+          })
+      }
+      fetch()
+    }
+  }, [state.fetchOrdersCount])
 
   return (
     <>

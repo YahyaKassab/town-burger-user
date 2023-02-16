@@ -35,11 +35,13 @@ export default function LoggedIn() {
           <span
             className="absolute text-sm font-bold"
             style={{
-              right: `${appState.cart.length < 10 ? 5 : 1}px`,
+              right: `${appState.cart.items.length < 10 ? 5 : 1}px`,
               bottom: 0,
             }}
           >
-            {appState.cart.length < 10 ? appState.cart.length : '9+'}
+            {appState.cart.items.length < 10
+              ? appState.cart.items.length
+              : '9+'}
           </span>
         </span>
         <Button

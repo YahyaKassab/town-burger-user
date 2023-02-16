@@ -5,27 +5,39 @@ import {
   List,
   ListItem,
   Typography,
-} from "@mui/material"
-import { Fragment, useContext, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import StateContext from "../../StateContext"
-import Page from "../Page"
+} from '@mui/material'
+import { Fragment, useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import DispatchContext from '../../DispatchContext'
+import StateContext from '../../StateContext'
+import LoadingIcon from '../LoadingIcon'
+import Page from '../Page'
 
 const Orders = () => {
   const navigate = useNavigate()
   const appState = useContext(StateContext)
+  const [isFetching, setIsFetching] = useState(true)
+  const appDispatch = useContext(DispatchContext)
+
+  useEffect(() => {
+    appDispatch({ type: 'fetchOrders' })
+    setIsFetching(false)
+    console.log(appState.orders)
+  }, [])
+
+  if (isFetching) return <LoadingIcon />
   return (
     <Page container={true} nav={true} title="My Orders">
-      <Grid container direction={"column-reverse"} spacing={4}>
+      <Grid container direction={'column-reverse'} spacing={4}>
         <Grid item xs={12}>
-          <List sx={{ width: "100%", marginTop: 10, marginLeft: 3 }}>
+          <List sx={{ width: '100%', marginTop: 10, marginLeft: 3 }}>
             {appState.orders.length == 0 ? (
               <h1 className="text-center text-red-800">
                 No Orders Yet
                 <Button
                   variant="contained"
                   className="bg-red-800 ml-5"
-                  onClick={() => navigate("/menu")}
+                  onClick={() => navigate('/menu')}
                 >
                   Order Now
                 </Button>
@@ -40,21 +52,19 @@ const Orders = () => {
                       <Grid container spacing={4}>
                         <Grid item xs={4}>
                           <Typography variant="h3" className="mb-3">
-                            Ordered on {order.datePlaced.date.day}/
-                            {order.datePlaced.date.month}/
-                            {order.datePlaced.date.year}
+                            Ordered on {order.placedIn}
                             <span className="text-lg">
-                              {" "}
+                              {' '}
                               {} <br /> at {order.datePlaced.time.hour}:
                               {order.datePlaced.time.minute}
-                              {" " + order.datePlaced.time.day
-                                ? " AM"
-                                : " PM"}{" "}
+                              {' ' + order.datePlaced.time.day
+                                ? ' AM'
+                                : ' PM'}{' '}
                               <br />
                               to Yahya kassab <br /> in {
                                 order.address.street
-                              }{" "}
-                              street exactly {order.address.details} <br />{" "}
+                              }{' '}
+                              street exactly {order.address.details} <br />{' '}
                               {/* index {appState.orders.length}, {order.index} */}
                             </span>
                           </Typography>
@@ -130,9 +140,9 @@ const Orders = () => {
                             {order.state == 3 ? (
                               `Delivered on ${
                                 order.dateDelivered.hour +
-                                ":" +
+                                ':' +
                                 order.dateDelivered.minute +
-                                (order.dateDelivered.day ? " AM" : " PM")
+                                (order.dateDelivered.day ? ' AM' : ' PM')
                               } `
                             ) : (
                               <Button

@@ -53,12 +53,10 @@ const PlaceOrder = () => {
   const [edit, setEdit] = useState(true)
   var today = new Date()
   const handlePlaceOrder = async () => {
-    console.log('address id')
-    console.log(addressId)
+    appDispatch({ type: 'ensurePrice' })
+    console.log('addressId: ' + addressId)
     await axios
-      .post(
-        `/Orders/PlaceOrder?customerId=${appState.user.id}&addressId=${addressId}`
-      )
+      .post(`/Orders/PlaceOrder?addressId=${addressId}`)
       .then((res) => {
         navigate('/orders')
         console.log(addressId)
