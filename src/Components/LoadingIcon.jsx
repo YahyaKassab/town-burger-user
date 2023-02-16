@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react'
+import * as React from 'react'
+import CircularProgress from '@mui/material/CircularProgress'
+import Box from '@mui/material/Box'
 
-function LoadingIcon() {
+export default function LoadingIcon() {
   return (
-    <div className="text-center justify-content-center">
-      <div className="spinner-border justify-content-center" role="status">
-        <span className="sr-only"></span>
-      </div>
+    <div className="justify-center mx-auto text-center">
+      <CircularProgress />
     </div>
   )
 }
-
-export default LoadingIcon

@@ -106,6 +106,7 @@ function App() {
     fetchAddressCount: 0,
     fetchCartCount: 0,
     fetchOrdersCount: 0,
+    ordersFetching: false,
     orders: [],
     addresses: [],
   }
@@ -149,9 +150,16 @@ function App() {
         return
       case 'fetchCart':
         draft.fetchCartCount++
+        draft.ordersFetching = true
+        return
+      case 'cartFetched':
+        draft.ordersFetching = false
         return
       case 'fetchOrders':
         draft.fetchOrdersCount++
+        return
+      case 'ordersFetched':
+        draft.ordersFetching = false
         return
       case 'setCart':
         draft.cart = action.value
@@ -264,6 +272,7 @@ function App() {
             dispatch({ type: 'ensurePrice' })
             console.log('cart fetched successfully')
             console.log(res.data)
+            dispatch({ type: 'ordersFetched' })
           })
           .catch((res) => {
             console.log('fetch cart failed')
@@ -285,6 +294,7 @@ function App() {
             console.log('Orders fetched successfully')
             console.log(res.data.result)
             dispatch({ type: 'setOrders', value: res.data.result })
+            dispatch({ type: 'ordersFetched' })
           })
           .catch((res) => {
             console.log('fetch orders failed')
@@ -338,7 +348,7 @@ function App() {
                 <Route path="/addresses" element={<Addresses />} />
                 <Route path="/add-address" element={<AddAddress />} />
                 <Route path="/:addressid/edit" element={<EditAddress />} />
-                <Route path="/:orderid/track" element={<TrackOrder />} />
+                <Route path="/:index/track" element={<TrackOrder />} />
                 <Route path="/place-order" element={<PlaceOrder />} />
               </Routes>
             </Page>

@@ -16,16 +16,14 @@ import Page from '../Page'
 const Orders = () => {
   const navigate = useNavigate()
   const appState = useContext(StateContext)
-  const [isFetching, setIsFetching] = useState(true)
   const appDispatch = useContext(DispatchContext)
 
   useEffect(() => {
     appDispatch({ type: 'fetchOrders' })
-    setIsFetching(false)
     console.log(appState.orders)
   }, [])
 
-  if (isFetching) return <LoadingIcon />
+  if (appState.ordersFetching) return <LoadingIcon />
   return (
     <Page container={true} nav={true} title="My Orders">
       <Grid container direction={'column-reverse'} spacing={4}>
@@ -50,21 +48,20 @@ const Orders = () => {
                     <Divider variant="inset" component="li" />
                     <ListItem alignItems="flex-start" className="ml-12 my-10">
                       <Grid container spacing={4}>
-                        <Grid item xs={4}>
+                        <Grid item xs={1}>
+                          {order.id}
+                        </Grid>
+                        <Grid item xs={3}>
                           <Typography variant="h3" className="mb-3">
-                            Ordered on {order.placedIn}
+                            Ordered on {order.placedIn.day}/
+                            {order.placedIn.month}/{order.placedIn.year}
                             <span className="text-lg">
                               {' '}
-                              {} <br /> at {order.datePlaced.time.hour}:
-                              {order.datePlaced.time.minute}
-                              {' ' + order.datePlaced.time.day
-                                ? ' AM'
-                                : ' PM'}{' '}
-                              <br />
-                              to Yahya kassab <br /> in {
-                                order.address.street
-                              }{' '}
-                              street exactly {order.address.details} <br />{' '}
+                              {} <br /> at {order.placedIn.hour}:
+                              {order.placedIn.minute} <br />
+                              to {appState.user.fullName} <br /> in{' '}
+                              {order.address.street} street exactly{' '}
+                              {order.address.details} <br />{' '}
                               {/* index {appState.orders.length}, {order.index} */}
                             </span>
                           </Typography>
@@ -81,13 +78,13 @@ const Orders = () => {
                               <Grid container>
                                 <Grid item xs={12}>
                                   <Typography variant="h5">Meal</Typography>
-                                  {order.cart.map((meal, index) => (
+                                  {order.cart.items.map((meal, index) => (
                                     <Typography
                                       key={index}
                                       variant="h5"
                                       className="my-3"
                                     >
-                                      {meal.meal.title}
+                                      {meal.item.title}
                                     </Typography>
                                   ))}
                                 </Grid>
@@ -97,13 +94,13 @@ const Orders = () => {
                               <Grid container>
                                 <Grid item xs={12}>
                                   <Typography variant="h5">Quantity</Typography>
-                                  {order.cart.map((meal, index) => (
+                                  {order.cart.items.map((meal, index) => (
                                     <Typography
                                       key={index}
                                       variant="h5"
                                       className="my-3"
                                     >
-                                      {meal.qty}
+                                      {meal.quantity}
                                     </Typography>
                                   ))}
                                 </Grid>
@@ -115,7 +112,7 @@ const Orders = () => {
                                   <Typography variant="h5">
                                     Description
                                   </Typography>
-                                  {order.cart.map((meal, index) => (
+                                  {order.cart.items.map((meal, index) => (
                                     <Typography
                                       key={index}
                                       variant="h5"
@@ -137,20 +134,17 @@ const Orders = () => {
 
                         <Grid item lg={2} xs={8}>
                           <Typography variant="h5" className="text-center">
-                            {order.state == 3 ? (
+                            {order.state == 2 ? (
                               `Delivered on ${
-                                order.dateDelivered.hour +
+                                order.deliveredIn.hour +
                                 ':' +
-                                order.dateDelivered.minute +
-                                (order.dateDelivered.day ? ' AM' : ' PM')
+                                order.deliveredIn.minute
                               } `
                             ) : (
                               <Button
                                 variant="contained"
                                 className="bg-red-800 py-6 px-14 font-bold"
-                                onClick={() =>
-                                  navigate(`/${order.index}/track`)
-                                }
+                                onClick={() => navigate(`/${index}/track`)}
                               >
                                 Track Order
                               </Button>
