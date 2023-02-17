@@ -1,7 +1,7 @@
-import { useState } from "react"
-import "./home.css"
-import { Typography } from "@mui/material"
-import ImageSlide from "./ImageSlide"
+import { useState } from 'react'
+import './home.css'
+import { Typography } from '@mui/material'
+import ImageSlide from './ImageSlide'
 
 const ImageSlider = (props) => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -12,6 +12,7 @@ const ImageSlider = (props) => {
           slides={props.slides}
           index={currentIndex}
           setIndex={setCurrentIndex}
+          isFetching={props.isFetching}
         />
       </div>
     </div>
