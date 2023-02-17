@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Page from '../Page'
 import './home.css'
 import { Grid, Typography } from '@mui/material'
@@ -8,37 +8,44 @@ import Divider from '@mui/material/Divider'
 import MostFamous from './MostFamous'
 import Footer from './Footer'
 import SpecialOffers from './SpecialOffers'
+import axios from 'axios'
 export default function Home() {
+  const [isFetching, setIsFetching] = useState(true)
   const [slides, setSlides] = useState([
     {
-      url: 'SliderImages\\1.jpg',
-      title: 'title1',
-      body: 'body1',
-      action: '/login',
-      position: 'top-right',
-    },
-    {
-      url: 'SliderImages\\2.jpg',
-      title: 'title2',
-      body: 'body2',
-      action: '/login',
-      position: 'top-left',
-    },
-    {
-      url: 'SliderImages\\3.jpg',
-      title: 'title3',
-      body: 'body3',
-      action: '/login',
-      position: 'bottom-left',
-    },
-    {
-      url: 'SliderImages\\3.jpg',
-      title: 'title4',
-      body: 'body4',
-      action: '/login',
-      position: 'bottom-right',
+      item1: {
+        id: 2,
+        title: '',
+        description: '',
+        type: '',
+        price: 30,
+      },
     },
   ])
+  useEffect(() => {
+    const fetch = async () => {
+      await axios
+        .get(
+          `/Admin/GetMostOrderedByType?type=${'beef burger'.replace(
+            ' ',
+            '%20'
+          )}`
+        )
+        .then((res) => {
+          console.log('fetch most ordered beef success')
+          console.log(res.data)
+          setSlides(res.data.result)
+          setIsFetching(false)
+        })
+        .catch((res) => {
+          console.log('fetch most ordered beef failed')
+          console.log(res)
+        })
+        .finally(() => {})
+    }
+    fetch()
+  }, [])
+
   return (
     <>
       <Page container={true} nav={true} title="home">
@@ -55,7 +62,7 @@ export default function Home() {
             </Typography>
           </Grid>
           <Grid item lg={8} xs={12}>
-            <ImageSlider slides={slides} />
+            <ImageSlider slides={slides.item1} isFetching={isFetching} />
           </Grid>
           <Grid item lg={4} xs={12}>
             <OtherBurgers />

@@ -1,37 +1,38 @@
-import { useState } from "react"
+import { useState } from 'react'
 import {
   Card,
   CardActions,
   CardContent,
   Button,
   Typography,
-} from "@mui/material"
-import FiberManualRecordOutlinedIcon from "@mui/icons-material/FiberManualRecordOutlined"
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord"
-import "./home.css"
-import { useNavigate } from "react-router"
+} from '@mui/material'
+import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined'
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord'
+import './home.css'
+import { useNavigate } from 'react-router'
+import LoadingIcon from '../LoadingIcon'
 const rightArrowStyles = {
-  position: "absolute",
-  top: "50%",
-  transform: "translate(0, -50%)",
-  right: "0px",
+  position: 'absolute',
+  top: '50%',
+  transform: 'translate(0, -50%)',
+  right: '0px',
   borderRadius: 10,
-  fontSize: "45px",
-  color: "#fff",
+  fontSize: '45px',
+  color: '#fff',
   zIndex: 1,
-  cursor: "pointer",
+  cursor: 'pointer',
 }
 
 const leftArrowStyles = {
-  position: "absolute",
-  top: "50%",
-  transform: "translate(0, -50%)",
-  left: "0px",
+  position: 'absolute',
+  top: '50%',
+  transform: 'translate(0, -50%)',
+  left: '0px',
   borderRadius: 10,
-  fontSize: "45px",
-  color: "#fff",
+  fontSize: '45px',
+  color: '#fff',
   zIndex: 1,
-  cursor: "pointer",
+  cursor: 'pointer',
 }
 
 const ImageSlide = (props) => {
@@ -55,9 +56,11 @@ const ImageSlide = (props) => {
     e.preventDefault()
     props.setIndex(slideIndex)
   }
+
+  if (props.isFetching) return <LoadingIcon />
   return (
     <>
-      <div className={`${props.slides[props.index].position}`} id="slider">
+      <div className={`top-left`} id="slider">
         {showCard ? (
           <Card className={`text-white w-60  xl:w-80`}>
             <CardContent>
@@ -65,13 +68,13 @@ const ImageSlide = (props) => {
                 variant="h4"
                 className="text-bold font-sans text-black"
               >
-                {props.slides[props.index].title}
+                {slides[props.index].title}
               </Typography>
               <Typography
                 variant="body1"
                 className="hidden sm:block mt-2 text-gray-700"
               >
-                {props.slides[props.index].body}
+                {slides[props.index].description}
               </Typography>
             </CardContent>
             <CardActions className="flex justify-end">
@@ -80,7 +83,7 @@ const ImageSlide = (props) => {
               </Button>
               <Button
                 variant="contained"
-                onClick={() => navigate(`${props.slides[props.index].action}`)}
+                onClick={() => navigate(`/menu`)}
                 className="text-bold bg-red-800"
               >
                 Order now
@@ -115,7 +118,7 @@ const ImageSlide = (props) => {
         ❱
       </div>
       <img
-        src={props.slides[props.index].url}
+        src={`SliderImages\\1.jpg`}
         className="image"
         style={{ borderRadius: 10 }}
         alt=""

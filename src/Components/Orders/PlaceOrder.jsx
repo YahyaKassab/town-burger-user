@@ -69,6 +69,8 @@ const PlaceOrder = () => {
   }
 
   const updateCart = async () => {
+    console.log('cart to update from place order')
+    console.log(appState.cart)
     const response = await axios
       .put(`/Orders/UpdateCart`, appState.cart)
       .then((res) => {
@@ -79,7 +81,6 @@ const PlaceOrder = () => {
       .catch((res) => {
         console.log(res)
         console.log('failed')
-        updateCart()
       })
   }
 

@@ -43,7 +43,7 @@ export default function Cart() {
   }, [])
 
   const updateCart = async () => {
-    console.log('cart')
+    console.log('cart to update from menu cart')
     console.log(appState.cart)
     const response = await axios
       .put(`/Orders/UpdateCart`, appState.cart)
@@ -54,7 +54,6 @@ export default function Cart() {
       .catch((res) => {
         console.log(res)
         console.log('failed')
-        updateCart()
       })
   }
 

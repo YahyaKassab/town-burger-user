@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 
 export default function LoadingIcon() {
   return (
-    <div className="justify-center mx-auto text-center">
+    <div className="justify-center mx-auto text-center mt-32">
       <CircularProgress />
     </div>
   )

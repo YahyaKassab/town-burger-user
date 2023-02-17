@@ -18,10 +18,29 @@ const Orders = () => {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
 
+  const getDate = (date) => {
+    const myDate = new Date(date)
+
+    return `${myDate.getDate()}/${
+      myDate.getMonth() + 1
+    }/${myDate.getFullYear()}`
+  }
+  const getTime = (date) => {
+    const myDate = new Date(date)
+    return `${myDate.getHours()}:${myDate.getMinutes()}`
+  }
+
   useEffect(() => {
     appDispatch({ type: 'fetchOrders' })
     console.log(appState.orders)
   }, [])
+
+  useEffect(() => {
+    if (!appState.ordersFetching) {
+      console.log('orders from orders')
+      console.log(appState.orders)
+    }
+  }, [appState.ordersFetching])
 
   if (appState.ordersFetching) return <LoadingIcon />
   return (
@@ -43,6 +62,10 @@ const Orders = () => {
             ) : (
               appState.orders.map((order, index) => {
                 console.log(order)
+                const datePlaced = getDate(order.placedIn)
+                const timePlaced = getTime(order.placedIn)
+                const timeDelivered =
+                  order.deliveredIn == null ? '' : getTime(order.deliveredIn)
                 return (
                   <Fragment key={index}>
                     <Divider variant="inset" component="li" />
@@ -53,12 +76,10 @@ const Orders = () => {
                         </Grid>
                         <Grid item xs={3}>
                           <Typography variant="h3" className="mb-3">
-                            Ordered on {order.placedIn.day}/
-                            {order.placedIn.month}/{order.placedIn.year}
+                            Ordered on {datePlaced}
                             <span className="text-lg">
                               {' '}
-                              {} <br /> at {order.placedIn.hour}:
-                              {order.placedIn.minute} <br />
+                              {} <br /> at {timePlaced} <br />
                               to {appState.user.fullName} <br /> in{' '}
                               {order.address.street} street exactly{' '}
                               {order.address.details} <br />{' '}
@@ -78,7 +99,7 @@ const Orders = () => {
                               <Grid container>
                                 <Grid item xs={12}>
                                   <Typography variant="h5">Meal</Typography>
-                                  {order.cart.items.map((meal, index) => (
+                                  {order.cartItems.map((meal, index) => (
                                     <Typography
                                       key={index}
                                       variant="h5"
@@ -94,7 +115,7 @@ const Orders = () => {
                               <Grid container>
                                 <Grid item xs={12}>
                                   <Typography variant="h5">Quantity</Typography>
-                                  {order.cart.items.map((meal, index) => (
+                                  {order.cartItems.map((meal, index) => (
                                     <Typography
                                       key={index}
                                       variant="h5"
@@ -112,7 +133,7 @@ const Orders = () => {
                                   <Typography variant="h5">
                                     Description
                                   </Typography>
-                                  {order.cart.items.map((meal, index) => (
+                                  {order.cartItems.map((meal, index) => (
                                     <Typography
                                       key={index}
                                       variant="h5"
@@ -135,11 +156,7 @@ const Orders = () => {
                         <Grid item lg={2} xs={8}>
                           <Typography variant="h5" className="text-center">
                             {order.state == 2 ? (
-                              `Delivered on ${
-                                order.deliveredIn.hour +
-                                ':' +
-                                order.deliveredIn.minute
-                              } `
+                              `Delivered on ${timeDelivered} `
                             ) : (
                               <Button
                                 variant="contained"

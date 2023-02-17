@@ -28,32 +28,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 const Addresses = () => {
-  const [isFetching, setIsFetching] = useState(true)
-
   const [open, setOpen] = useState(0)
-
-  // useEffect(() => {
-  //   const fetch = async () => {
-  //     const response = await axios
-  //       .get(`/Customer/GetAddressesByCustomerId?id=${appState.user.id}`)
-  //       .then((res) => {
-  //         console.log('Addresses fetched successfully')
-  //         console.log(res.data)
-  //         appDispatch({ type: 'setAddresses', value: res.data.result })
-  //       })
-  //       .catch((res) => {
-  //         console.log('error')
-  //         console.log(res)
-  //         message.error(res.response.data.message)
-  //       })
-  //       .finally(() => setIsFetching(false))
-  //   }
-  //   fetch()
-  // }, [])
-
   useEffect(() => {
     appDispatch({ type: 'fetchAddresses' })
-    setIsFetching(false)
   }, [])
 
   const [edit, setEdit] = useState(false)
@@ -75,7 +52,7 @@ const Addresses = () => {
         console.log(res)
       })
   }
-  if (isFetching) return <LoadingIcon />
+  if (appState.addressesFetching) return <LoadingIcon />
   return (
     <Page container={true} nav={true} title="Addresses">
       <Grid container direction={'column-reverse'} spacing={4}>

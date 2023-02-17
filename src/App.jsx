@@ -18,7 +18,6 @@ import PlaceOrder from './Components/Orders/PlaceOrder'
 import ForgotPassword from './Components/Login Page/ForgotPassword'
 import AboutUs from './Components/AboutUs'
 import OrderingPolicies from './Components/OrderingPolicies'
-import AddComplaint from './Components/Complaint/AddComplaint'
 import TrackOrder from './Components/Orders/TrackOrder'
 import AddAddress from './Components/Addresses Page/AddAddress'
 import Addresses from './Components/Addresses Page/Addresses'
@@ -26,6 +25,7 @@ import EditAddress from './Components/Addresses Page/EditAddress'
 import EmailConfirmed from './Components/Register Page/EmailConfirmed'
 import ResetPassword from './Components/Register Page/ResetPassword'
 import axios from 'axios'
+import AddReview from './Components/Review/AddReview'
 
 function App() {
   // const footerRef = createRef()
@@ -102,11 +102,14 @@ function App() {
     cartId: 0,
     cart: { id: 0, items: [] },
     menu: [],
+    menuTypes: ['Full Menu'],
     totalCartPrice: 0,
     fetchAddressCount: 0,
     fetchCartCount: 0,
     fetchOrdersCount: 0,
     ordersFetching: false,
+    cartFetching: false,
+    addressesFetching: false,
     orders: [],
     addresses: [],
   }
@@ -138,35 +141,40 @@ function App() {
         }
       case 'setOrders':
         draft.orders = action.value
+        draft.ordersFetching = false
         return
       case 'addAddress':
         draft.addresses.push(action.value)
         return
       case 'setAddresses':
         draft.addresses = action.value
+        draft.addressesFetching = false
         return
       case 'fetchAddresses':
         draft.fetchAddressCount++
+        draft.addressesFetching = true
         return
       case 'fetchCart':
         draft.fetchCartCount++
-        draft.ordersFetching = true
-        return
-      case 'cartFetched':
-        draft.ordersFetching = false
+        draft.cartFetching = true
         return
       case 'fetchOrders':
         draft.fetchOrdersCount++
-        return
-      case 'ordersFetched':
-        draft.ordersFetching = false
+        draft.ordersFetching = true
         return
       case 'setCart':
         draft.cart = action.value
         draft.cartId = action.value.id
+        draft.cartFetching = false
         return
       case 'setMenu':
         draft.menu = action.value
+        action.value.map((item) => {
+          //for each item in the menu
+          if (draft.menuTypes.findIndex((t) => t == item.type) == -1) {
+            draft.menuTypes = [...draft.menuTypes, item.type]
+          }
+        })
         return
       case 'removeFromCart':
         draft.cart.items.splice(action.value, 1)
@@ -210,6 +218,7 @@ function App() {
       localStorage.removeItem('userNumber')
       localStorage.removeItem('userEmail')
     }
+    console.log('Cart : ')
   }, [state.loggedIn])
 
   //Check the token
@@ -281,6 +290,7 @@ function App() {
           })
       }
       fetch()
+      console.log(state.cart)
     }
   }, [state.fetchCartCount])
 
@@ -294,7 +304,6 @@ function App() {
             console.log('Orders fetched successfully')
             console.log(res.data.result)
             dispatch({ type: 'setOrders', value: res.data.result })
-            dispatch({ type: 'ordersFetched' })
           })
           .catch((res) => {
             console.log('fetch orders failed')
@@ -337,7 +346,7 @@ function App() {
                   path="/reset-password/:email/:token"
                   element={<ResetPassword />}
                 />
-                <Route path="/add-complaint" element={<AddComplaint />} />
+                <Route path="/add-review" element={<AddReview />} />
                 <Route path="/policies" element={<OrderingPolicies />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/forgot" element={<ForgotPassword />} />

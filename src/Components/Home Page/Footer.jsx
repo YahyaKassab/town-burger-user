@@ -1,7 +1,7 @@
-import { Button, Divider, Grid, Typography } from "@mui/material"
-import { useContext, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
-import StateContext from "../../StateContext"
+import { Button, Divider, Grid, Typography } from '@mui/material'
+import { useContext, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import StateContext from '../../StateContext'
 
 const Footer = () => {
   const navigate = useNavigate()
@@ -11,7 +11,7 @@ const Footer = () => {
       <hr />
       <div
         className="flex justify-between my-20"
-        style={{ float: "left", clear: "both" }}
+        style={{ float: 'left', clear: 'both' }}
         // ref={appState.footerRef}
         id="footer"
       >
@@ -47,7 +47,7 @@ const Footer = () => {
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="h4">
-                  {" "}
+                  {' '}
                   Call us:
                   <a
                     href="tel:PHONE_NUM"
@@ -64,7 +64,7 @@ const Footer = () => {
             <Grid container spacing={4}>
               <Grid item xs={12}>
                 <Link
-                  to={"/policies"}
+                  to={'/policies'}
                   className="text-black no-underline text-center"
                 >
                   <Typography variant="h6">Ordering Policies</Typography>
@@ -72,7 +72,7 @@ const Footer = () => {
               </Grid>
               <Grid item xs={12}>
                 <Link
-                  to={"/about-us"}
+                  to={'/about-us'}
                   className="text-black no-underline  text-center"
                 >
                   <Typography variant="h6">About Us</Typography>
@@ -83,10 +83,10 @@ const Footer = () => {
           <Grid item md={4} xs={12}>
             <Button
               variant="contained"
-              onClick={() => navigate("/add-complaint")}
+              onClick={() => navigate('/add-review')}
               className="bg-red-800 px-10 py-5 font-bold mt-24 ml-28"
             >
-              Add Complaint
+              Add Review
             </Button>
           </Grid>
         </Grid>

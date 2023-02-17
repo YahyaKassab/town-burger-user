@@ -99,68 +99,34 @@ export default function Menu() {
                   scrollButtons
                   allowScrollButtonsMobile
                 >
-                  <Tab
-                    label="Full Menu"
-                    className="font-bold text-red-800"
-                    {...a11yProps(0)}
-                  />
-                  <Tab
-                    className="font-bold text-red-800"
-                    label="Beef Burgers"
-                    {...a11yProps(1)}
-                  />
-                  <Tab
-                    className="font-bold text-red-800"
-                    label="Chicken Burgers"
-                    {...a11yProps(2)}
-                  />
-                  <Tab
-                    className="font-bold text-red-800"
-                    label="Kids Meals"
-                    {...a11yProps(3)}
-                  />
-                  <Tab
-                    className="font-bold text-red-800"
-                    label="Drinks"
-                    {...a11yProps(4)}
-                  />
-                  <Tab
-                    className="font-bold text-red-800"
-                    label="Side Meals"
-                    {...a11yProps(5)}
-                  />
+                  {appState.menuTypes.map((type, index) => (
+                    <Tab
+                      key={index}
+                      label={type}
+                      className="font-bold text-red-800"
+                      {...a11yProps(index)}
+                    />
+                  ))}
                 </Tabs>
               </Box>
-              <TabPanel value={value} index={0}>
-                <Grid container spacing={4} className="my-20 justify-center">
-                  {appState.menu.map((item, index) => (
-                    <Grid item key={index} xl={4} lg={6} xs={12}>
-                      <MealItem item={item} />
-                    </Grid>
-                  ))}
-                </Grid>
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                <Grid container spacing={4} className="my-20 justify-center">
-                  {appState.menu.map((item, index) => (
-                    <Grid item key={index} lg={4} md={6} xs={12}>
-                      <MealItem item={item} />
-                    </Grid>
-                  ))}
-                </Grid>
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={4}>
-                Item Three
-              </TabPanel>
-              <TabPanel value={value} index={5}>
-                Item Three
-              </TabPanel>
+              {appState.menuTypes.map((type, index) => (
+                <TabPanel value={value} key={index} index={index}>
+                  <Grid container spacing={4} className="my-20 justify-center">
+                    {appState.menu.map((item, index) => {
+                      if (
+                        item.type.toLowerCase() == type.toLowerCase() ||
+                        type == 'Full Menu'
+                      )
+                        return (
+                          <Grid item key={index} lg={4} md={6} xs={12}>
+                            <MealItem item={item} />
+                          </Grid>
+                        )
+                      else return ''
+                    })}
+                  </Grid>
+                </TabPanel>
+              ))}
             </Box>
           </Grid>
         </Grid>

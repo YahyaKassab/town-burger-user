@@ -7,7 +7,7 @@ const OtherBurgers = () => {
     <>
       <Grid container spacing={2} flexWrap className="-mt-4">
         <Grid item lg={12} md={6} xs={12}>
-          <Link to={'/login'}>
+          <Link to={'/menu'}>
             <div className="relative">
               <Typography
                 variant="overline"
@@ -26,7 +26,7 @@ const OtherBurgers = () => {
           </Link>
         </Grid>
         <Grid item lg={12} md={6} xs={12}>
-          <Link to={'/login'}>
+          <Link to={'/menu'}>
             <div className="relative">
               <Typography
                 variant="overline"
