@@ -21,6 +21,15 @@ export default function Home() {
         price: 30,
       },
     },
+    {
+      item1: {
+        id: 2,
+        title: '',
+        description: '',
+        type: '',
+        price: 30,
+      },
+    },
   ])
   useEffect(() => {
     const fetch = async () => {
@@ -33,7 +42,6 @@ export default function Home() {
         )
         .then((res) => {
           console.log('fetch most ordered beef success')
-          console.log(res.data)
           setSlides(res.data.result)
           setIsFetching(false)
         })
@@ -62,7 +70,7 @@ export default function Home() {
             </Typography>
           </Grid>
           <Grid item lg={8} xs={12}>
-            <ImageSlider slides={slides.item1} isFetching={isFetching} />
+            <ImageSlider slides={slides} isFetching={isFetching} />
           </Grid>
           <Grid item lg={4} xs={12}>
             <OtherBurgers />

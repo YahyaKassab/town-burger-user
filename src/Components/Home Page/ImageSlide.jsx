@@ -37,18 +37,18 @@ const leftArrowStyles = {
 
 const ImageSlide = (props) => {
   const navigate = useNavigate()
-  const [slides, setSlides] = useState(props.slides)
   const [showCard, setShowCard] = useState(false)
+
   const toggleCard = () => {
     setShowCard(!showCard)
   }
   const goToPrevious = () => {
     const isFirstSlide = props.index == 0
-    const newIndex = isFirstSlide ? slides.length - 1 : props.index - 1
+    const newIndex = isFirstSlide ? props.slides.length - 1 : props.index - 1
     props.setIndex(newIndex)
   }
   const goToNext = () => {
-    const isLastSlide = props.index == slides.length - 1
+    const isLastSlide = props.index == props.slides.length - 1
     const newIndex = isLastSlide ? 0 : props.index + 1
     props.setIndex(newIndex)
   }
@@ -68,13 +68,13 @@ const ImageSlide = (props) => {
                 variant="h4"
                 className="text-bold font-sans text-black"
               >
-                {slides[props.index].title}
+                {props.slides[props.index].item1.title}
               </Typography>
               <Typography
                 variant="body1"
                 className="hidden sm:block mt-2 text-gray-700"
               >
-                {slides[props.index].description}
+                {props.slides[props.index].item1.description}
               </Typography>
             </CardContent>
             <CardActions className="flex justify-end">
@@ -124,22 +124,24 @@ const ImageSlide = (props) => {
         alt=""
       />
       <div className="flex flex-row justify-center space-x-3">
-        {slides.map((slide, slideIndex) => (
-          <a
-            key={slideIndex}
-            href="#"
-            className="text-black no-underline"
-            onClick={(e) => handleClick(slideIndex, e)}
-          >
-            <div className="" key={slideIndex}>
-              {props.index == slideIndex ? (
-                <FiberManualRecordIcon fontSize="large" />
-              ) : (
-                <FiberManualRecordOutlinedIcon fontSize="large" />
-              )}
-            </div>
-          </a>
-        ))}
+        {props.slides.length > 0
+          ? props.slides.map((slide, slideIndex) => (
+              <a
+                key={slideIndex}
+                href="#"
+                className="text-black no-underline"
+                onClick={(e) => handleClick(slideIndex, e)}
+              >
+                <div className="" key={slideIndex}>
+                  {props.index == slideIndex ? (
+                    <FiberManualRecordIcon fontSize="large" />
+                  ) : (
+                    <FiberManualRecordOutlinedIcon fontSize="large" />
+                  )}
+                </div>
+              </a>
+            ))
+          : 'nigga'}
       </div>
     </>
   )
