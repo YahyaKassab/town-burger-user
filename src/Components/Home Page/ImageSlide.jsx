@@ -124,7 +124,7 @@ const ImageSlide = (props) => {
         alt=""
       />
       <div className="flex flex-row justify-center space-x-3">
-        {props.slides.length > 0
+        {props.slides != null
           ? props.slides.map((slide, slideIndex) => (
               <a
                 key={slideIndex}
@@ -141,7 +141,7 @@ const ImageSlide = (props) => {
                 </div>
               </a>
             ))
-          : 'nigga'}
+          : ''}
       </div>
     </>
   )

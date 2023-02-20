@@ -15,7 +15,7 @@ export default function MostFamous() {
   useEffect(() => {
     const fetch = async () => {
       await axios
-        .get('/Admin/GetMostOrdered')
+        .get('/Orders/GetMostOrdered')
         .then((res) => {
           console.log(res.data)
           setMostFamous(res.data.result)
@@ -58,19 +58,21 @@ export default function MostFamous() {
         </Grid>
       </Grid>
       <Grid container spacing={4} className="mb-20">
-        {mostFamous.map((item, index) => (
-          <Fragment key={index}>
-            <Grid
-              item
-              className={index == 0 ? 'block' : 'hidden md:block'}
-              md={4}
-              sm={6}
-              xs={12}
-            >
-              <MostFamousItem meal={item} />
-            </Grid>
-          </Fragment>
-        ))}
+        {mostFamous != null
+          ? mostFamous.map((item, index) => (
+              <Fragment key={index}>
+                <Grid
+                  item
+                  className={index == 0 ? 'block' : 'hidden md:block'}
+                  md={4}
+                  sm={6}
+                  xs={12}
+                >
+                  <MostFamousItem meal={item} />
+                </Grid>
+              </Fragment>
+            ))
+          : ''}
       </Grid>
     </>
   )

@@ -29,9 +29,6 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const Addresses = () => {
   const [open, setOpen] = useState(0)
-  useEffect(() => {
-    appDispatch({ type: 'fetchAddresses' })
-  }, [])
 
   const [edit, setEdit] = useState(false)
   const navigate = useNavigate()
@@ -52,13 +49,20 @@ const Addresses = () => {
         console.log(res)
       })
   }
+  useEffect(() => {
+    if (!appState.loggedIn) {
+      navigate('/login')
+      message.info('Login first')
+    }
+    appDispatch({ type: 'fetchAddresses' })
+  }, [])
   if (appState.addressesFetching) return <LoadingIcon />
   return (
     <Page container={true} nav={true} title="Addresses">
       <Grid container direction={'column-reverse'} spacing={4}>
         <Grid item xs={12}>
           <List sx={{ width: '100%', marginTop: 10, marginLeft: 3 }}>
-            {appState.addresses.length == 0 ? (
+            {appState.addresses == null ? (
               <h1 className="text-center text-red-800">
                 No Addresses Yet
                 <Button

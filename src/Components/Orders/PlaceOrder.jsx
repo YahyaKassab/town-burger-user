@@ -85,6 +85,10 @@ const PlaceOrder = () => {
   }
 
   useEffect(() => {
+    if (!appState.loggedIn) {
+      navigate('/login')
+      message.info('Login first')
+    }
     //fetch addresses
     appDispatch({ type: 'fetchAddresses' })
     appDispatch({ type: 'fetchCart' })
@@ -257,7 +261,7 @@ const PlaceOrder = () => {
                   label="Age"
                   onChange={handleChange}
                 >
-                  {appState.addresses.length == 0 ? (
+                  {appState.addresses == null ? (
                     <MenuItem>
                       <Button
                         variant="contained"

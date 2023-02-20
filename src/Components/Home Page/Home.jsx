@@ -35,7 +35,7 @@ export default function Home() {
     const fetch = async () => {
       await axios
         .get(
-          `/Admin/GetMostOrderedByType?type=${'beef burger'.replace(
+          `/orders/GetMostOrderedByType?type=${'beef burger'.replace(
             ' ',
             '%20'
           )}`

@@ -52,7 +52,7 @@ export default function Register() {
       return
     }
     const response = await axios
-      .post('/User/AddCustomer', {
+      .post('/Customer/AddCustomer', {
         email,
         phoneNumber,
         fullName,

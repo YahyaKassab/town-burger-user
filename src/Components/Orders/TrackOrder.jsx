@@ -39,6 +39,11 @@ const TrackOrder = () => {
   const [order, setOrder] = useState({})
   const [activeStep, setActiveStep] = React.useState(0)
   useEffect(() => {
+    if (!appState.loggedIn) {
+      navigate('/login')
+      message.info('Login first')
+    }
+
     console.log('index ' + index)
     appDispatch({ type: 'fetchOrders' })
     if (activeStep == -1) {

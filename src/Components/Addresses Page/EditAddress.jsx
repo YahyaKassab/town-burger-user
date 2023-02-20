@@ -19,6 +19,11 @@ const EditAddress = () => {
   const [isFetching, setIsFetching] = useState(true)
 
   useEffect(() => {
+    if (!appState.loggedIn) {
+      navigate('/login')
+      message.info('Login first')
+    }
+
     //fetch the address
     const fetch = async () => {
       await axios
@@ -49,6 +54,7 @@ const EditAddress = () => {
           console.log(res.data.message)
           message.success(res.data.message)
           console.log(res.data)
+          navigate('/addresses')
         })
         .catch((res) => {
           console.log('failed')

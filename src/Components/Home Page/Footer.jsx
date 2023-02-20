@@ -23,7 +23,10 @@ const Footer = () => {
                 <Typography variant="h4">Contact us</Typography>
               </Grid>
               <Grid item xs={4}>
-                <a href="https://www.facebook.com/townburger.eg">
+                <a
+                  href="https://www.facebook.com/townburger.eg"
+                  target="_blank"
+                >
                   <img
                     src="src\Components\Home Page\Icons\facebook-icon.png"
                     style={{ width: 80, height: 80 }}
@@ -32,11 +35,16 @@ const Footer = () => {
                 </a>
               </Grid>
               <Grid item xs={4}>
-                <img
-                  src="src\Components\Home Page\Icons\Instagram-icon.png"
-                  style={{ width: 90, height: 90 }}
-                  alt=""
-                />
+                <a
+                  href="https://www.instagram.com/townburger.eg/"
+                  target="_blank"
+                >
+                  <img
+                    src="src\Components\Home Page\Icons\Instagram-icon.png"
+                    style={{ width: 90, height: 90 }}
+                    alt=""
+                  />
+                </a>
               </Grid>
               <Grid item xs={4}>
                 <img

@@ -48,7 +48,7 @@ const Orders = () => {
       <Grid container direction={'column-reverse'} spacing={4}>
         <Grid item xs={12}>
           <List sx={{ width: '100%', marginTop: 10, marginLeft: 3 }}>
-            {appState.orders.length == 0 ? (
+            {appState.orders == null ? (
               <h1 className="text-center text-red-800">
                 No Orders Yet
                 <Button

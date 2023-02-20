@@ -81,53 +81,61 @@ export default function Menu() {
 
   return (
     <>
-      <Page container={true} nav={true} title={'Our Delicious menu'}>
-        <Grid container direction={'row-reverse'} spacing={3} className="mt-16">
-          <Grid item xs={12} md={6} lg={4}>
-            {appState.loggedIn ? <Cart /> : ''}
-          </Grid>
-          <Grid item xs={12} md={6} lg={8}>
-            <Box sx={{ width: '100%' }}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  variant="scrollable"
-                  textColor="secondary"
-                  indicatorColor="secondary"
-                  aria-label="basic tabs example"
-                  scrollButtons
-                  allowScrollButtonsMobile
-                >
+      <Page container={false} nav={true} title={'Our Delicious menu'}>
+        <Grid container className="mt-16 justify-center">
+          <Grid item xs={12} lg={10}>
+            <Grid container direction={'row-reverse'} spacing={3}>
+              <Grid item xs={12} md={6} lg={4}>
+                {appState.loggedIn ? <Cart /> : ''}
+              </Grid>
+              <Grid item xs={12} md={6} lg={8}>
+                <Box sx={{ width: '100%' }}>
+                  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Tabs
+                      value={value}
+                      onChange={handleChange}
+                      variant="scrollable"
+                      textColor="secondary"
+                      indicatorColor="secondary"
+                      aria-label="basic tabs example"
+                      scrollButtons
+                      allowScrollButtonsMobile
+                    >
+                      {appState.menuTypes.map((type, index) => (
+                        <Tab
+                          key={index}
+                          label={type}
+                          className="font-bold text-red-800"
+                          {...a11yProps(index)}
+                        />
+                      ))}
+                    </Tabs>
+                  </Box>
                   {appState.menuTypes.map((type, index) => (
-                    <Tab
-                      key={index}
-                      label={type}
-                      className="font-bold text-red-800"
-                      {...a11yProps(index)}
-                    />
+                    <TabPanel value={value} key={index} index={index}>
+                      <Grid
+                        container
+                        spacing={4}
+                        className="my-20 justify-center"
+                      >
+                        {appState.menu.map((item, index) => {
+                          if (
+                            item.type.toLowerCase() == type.toLowerCase() ||
+                            type == 'Full Menu'
+                          )
+                            return (
+                              <Grid item key={index} lg={6} xs={12} xl={4}>
+                                <MealItem item={item} />
+                              </Grid>
+                            )
+                          else return ''
+                        })}
+                      </Grid>
+                    </TabPanel>
                   ))}
-                </Tabs>
-              </Box>
-              {appState.menuTypes.map((type, index) => (
-                <TabPanel value={value} key={index} index={index}>
-                  <Grid container spacing={4} className="my-20 justify-center">
-                    {appState.menu.map((item, index) => {
-                      if (
-                        item.type.toLowerCase() == type.toLowerCase() ||
-                        type == 'Full Menu'
-                      )
-                        return (
-                          <Grid item key={index} lg={4} md={6} xs={12}>
-                            <MealItem item={item} />
-                          </Grid>
-                        )
-                      else return ''
-                    })}
-                  </Grid>
-                </TabPanel>
-              ))}
-            </Box>
+                </Box>
+              </Grid>
+            </Grid>
           </Grid>
         </Grid>
       </Page>

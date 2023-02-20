@@ -41,6 +41,13 @@ const AddAddress = () => {
     }
   }
 
+  useEffect(() => {
+    if (!appState.loggedIn) {
+      navigate('/login')
+      message.info('Login first')
+    }
+  }, [])
+
   return (
     <Page container={true} nav={true} title="Add Address">
       <CssBaseline />
