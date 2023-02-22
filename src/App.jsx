@@ -218,7 +218,6 @@ function App() {
       localStorage.removeItem('userNumber')
       localStorage.removeItem('userEmail')
     }
-    console.log('Cart : ')
   }, [state.loggedIn])
 
   //Check the token

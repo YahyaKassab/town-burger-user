@@ -48,7 +48,7 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault()
     const response = await axios
-      .post('/user/loginemail', { email, password })
+      .post('/user/loginCustomer', { email, password })
       .then((res) => {
         console.log(res.data)
         message.success(res.data.message)
