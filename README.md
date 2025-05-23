@@ -24,9 +24,3 @@ Watch the demo of the Town Burger Website here:
 - **Authentication:** JWT for secure login
 - **Deployment:** Vercel or Netlify (for live demo)
 
-## Setup & Installation
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/town-burger-website.git
-   cd town-burger-website
